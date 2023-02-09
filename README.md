@@ -57,7 +57,8 @@ and add them to an inventory-like collection that could be Y.
 - have fun mastering the combat system and learning how to guide the story towards a goal
 - explore the possible actions and objects of interest within the game through natural text prompts
 - understand the overarching story between multiple runs of the game
-- become invested in defeating the enemy by learning more spells
+- become invested in defeating the enemy by learning more
+- add arcane spells to a list of possible abilities they can utilize throughout the story
 - learn the effects of each spell and experiment with the keywords to build a rudimentary understanding 
 of some French vocabulary
 - utilize the fact that the game resets upon death to jump into preparing for the next battle
