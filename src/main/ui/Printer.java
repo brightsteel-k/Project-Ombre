@@ -1,22 +1,32 @@
 package ui;
 
+import model.StoryController;
+
 import java.util.Scanner;
 
+// Controls text and interface with which the user interacts
 public class Printer {
 
-    Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public Printer() {
 
     }
 
+    public static void printText(String output) {
+        System.out.println(output);
+    }
+
+    public static void continueText() {
+        System.out.println("[Space to continue]");
+        scanner.nextLine();
+        StoryController.printNextLine();
+    }
 
     // EFFECTS: gets and returns the processed input that the user types
     public String userInput() {
         String response = scanner.nextLine();
-
         response = removeLeadingPronoun(removeLeadingSpaces(removeTrailingSpaces(response.toLowerCase())));
-
         return response;
     }
 
@@ -25,7 +35,6 @@ public class Printer {
         if (input.substring(0, 1).equals(" ")) {
             return removeLeadingSpaces(input.substring(1));
         }
-
         return input;
     }
 
@@ -34,7 +43,6 @@ public class Printer {
         if (input.substring(input.length() - 1).equals(" ")) {
             return removeTrailingSpaces(input.substring(0, input.length() - 1));
         }
-
         return input;
     }
 
@@ -44,7 +52,6 @@ public class Printer {
         if (input.substring(0, 2).equals("i ")) {
             return input.substring(2);
         }
-
         return input;
     }
 }
