@@ -14,4 +14,13 @@ public class DescriptiveScene extends Scene {
         super(textsIn);
         nextScene = nextIn;
     }
+
+    @Override
+    protected boolean endLine() {
+        if (!super.endLine()) {
+            StoryController.beginScene(nextScene);
+            return false;
+        }
+        return true;
+    }
 }

@@ -10,7 +10,7 @@ public class Printer {
     private static final Scanner scanner = new Scanner(System.in);
 
     public Printer() {
-
+        
     }
 
     public static void printText(String output) {
@@ -18,7 +18,7 @@ public class Printer {
     }
 
     public static void continueText() {
-        System.out.println("[Space to continue]");
+        System.out.print("[Enter to continue]");
         scanner.nextLine();
         StoryController.printNextLine();
     }
@@ -32,7 +32,7 @@ public class Printer {
 
     // EFFECTS: returns given string with all leading spaces removed
     private String removeLeadingSpaces(String input) {
-        if (input.substring(0, 1).equals(" ")) {
+        if (input.charAt(0) == ' ') {
             return removeLeadingSpaces(input.substring(1));
         }
         return input;
@@ -40,7 +40,7 @@ public class Printer {
 
     // EFFECTS: returns given string with all trailing spaces removed
     private String removeTrailingSpaces(String input) {
-        if (input.substring(input.length() - 1).equals(" ")) {
+        if (input.charAt(input.length() - 1) == ' ') {
             return removeTrailingSpaces(input.substring(0, input.length() - 1));
         }
         return input;
