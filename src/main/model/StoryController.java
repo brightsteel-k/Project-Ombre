@@ -1,8 +1,10 @@
 package model;
 
 
+import exceptions.InvalidActionException;
 import exceptions.NoNextSceneException;
 import exceptions.SceneEndingException;
+import model.player.Location;
 import model.scenes.ChoiceScene;
 import model.scenes.DescriptiveScene;
 import model.scenes.Scene;
@@ -15,10 +17,13 @@ import java.util.Map;
 public class StoryController {
 
     public static final Map<String, Scene> ALL_SCENES = new HashMap<>();
+    public static final Map<String, Location> ALL_LOCATIONS = new HashMap<>();
     private static Scene CURRENT_SCENE;
+    private static Location CURRENT_LOCATION;
 
     public StoryController() {
         initializeScenes();
+        initializeLocations();
     }
 
     public Scene getCurrentScene() {
@@ -27,6 +32,14 @@ public class StoryController {
 
     public void setCurrentScene(String id) {
         CURRENT_SCENE = ALL_SCENES.get(id);
+    }
+
+    public Location getCurrentLocation() {
+        return CURRENT_LOCATION;
+    }
+
+    public void setCurrentLocation(String id) {
+        CURRENT_LOCATION = ALL_LOCATIONS.get(id);
     }
 
     // MODIFIES: this
@@ -57,6 +70,13 @@ public class StoryController {
         ALL_SCENES.put("home", new ChoiceScene(new String[] { "Hello there." }));
     }
 
+    private void initializeLocations() {
+        Location front = new Location("front", ALL_LOCATIONS);
+        front.addObjectOfInterest("desk", "desk");
+        front.addObjectOfInterest("table", "desk");
+        front.addObjectOfInterest("worktable", "desk");
+    }
+
     // EFFECTS: returns the next line of the current scene, or throws an exception if the scene has ended.
     public String getCurrentNextLine() throws SceneEndingException {
         return CURRENT_SCENE.getNextLine();
@@ -67,5 +87,10 @@ public class StoryController {
     //          OR throws exception if it does not exist.
     public void switchToNextScene() throws NoNextSceneException {
         setCurrentScene(CURRENT_SCENE.getNextScene());
+    }
+
+    // TODO: implement according to plan
+    public void executeAction(String[] keywords) throws InvalidActionException {
+
     }
 }

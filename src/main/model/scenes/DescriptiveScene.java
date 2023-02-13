@@ -10,15 +10,15 @@ public class DescriptiveScene extends Scene {
 
     // EFFECTS: this has the given text as its script, index set to 0. When it ends, it will signal for
     //          the scene with id nextIn to begin.
-    public DescriptiveScene(String textIn, String nextIn) {
-        super(new String[] { textIn });
+    public DescriptiveScene(String text, String nextIn) {
+        super(new String[] { text });
         nextScene = nextIn;
     }
 
     // EFFECTS: this has the given texts as its script and index set to 0. When it ends, it will signal for
     //          the scene with id nextIn to begin.
-    public DescriptiveScene(String[] textsIn, String nextIn) {
-        super(textsIn);
+    public DescriptiveScene(String[] texts, String nextIn) {
+        super(texts);
         nextScene = nextIn;
     }
 

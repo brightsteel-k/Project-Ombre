@@ -1,8 +1,10 @@
 package ui;
 
+import exceptions.InvalidActionException;
 import exceptions.NoNextSceneException;
 import exceptions.SceneEndingException;
 import model.StoryController;
+import model.player.Interpreter;
 import model.scenes.EndSceneEvent;
 
 import java.util.Scanner;
@@ -10,13 +12,14 @@ import java.util.Scanner;
 // Controls text and interface with which the user interacts
 public class Printer {
 
-    private static StoryController STORY;
+    private StoryController story;
+    private Interpreter interpreter;
     private static final Scanner scanner = new Scanner(System.in);
     private boolean isPrinting = false;
 
     public Printer() {
-        STORY = new StoryController();
-        STORY.setCurrentScene("intro");
+        story = new StoryController();
+        story.setCurrentScene("intro");
         printScene();
     }
 
@@ -24,7 +27,7 @@ public class Printer {
         isPrinting = true;
         while (isPrinting) {
             try {
-                System.out.println(STORY.getCurrentNextLine());
+                System.out.println(story.getCurrentNextLine());
                 continueText();
             } catch (SceneEndingException e) {
                 handleEndScene(e.getEvent());
@@ -37,52 +40,33 @@ public class Printer {
         switch (e) {
             case NEXT_SCENE:
                 try {
-                    STORY.switchToNextScene();
+                    story.switchToNextScene();
                 } catch (NoNextSceneException no) {
                     System.err.println("Incorrect NextScene call:");
                     no.printStackTrace(System.err);
                 }
                 break;
             case FREE_ROAM:
-                System.out.println("Explore"); // TODO: Implement free roam
+                getUserActivity();
                 break;
         }
     }
 
+    // EFFECTS: program is paused until user inputs anything.
     public void continueText() {
         System.out.print("[Enter to continue]");
         scanner.nextLine();
     }
 
-    // EFFECTS: gets and returns the processed input that the user types
-    public String userInput() {
-        String response = scanner.nextLine();
-        response = removeLeadingPronoun(removeLeadingSpaces(removeTrailingSpaces(response.toLowerCase())));
-        return response;
-    }
-
-    // EFFECTS: returns given string with all leading spaces removed
-    private String removeLeadingSpaces(String input) {
-        if (input.charAt(0) == ' ') {
-            return removeLeadingSpaces(input.substring(1));
+    private boolean getUserActivity() {
+        try {
+            String[] keywords = interpreter.userInput(scanner.nextLine());
+        } catch (InvalidActionException e) {
+            return false;
         }
-        return input;
-    }
 
-    // EFFECTS: returns given string with all trailing spaces removed
-    private String removeTrailingSpaces(String input) {
-        if (input.charAt(input.length() - 1) == ' ') {
-            return removeTrailingSpaces(input.substring(0, input.length() - 1));
-        }
-        return input;
-    }
+        // TODO: construct actionCode, check if it's valid, call StoryController.executeAction()
 
-    // EFFECTS: if given string begins with "i ", get rid of pronoun and return the rest;
-    //          else, return the given string
-    private String removeLeadingPronoun(String input) {
-        if (input.substring(0, 2).equals("i ")) {
-            return input.substring(2);
-        }
-        return input;
+        return true;
     }
 }

@@ -11,8 +11,8 @@ public abstract class Scene {
     protected int index;
 
     // EFFECTS: Scene has the given texts as its script, and its index set to 0.
-    public Scene(String[] textsIn) {
-        texts = textsIn;
+    public Scene(String[] texts) {
+        this.texts = texts;
         index = 0;
     }
 

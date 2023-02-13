@@ -6,8 +6,8 @@ import exceptions.SceneEndingException;
 public class ChoiceScene extends Scene {
 
     // EFFECTS: Scene has the given texts as its script, and its index set to 0.
-    public ChoiceScene(String[] textsIn) {
-        super(textsIn);
+    public ChoiceScene(String[] texts) {
+        super(texts);
     }
 
     @Override
