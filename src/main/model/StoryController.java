@@ -1,9 +1,13 @@
 package model;
 
 
+import exceptions.NoNextSceneException;
+import exceptions.SceneEndingException;
+import model.scenes.ChoiceScene;
+import model.scenes.DescriptiveScene;
+import model.scenes.Scene;
 import ui.Printer;
 
-import javax.swing.plaf.ColorUIResource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +15,6 @@ import java.util.Map;
 public class StoryController {
 
     public static final Map<String, Scene> ALL_SCENES = new HashMap<>();
-    public static final Printer PRINTER = new Printer();
     private static Scene CURRENT_SCENE;
 
     public StoryController() {
@@ -22,10 +25,13 @@ public class StoryController {
         return CURRENT_SCENE;
     }
 
-    public void setCurrentScene(Scene scene) {
-        CURRENT_SCENE = scene;
+    public void setCurrentScene(String id) {
+        CURRENT_SCENE = ALL_SCENES.get(id);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Defines all the scenes in the game, puts them into one giant map.
+    //          Eventually will read data from serialized json files instead.
     private void initializeScenes() {
         ALL_SCENES.put("intro",
                 new DescriptiveScene(
@@ -48,18 +54,18 @@ public class StoryController {
                                 "Now here you are, in the heart of a dangerous rogue mage’s most ambitious project, "
                                 + "with one goal in mind: destroy Dythanos and the Voidstone. "
                         }, "home"));
+        ALL_SCENES.put("home", new ChoiceScene(new String[] { "Hello there." }));
     }
 
-    public static void printNextLine() {
-        CURRENT_SCENE.printNextLine();
+    // EFFECTS: returns the next line of the current scene, or throws an exception if the scene has ended.
+    public String getCurrentNextLine() throws SceneEndingException {
+        return CURRENT_SCENE.getNextLine();
     }
 
-    public static void beginScene(String id) {
-        CURRENT_SCENE = ALL_SCENES.get(id);
-        printNextLine();
-    }
-
-    public void start() {
-        beginScene("intro");
+    // MODIFIES: this
+    // EFFECTS: current scene is the one that comes after the previous one,
+    //          OR throws exception if it does not exist.
+    public void switchToNextScene() throws NoNextSceneException {
+        setCurrentScene(CURRENT_SCENE.getNextScene());
     }
 }
