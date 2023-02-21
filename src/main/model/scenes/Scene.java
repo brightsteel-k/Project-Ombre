@@ -2,7 +2,6 @@ package model.scenes;
 
 import exceptions.NoNextSceneException;
 import exceptions.SceneEndingException;
-import ui.Printer;
 
 // Framework for a scene: a distinct section of the story text with which the user will interact
 public abstract class Scene {

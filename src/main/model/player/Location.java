@@ -7,9 +7,11 @@ public class Location {
 
     private Map<String, String> objectsOfInterest = new HashMap<>();
     private String id;
+    private String name;
 
-    public Location(String id, Map<String, Location> allLocations) {
+    public Location(String id, String name, Map<String, Location> allLocations) {
         this.id = id;
+        this.name = name;
         allLocations.put(id, this);
     }
 
@@ -17,5 +19,7 @@ public class Location {
         objectsOfInterest.put(synonym, id);
     }
 
-
+    public String getName() {
+        return name;
+    }
 }

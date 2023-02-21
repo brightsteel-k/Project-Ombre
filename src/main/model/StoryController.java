@@ -71,7 +71,7 @@ public class StoryController {
     }
 
     private void initializeLocations() {
-        Location front = new Location("front", ALL_LOCATIONS);
+        Location front = new Location("front", "the front of the room", ALL_LOCATIONS);
         front.addObjectOfInterest("desk", "desk");
         front.addObjectOfInterest("table", "desk");
         front.addObjectOfInterest("worktable", "desk");
@@ -89,8 +89,16 @@ public class StoryController {
         setCurrentScene(CURRENT_SCENE.getNextScene());
     }
 
+    public void changeLocation(String loc) throws InvalidActionException {
+        if (ALL_LOCATIONS.containsKey(loc)) {
+            setCurrentLocation(loc);
+        } else {
+            throw new InvalidActionException();
+        }
+    }
+
     // TODO: implement according to plan
-    public void executeAction(String[] keywords) throws InvalidActionException {
+    public void executeAction(String actionCode) throws InvalidActionException {
 
     }
 }

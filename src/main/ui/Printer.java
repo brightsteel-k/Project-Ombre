@@ -47,26 +47,40 @@ public class Printer {
                 }
                 break;
             case FREE_ROAM:
-                getUserActivity();
+                handleFreeRoam();
                 break;
         }
     }
 
-    // EFFECTS: program is paused until user inputs anything.
+    // EFFECTS: pauses program until player inputs something
     public void continueText() {
         System.out.print("[Enter to continue]");
         scanner.nextLine();
     }
 
-    private boolean getUserActivity() {
+
+    private void handleFreeRoam() {
         try {
-            String[] keywords = interpreter.userInput(scanner.nextLine());
+            executeUserInput();
         } catch (InvalidActionException e) {
-            return false;
+            // TODO: handle invalid actions
+        }
+    }
+
+    // EFFECTS: receives user input from Interpreter and carries the action out with the StoryController, if valid
+    private void executeUserInput() throws InvalidActionException {
+        String actionCode = interpreter.userInput(scanner.nextLine());
+
+        if (actionCode.startsWith("goto")) {
+            story.changeLocation(actionCode.substring(5));
+            printLocation();
         }
 
-        // TODO: construct actionCode, check if it's valid, call StoryController.executeAction()
+        story.executeAction(actionCode);
+    }
 
-        return true;
+    // EFFECTS: prints update to player's location
+    private void printLocation() {
+        System.out.println("You make your way to " + story.getCurrentLocation().getName() + ".");
     }
 }

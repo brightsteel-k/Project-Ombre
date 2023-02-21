@@ -3,8 +3,7 @@ package model.player;
 import exceptions.InvalidActionException;
 import model.StoryController;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Interpreter {
 
@@ -13,10 +12,10 @@ public class Interpreter {
 
     public Interpreter(StoryController story) {
         this.story = story;
-        initalizeActions();
+        initializeActions();
     }
 
-    public void initalizeActions() {
+    public void initializeActions() {
         ACTIONS.put("view", "view");
         ACTIONS.put("check", "view");
         ACTIONS.put("observe", "view");
@@ -26,31 +25,44 @@ public class Interpreter {
         ACTIONS.put("stare at", "view");
         ACTIONS.put("search", "search");
         ACTIONS.put("investigate", "search");
+        ACTIONS.put("go to", "goto");
+        ACTIONS.put("move to", "goto");
+        ACTIONS.put("walk to", "goto");
     }
 
     // EFFECTS: gets and returns the processed input that the user types
-    public String[] userInput(String input) throws InvalidActionException {
+    public String userInput(String input) throws InvalidActionException {
         input = removeLeadingPronoun(removeLeadingSpaces(removeTrailingSpaces(input.toLowerCase())));
-        String[] keywords = input.split(" ");
+        String[] actionWords = processAction(input.split(" "));
 
-        keywords[0] = processAction(keywords);
-
-        return keywords;
+        return actionWords[0] + "@" + actionWords[1];
     }
 
-    private String processAction(String[] keywords) throws InvalidActionException {
-        String action;
+    // REQUIRES: non-empty array of keywords constructed from user input, split by spaces
+    // EFFECTS: configures set of input words to contain a valid action in position 0 and object in position 1,
+    //          or throws InvalidActionException if cannot
+    private String[] processAction(String[] keywords) throws InvalidActionException {
+        List<String> actionWords = new ArrayList<>(Arrays.asList(keywords));
         try {
-            action = ACTIONS.get(keywords[0]);
-        } catch (NullPointerException n0) {
+            actionWords.set(0, ACTIONS.get(keywords[0]));
+        } catch (NullPointerException n1) {
             try {
-                action = ACTIONS.get(keywords[0] + " " + keywords[1]);
-            } catch (NullPointerException n1) {
-                throw new InvalidActionException();
+                actionWords.set(0, ACTIONS.get(keywords[0] + " " + keywords[1]));
+                actionWords.remove(1);
+            } catch (NullPointerException n2) {
+                try {
+                    actionWords.set(0, ACTIONS.get(keywords[0] + " " + keywords[1] + " " + keywords[2]));
+                    actionWords.remove(1);
+                    actionWords.remove(2);
+                } catch (NullPointerException n3) {
+                    throw new InvalidActionException();
+                }
             }
         }
-
-        return action;
+        if (actionWords.get(1).equals("a") || actionWords.get(1).equals("the")) {
+            actionWords.remove(1);
+        }
+        return actionWords.toArray(new String[] {});
     }
 
     // EFFECTS: returns given string with all leading spaces removed
