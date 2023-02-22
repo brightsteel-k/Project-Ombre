@@ -1,6 +1,6 @@
 package model.scenes;
 
-import exceptions.NoNextSceneException;
+import exceptions.InvalidSceneException;
 import exceptions.SceneEndingException;
 
 // Framework for a scene: a distinct section of the story text with which the user will interact
@@ -15,7 +15,7 @@ public abstract class Scene {
         index = 0;
     }
 
-    // REQUIRES: index < texts.length
+    // REQUIRES: index <= texts.length
     // MODIFIES: this
     // EFFECTS: returns the next line in this scene's script and increments its index by 1,
     //          OR throws an exception if the scene has ended.
@@ -28,9 +28,4 @@ public abstract class Scene {
 
     // EFFECTS: returns the event that should occur at the end of the scene.
     protected abstract SceneEndingException getEndSceneEvent();
-
-    // EFFECTS: returns the id of the scene that directly follows this one, or the empty string if no scene does.
-    public String getNextScene() throws NoNextSceneException {
-        throw new NoNextSceneException();
-    }
 }

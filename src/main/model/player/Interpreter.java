@@ -15,6 +15,9 @@ public class Interpreter {
         initializeActions();
     }
 
+    // MODIFIES: this
+    // EFFECTS: Relates synonyms to their corresponding actions in the game in one giant map.
+    //          Eventually will read data from serialized json files instead.
     public void initializeActions() {
         ACTIONS.put("view", "view");
         ACTIONS.put("check", "view");
@@ -31,11 +34,12 @@ public class Interpreter {
     }
 
     // EFFECTS: gets and returns the processed input that the user types
-    public String userInput(String input) throws InvalidActionException {
+    public String[] userInput(String input) throws InvalidActionException {
         input = removeLeadingPronoun(removeLeadingSpaces(removeTrailingSpaces(input.toLowerCase())));
-        String[] actionWords = processAction(input.split(" "));
-
-        return actionWords[0] + "@" + actionWords[1];
+        if (input.contains("@")) {
+            throw new InvalidActionException();
+        }
+        return processAction(input.split(" "));
     }
 
     // REQUIRES: non-empty array of keywords constructed from user input, split by spaces
@@ -43,31 +47,52 @@ public class Interpreter {
     //          or throws InvalidActionException if cannot
     private String[] processAction(String[] keywords) throws InvalidActionException {
         List<String> actionWords = new ArrayList<>(Arrays.asList(keywords));
-        try {
-            actionWords.set(0, ACTIONS.get(keywords[0]));
-        } catch (NullPointerException n1) {
-            try {
-                actionWords.set(0, ACTIONS.get(keywords[0] + " " + keywords[1]));
-                actionWords.remove(1);
-            } catch (NullPointerException n2) {
-                try {
-                    actionWords.set(0, ACTIONS.get(keywords[0] + " " + keywords[1] + " " + keywords[2]));
-                    actionWords.remove(1);
-                    actionWords.remove(2);
-                } catch (NullPointerException n3) {
-                    throw new InvalidActionException();
-                }
-            }
+        String action = null;
+        int keyNum = 0;
+
+        checkMinActionSize(actionWords, 1);
+        action = ACTIONS.get(keywords[0]);
+        if (action == null) {
+            checkMinActionSize(actionWords, 2);
+            action = ACTIONS.get(keywords[0] + " " + keywords[1]);
+            keyNum = 1;
         }
-        if (actionWords.get(1).equals("a") || actionWords.get(1).equals("the")) {
+        if (action == null) {
+            checkMinActionSize(actionWords, 3);
+            action = ACTIONS.get(keywords[0] + " " + keywords[1] + " " + keywords[2]);
+            keyNum = 2;
+        }
+        if (action == null) {
+            throw new InvalidActionException();
+        }
+
+        for (int k = 0; k < keyNum; k++) {
+            actionWords.remove(k);
+        }
+        actionWords.add(0, action);
+        return configureWordsList(actionWords);
+    }
+
+    // EFFECTS: throws exception iff given list is smaller than given minimum size
+    private void checkMinActionSize(List<String> actionWords, int minSize) throws InvalidActionException {
+        if (actionWords.size() < minSize) {
+            throw new InvalidActionException();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes determiners from 2nd position, return list as an array
+    private String[] configureWordsList(List<String> actionWords) {
+        if (actionWords.size() > 1 && (actionWords.get(1).equals("a") || actionWords.get(1).equals("the"))) {
             actionWords.remove(1);
         }
-        return actionWords.toArray(new String[] {});
+
+        return actionWords.subList(0, Math.min(actionWords.size(), 2)).toArray(new String[]{});
     }
 
     // EFFECTS: returns given string with all leading spaces removed
     private String removeLeadingSpaces(String input) {
-        if (input.charAt(0) == ' ') {
+        if (input.startsWith(" ")) {
             return removeLeadingSpaces(input.substring(1));
         }
         return input;
@@ -75,7 +100,7 @@ public class Interpreter {
 
     // EFFECTS: returns given string with all trailing spaces removed
     private String removeTrailingSpaces(String input) {
-        if (input.charAt(input.length() - 1) == ' ') {
+        if (input.endsWith(" ")) {
             return removeTrailingSpaces(input.substring(0, input.length() - 1));
         }
         return input;
@@ -84,8 +109,14 @@ public class Interpreter {
     // EFFECTS: if given string begins with "i ", get rid of pronoun and return the rest;
     //          else, return the given string
     private String removeLeadingPronoun(String input) {
-        if (input.substring(0, 2).equals("i ")) {
+        if (input.startsWith("i ")) {
             return input.substring(2);
+        }
+
+        if (input.startsWith("would like to ")) {
+            return input.substring(14);
+        } else if (input.startsWith("will ")) {
+            return input.substring(5);
         }
         return input;
     }
