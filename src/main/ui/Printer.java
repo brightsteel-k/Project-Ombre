@@ -36,6 +36,7 @@ public class Printer {
         }
     }
 
+    // EFFECTS: prints the successive lines in an exposition scene, one by one, separated by a call to continueText().
     public void printScene() {
         isPrinting = true;
         while (isPrinting) {
@@ -44,10 +45,6 @@ public class Printer {
                 continueText();
             } catch (SceneEndingException e) {
                 isPrinting = false;
-                String msg = e.getLastMessage();
-                if (msg != null) {
-                    System.out.println(msg);
-                }
                 handleEndSceneEvents(e.getEvents());
             }
         }
@@ -56,14 +53,17 @@ public class Printer {
     // EFFECTS: triggers all corresponding end scene events.
     private void handleEndSceneEvents(List<EndSceneEvent> endEvents) {
         boolean containsExplore = false;
-        EndSceneEvent nextSceneEvent = null;
+        String nextSceneId = null;
         for (EndSceneEvent event : endEvents) {
             switch (event.getType()) {
-                case EXPLORE:
+                case START_EXPLORING:
                     containsExplore = true;
                     break;
+                case DISPLAY_TEXT:
+                    System.out.println(event.getKeyword());
+                    break;
                 case NEXT_SCENE:
-                    nextSceneEvent = event;
+                    nextSceneId = event.getKeyword();
                     break;
                 case LEARN_SPELL:
                     break;
@@ -72,20 +72,15 @@ public class Printer {
             }
         }
 
-        finishScene(containsExplore, nextSceneEvent);
+        finishScene(containsExplore, nextSceneId);
     }
 
     // EFFECTS: determines what will happen after this scene.
-    private void finishScene(boolean explore, EndSceneEvent nextSceneEvent) {
+    private void finishScene(boolean explore, String nextSceneId) {
         if (explore) {
             isExploring = true;
-        } else if (nextSceneEvent != null) {
-            try {
-                story.setCurrentScene(nextSceneEvent.getKeyword());
-            } catch (InvalidSceneException no) {
-                System.err.println("Incorrect NextScene call:");
-                no.printStackTrace(System.err);
-            }
+        } else if (nextSceneId != null) {
+            story.setCurrentScene(nextSceneId);
             isExploring = false;
         }
     }

@@ -56,7 +56,7 @@ public class StoryController {
     @SuppressWarnings("methodlength")
     private void initializeScenes() {
         ALL_SCENES.put("intro",
-                new DescriptiveScene(
+                new Scene(
                         new String[]{"A flash of brilliant violet light blinds your vision, making your head "
                                 + "swirl in a vortex of freezing amethyst. Your mind feels numb. You steel yourself \n"
                                 + "and step into the cool stonebrick chamber, shielding your eyes from the shining "
@@ -75,18 +75,26 @@ public class StoryController {
                                 + "Dythanos’s lair just as the Voidstone began to act up.",
                                 "Now here you are, in the heart of a dangerous rogue mage’s most ambitious project, "
                                 + "with one goal in mind: destroy Dythanos and the Voidstone. "
-                        }, "home"));
+                        },
+                        new EndSceneEvent[] {
+                                new EndSceneEvent(EndSceneEventType.NEXT_SCENE, "home")
+                        }));
         ALL_SCENES.put("test",
-                new DescriptiveScene(
+                new Scene(
                         new String[]{"A flash of brilliant violet light blinds your vision, making your head "
                                 + "swirl in a vortex of freezing amethyst. Your mind feels numb. You steel yourself \n"
                                 + "and step into the cool stonebrick chamber, shielding your eyes from the shining "
                                 + "purple crystal in front of you. A moment later, the blazing light fades and \n"
                                 + "you're left blinking spots away at the front of a large heptagonal chamber. ",
                                 "Wow, coding is hard."
-                        }, "home"));
-        ALL_SCENES.put("home", new ReactionScene(new String[] { "What would you like to do?" },
-                new EndSceneEvent[] { new EndSceneEvent(EndSceneEventType.EXPLORE) }));
+                        },
+                        new EndSceneEvent[] {
+                                new EndSceneEvent(EndSceneEventType.NEXT_SCENE, "home")
+                        }));
+        ALL_SCENES.put("home", new Scene(new String[] { "Looking around, the room seems very spooky." },
+                new EndSceneEvent[] {
+                        new EndSceneEvent(EndSceneEventType.DISPLAY_TEXT,"What would you like to do?"),
+                        new EndSceneEvent(EndSceneEventType.START_EXPLORING) }));
     }
 
     // MODIFIES: this
@@ -97,10 +105,10 @@ public class StoryController {
         front.addObjectOfInterest("desk", "desk");
         front.addObjectOfInterest("table", "desk");
         front.addObjectOfInterest("worktable", "desk");
-        Location desk = new Location("front", "the front of the room", ALL_LOCATIONS);
-        front.addObjectOfInterest("desk", "desk");
-        front.addObjectOfInterest("table", "desk");
-        front.addObjectOfInterest("worktable", "desk");
+        Location desk = new Location("desk", "the worktable", ALL_LOCATIONS);
+        desk.addObjectOfInterest("drawers", "drawers");
+        desk.addObjectOfInterest("desk", "drawers");
+        desk.addObjectOfInterest("worktable", "drawers");
     }
 
     // EFFECTS: returns the next line of the current scene, or throws an exception if the scene has ended.
