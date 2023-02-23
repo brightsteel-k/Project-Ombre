@@ -1,4 +1,4 @@
-package model.player;
+package model;
 
 import exceptions.InvalidActionException;
 import model.scenes.SceneEvent;

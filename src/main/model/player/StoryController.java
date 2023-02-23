@@ -1,10 +1,11 @@
-package model;
+package model.player;
 
 
 import exceptions.InvalidActionException;
 import exceptions.InvalidSceneException;
 import exceptions.SceneEndingException;
-import model.player.Location;
+import model.Location;
+import model.Spell;
 import model.scenes.*;
 
 import java.util.HashMap;
@@ -16,10 +17,13 @@ public class StoryController {
 
     public static final Map<String, Scene> ALL_SCENES = new HashMap<>();
     public static final Map<String, Location> ALL_LOCATIONS = new HashMap<>();
+    public static final Map<String, Spell> ALL_SPELLS = new HashMap<>();
     private static Scene CURRENT_SCENE;
     private static Location CURRENT_LOCATION;
+    private final Player player;
 
-    public StoryController() {
+    public StoryController(Player player) {
+        this.player = player;
         initializeScenes();
         initializeLocations();
     }
@@ -149,5 +153,17 @@ public class StoryController {
         }
 
         return actionCode;
+    }
+
+    // EFFECTS: returns true if the given condition is met, based on state of values in the Player class
+    public boolean conditionFulfilled(SceneEventCondition condition) {
+        switch (condition.getKey()) {
+            case "#hasItem":
+                return player.hasItem(condition.getExpected());
+            case "#hasSpell":
+                return player.hasSpell(condition.getExpected());
+            default:
+                return player.conditionMet(condition.getKey(), condition.getExpected());
+        }
     }
 }

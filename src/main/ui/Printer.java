@@ -2,7 +2,8 @@ package ui;
 
 import exceptions.InvalidActionException;
 import exceptions.SceneEndingException;
-import model.StoryController;
+import model.player.Player;
+import model.player.StoryController;
 import model.Interpreter;
 import model.scenes.SceneEvent;
 
@@ -13,6 +14,7 @@ import java.util.Scanner;
 // Controls text and interface with which the user interacts
 public class Printer {
 
+    private final Player player;
     private final StoryController story;
     private final Interpreter interpreter;
     private static final Scanner SCANNER = new Scanner(System.in);
@@ -21,11 +23,12 @@ public class Printer {
     private final Random random;
 
     public Printer() {
-        story = new StoryController();
-        story.setCurrentScene("test");
-        story.setCurrentLocation("front");
+        player = new Player();
+        story = new StoryController(player);
         interpreter = new Interpreter(story);
         random = new Random();
+        story.setCurrentScene("test");
+        story.setCurrentLocation("front");
         game();
     }
 
@@ -63,6 +66,10 @@ public class Printer {
 
     // EFFECTS: executes given scene event, with varying effects depending on its type and supplied keyword
     private void handleSceneEvent(SceneEvent event) {
+        if (!event.hasCondition() || !story.conditionFulfilled(event.getCondition())) {
+            return;
+        }
+
         switch (event.getType()) {
             case DISPLAY_TEXT:
                 System.out.println(event.getKeyword());
@@ -71,9 +78,14 @@ public class Printer {
                 changeLocation(event.getKeyword());
                 break;
             case LEARN_SPELL:
+                player.addSpell(event.getKeyword());
                 break;
             case ACQUIRE_ITEM:
+                player.addItem(event.getKeyword());
                 break;
+            case SET_CONDITION:
+                String[] info = event.getKeyword().split(":");
+                player.setCondition(info[0], info[1]);
         }
     }
 

@@ -7,5 +7,6 @@ public enum SceneEventType {
     DISPLAY_TEXT,
     CHANGE_LOCATION,
     ACQUIRE_ITEM,
-    LEARN_SPELL
+    LEARN_SPELL,
+    SET_CONDITION
 }

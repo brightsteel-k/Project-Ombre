@@ -1,6 +1,7 @@
 package model;
 
 import exceptions.InvalidActionException;
+import model.player.StoryController;
 
 import java.util.*;
 
@@ -8,7 +9,7 @@ import java.util.*;
 public class Interpreter {
 
     private final StoryController story;
-    private static final Map<String, String> ACTIONS = new HashMap<>();
+    private static final Map<String, String> ACTION_SYNONYMS = new HashMap<>();
 
     public Interpreter(StoryController story) {
         this.story = story;
@@ -19,18 +20,18 @@ public class Interpreter {
     // EFFECTS: Relates synonyms to their corresponding actions in the game in one giant map.
     //          Eventually will read data from serialized json files instead.
     public void initializeActions() {
-        ACTIONS.put("view", "view");
-        ACTIONS.put("check", "view");
-        ACTIONS.put("observe", "view");
-        ACTIONS.put("analyze", "view");
-        ACTIONS.put("analyse", "view");
-        ACTIONS.put("look at", "view");
-        ACTIONS.put("stare at", "view");
-        ACTIONS.put("search", "search");
-        ACTIONS.put("investigate", "search");
-        ACTIONS.put("go to", "goto");
-        ACTIONS.put("move to", "goto");
-        ACTIONS.put("walk to", "goto");
+        ACTION_SYNONYMS.put("view", "view");
+        ACTION_SYNONYMS.put("check", "view");
+        ACTION_SYNONYMS.put("observe", "view");
+        ACTION_SYNONYMS.put("analyze", "view");
+        ACTION_SYNONYMS.put("analyse", "view");
+        ACTION_SYNONYMS.put("look at", "view");
+        ACTION_SYNONYMS.put("stare at", "view");
+        ACTION_SYNONYMS.put("search", "search");
+        ACTION_SYNONYMS.put("investigate", "search");
+        ACTION_SYNONYMS.put("go to", "goto");
+        ACTION_SYNONYMS.put("move to", "goto");
+        ACTION_SYNONYMS.put("walk to", "goto");
     }
 
     // EFFECTS: gets and returns the processed input that the user types
@@ -79,7 +80,7 @@ public class Interpreter {
                 possibleKeyword += " ";
             }
         }
-        return ACTIONS.get(possibleKeyword);
+        return ACTION_SYNONYMS.get(possibleKeyword);
     }
 
     // MODIFIES: this
