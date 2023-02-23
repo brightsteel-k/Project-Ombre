@@ -111,14 +111,14 @@ public class Interpreter {
     // EFFECTS: if given string begins with "i ", "i would like to ", or "i will ", get rid of that prefix
     //          and return the rest; else, return the given string.
     private String removeLeadingPronoun(String input) {
+        if (input.startsWith("i would like to ")) {
+            return input.substring(16);
+        }
+        if (input.startsWith("i will ")) {
+            return input.substring(7);
+        }
         if (input.startsWith("i ")) {
             return input.substring(2);
-        }
-
-        if (input.startsWith("would like to ")) {
-            return input.substring(14);
-        } else if (input.startsWith("will ")) {
-            return input.substring(5);
         }
         return input;
     }
