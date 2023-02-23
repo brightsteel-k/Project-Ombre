@@ -1,7 +1,7 @@
 package model.scenes;
 
 // Different ways a scene might end
-public enum EndSceneEventType {
+public enum SceneEventType {
     START_EXPLORING,
     NEXT_SCENE,
     DISPLAY_TEXT,

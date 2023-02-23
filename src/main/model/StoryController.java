@@ -8,9 +8,10 @@ import model.player.Location;
 import model.scenes.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-// Controls actual information and story of the adventure game
+// Controls information about the scenes, locations, and story of the adventure game
 public class StoryController {
 
     public static final Map<String, Scene> ALL_SCENES = new HashMap<>();
@@ -29,7 +30,7 @@ public class StoryController {
 
     // MODIFIES: this
     // EFFECTS: sets current scene to the one with the corresponding id,
-    //          OR throws exception if it does not exist.
+    //          OR throws exception if one does not exist.
     public void setCurrentScene(String id) {
         Scene nextScene = ALL_SCENES.get(id);
         if (nextScene == null) {
@@ -51,7 +52,7 @@ public class StoryController {
     }
 
     // MODIFIES: this
-    // EFFECTS: Defines all the scenes in the game, puts them into one giant map.
+    // EFFECTS: defines all the scenes in the game, puts them into one giant map.
     //          Eventually will read data from serialized json files instead.
     @SuppressWarnings("methodlength")
     private void initializeScenes() {
@@ -76,8 +77,8 @@ public class StoryController {
                                 "Now here you are, in the heart of a dangerous rogue mage’s most ambitious project, "
                                 + "with one goal in mind: destroy Dythanos and the Voidstone. "
                         },
-                        new EndSceneEvent[] {
-                                new EndSceneEvent(EndSceneEventType.NEXT_SCENE, "home")
+                        new SceneEvent[] {
+                                new SceneEvent(SceneEventType.NEXT_SCENE, "home")
                         }));
         ALL_SCENES.put("test",
                 new Scene(
@@ -88,17 +89,17 @@ public class StoryController {
                                 + "you're left blinking spots away at the front of a large heptagonal chamber. ",
                                 "Wow, coding is hard."
                         },
-                        new EndSceneEvent[] {
-                                new EndSceneEvent(EndSceneEventType.NEXT_SCENE, "home")
+                        new SceneEvent[] {
+                                new SceneEvent(SceneEventType.NEXT_SCENE, "home")
                         }));
         ALL_SCENES.put("home", new Scene(new String[] { "Looking around, the room seems very spooky." },
-                new EndSceneEvent[] {
-                        new EndSceneEvent(EndSceneEventType.DISPLAY_TEXT,"What would you like to do?"),
-                        new EndSceneEvent(EndSceneEventType.START_EXPLORING) }));
+                new SceneEvent[] {
+                        new SceneEvent(SceneEventType.DISPLAY_TEXT,"What would you like to do?"),
+                        new SceneEvent(SceneEventType.START_EXPLORING) }));
     }
 
     // MODIFIES: this
-    // EFFECTS: Defines all the locations in the game, puts them into one giant map.
+    // EFFECTS: defines all the locations in the game, puts them into one giant map.
     //          Eventually will read data from serialized json files instead.
     private void initializeLocations() {
         Location front = new Location("front", "the front of the room", ALL_LOCATIONS);
@@ -111,27 +112,30 @@ public class StoryController {
         desk.addObjectOfInterest("worktable", "drawers");
     }
 
-    // EFFECTS: returns the next line of the current scene, or throws an exception if the scene has ended.
+    // EFFECTS: returns the next line of the current scene, or throws an exception if the scene has ended
     public String getCurrentNextLine() throws SceneEndingException {
         return CURRENT_SCENE.getNextLine();
     }
 
-    public String changeLocation(String loc) throws InvalidActionException {
-        if (ALL_LOCATIONS.containsKey(loc)) {
-            String previousName = CURRENT_LOCATION.getName();
-            setCurrentLocation(loc);
-            return "You leave " + previousName + " and make your way to " + CURRENT_LOCATION.getName() + ".";
-        } else {
-            throw new InvalidActionException();
-        }
+    // REQUIRES: loc is a valid location in ALL_LOCATIONS
+    // MODIFIES: this
+    // EFFECTS: changes the current location to the one with the given id, returns the appropriate feedback message
+    public String changeLocation(String loc) {
+        String previousName = CURRENT_LOCATION.getName();
+        setCurrentLocation(loc);
+        return "You leave " + previousName + " and make your way to " + CURRENT_LOCATION.getName() + ".";
     }
 
-    // TODO: implement according to plan
-    public void executeAction(String[] actionWords) throws InvalidActionException {
-        String newScene = CURRENT_LOCATION.tryActionCode(constructActionCode(actionWords));
-        setCurrentScene(newScene);
+    // REQUIRES: actionWords.length == 1 or 2
+    // EFFECTS: if current location recognizes given actionWords as a valid input, returns the corresponding scene
+    //          events to trigger in response. Otherwise, throws exception.
+    public List<SceneEvent> executeAction(String[] actionWords) throws InvalidActionException {
+        return CURRENT_LOCATION.tryActionCode(constructActionCode(actionWords));
     }
 
+    // REQUIRES: actionWords.length == 1 or 2
+    // EFFECTS: returns action code from the given input keywords, in the format of action@object. If the keywords act
+    //          on an object that does not exist in the current location, throws specialized exception with message.
     private String constructActionCode(String[] actionWords) throws InvalidActionException {
         String actionCode;
         if (actionWords.length == 1) {

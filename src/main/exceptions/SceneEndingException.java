@@ -1,19 +1,31 @@
 package exceptions;
 
-import model.scenes.EndSceneEvent;
+import model.scenes.SceneEvent;
 
 import java.util.List;
 
-// Exception signalling that a scene has ended, and specifying what event should take place as a result
+// Exception signifying that a scene has ended, and specifying what events should take place as a result
 public class SceneEndingException extends Exception {
-    private final List<EndSceneEvent> events;
+    private final List<SceneEvent> events;
+    private boolean startExploring;
+    private String nextScene;
 
-    // EFFECTS: SceneEndingException has the given event.
-    public SceneEndingException(List<EndSceneEvent> events) {
+    // EFFECTS: SceneEndingException is attached to the given events and post-scene behaviour
+    public SceneEndingException(List<SceneEvent> events, boolean startExporing, String nextScene) {
         this.events = events;
+        this.startExploring = startExporing;
+        this.nextScene = nextScene;
     }
 
-    public List<EndSceneEvent> getEvents() {
+    public List<SceneEvent> getEvents() {
         return events;
+    }
+
+    public boolean shouldStartExploring() {
+        return startExploring;
+    }
+
+    public String getNextScene() {
+        return nextScene;
     }
 }

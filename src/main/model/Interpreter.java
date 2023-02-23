@@ -1,13 +1,13 @@
-package model.player;
+package model;
 
 import exceptions.InvalidActionException;
-import model.StoryController;
 
 import java.util.*;
 
+// Contains logic to process and partially parse player input into usable set of action words
 public class Interpreter {
 
-    private StoryController story;
+    private final StoryController story;
     private static final Map<String, String> ACTIONS = new HashMap<>();
 
     public Interpreter(StoryController story) {
@@ -42,42 +42,44 @@ public class Interpreter {
         return processAction(input.split(" "));
     }
 
-    // REQUIRES: non-empty array of keywords constructed from user input, split by spaces
-    // EFFECTS: configures set of input words to contain a valid action in position 0 and object in position 1,
-    //          or throws InvalidActionException if cannot
+    // REQUIRES: keywords is a non-empty array of words without spaces or "@"
+    // EFFECTS: configures set of input words to contain a valid action in position 0 and optionally an object
+    //          in position 1, or throws exception if unable.
     private String[] processAction(String[] keywords) throws InvalidActionException {
         List<String> actionWords = new ArrayList<>(Arrays.asList(keywords));
         String action = null;
         int keyNum = 0;
 
-        checkMinActionSize(actionWords, 1);
-        action = ACTIONS.get(keywords[0]);
-        if (action == null) {
-            checkMinActionSize(actionWords, 2);
-            action = ACTIONS.get(keywords[0] + " " + keywords[1]);
-            keyNum = 1;
-        }
-        if (action == null) {
-            checkMinActionSize(actionWords, 3);
-            action = ACTIONS.get(keywords[0] + " " + keywords[1] + " " + keywords[2]);
-            keyNum = 2;
-        }
-        if (action == null) {
-            throw new InvalidActionException();
+        while (action == null) {
+            keyNum++;
+            if (keyNum == 4) {
+                throw new InvalidActionException();
+            }
+            action = tryParseAction(actionWords, keyNum);
         }
 
-        for (int k = 0; k < keyNum; k++) {
-            actionWords.remove(k);
-        }
+        actionWords.subList(0, keyNum).clear();
         actionWords.add(0, action);
+
         return configureWordsList(actionWords);
     }
 
-    // EFFECTS: throws exception iff given list is smaller than given minimum size
-    private void checkMinActionSize(List<String> actionWords, int minSize) throws InvalidActionException {
-        if (actionWords.size() < minSize) {
+    // REQUIRES: relevantWords > 0
+    // EFFECTS: tries to put together a keyword from the given number of relevant words in the given list, throws an
+    //          exception if unable. Otherwise, translates keyword to an action code and returns result.
+    private String tryParseAction(List<String> actionWords, int relevantWords) throws InvalidActionException {
+        if (actionWords.size() < relevantWords) {
             throw new InvalidActionException();
         }
+
+        String possibleKeyword = "";
+        for (int n = 0; n < relevantWords; n++) {
+            possibleKeyword += actionWords.get(n);
+            if (n < relevantWords - 1) {
+                possibleKeyword += " ";
+            }
+        }
+        return ACTIONS.get(possibleKeyword);
     }
 
     // MODIFIES: this
@@ -106,8 +108,8 @@ public class Interpreter {
         return input;
     }
 
-    // EFFECTS: if given string begins with "i ", get rid of pronoun and return the rest;
-    //          else, return the given string
+    // EFFECTS: if given string begins with "i ", "i would like to ", or "i will ", get rid of that prefix
+    //          and return the rest; else, return the given string.
     private String removeLeadingPronoun(String input) {
         if (input.startsWith("i ")) {
             return input.substring(2);

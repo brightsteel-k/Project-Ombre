@@ -1,13 +1,13 @@
 package ui;
 
 import exceptions.InvalidActionException;
-import exceptions.InvalidSceneException;
 import exceptions.SceneEndingException;
 import model.StoryController;
-import model.player.Interpreter;
-import model.scenes.EndSceneEvent;
+import model.Interpreter;
+import model.scenes.SceneEvent;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 // Controls text and interface with which the user interacts
@@ -18,11 +18,14 @@ public class Printer {
     private static final Scanner SCANNER = new Scanner(System.in);
     private boolean isPrinting = false;
     private boolean isExploring = false;
+    private final Random random;
 
     public Printer() {
         story = new StoryController();
         story.setCurrentScene("test");
+        story.setCurrentLocation("front");
         interpreter = new Interpreter(story);
+        random = new Random();
         game();
     }
 
@@ -36,7 +39,7 @@ public class Printer {
         }
     }
 
-    // EFFECTS: prints the successive lines in an exposition scene, one by one, separated by a call to continueText().
+    // EFFECTS: prints the successive lines in an exposition scene, one by one, separated by a call to continueText()
     public void printScene() {
         isPrinting = true;
         while (isPrinting) {
@@ -45,37 +48,37 @@ public class Printer {
                 continueText();
             } catch (SceneEndingException e) {
                 isPrinting = false;
-                handleEndSceneEvents(e.getEvents());
+                handleSceneEvents(e.getEvents());
+                finishScene(e.shouldStartExploring(), e.getNextScene());
             }
         }
     }
 
-    // EFFECTS: triggers all corresponding end scene events.
-    private void handleEndSceneEvents(List<EndSceneEvent> endEvents) {
-        boolean containsExplore = false;
-        String nextSceneId = null;
-        for (EndSceneEvent event : endEvents) {
-            switch (event.getType()) {
-                case START_EXPLORING:
-                    containsExplore = true;
-                    break;
-                case DISPLAY_TEXT:
-                    System.out.println(event.getKeyword());
-                    break;
-                case NEXT_SCENE:
-                    nextSceneId = event.getKeyword();
-                    break;
-                case LEARN_SPELL:
-                    break;
-                case ACQUIRE_ITEM:
-                    break;
-            }
+    // EFFECTS: triggers all given scene events
+    private void handleSceneEvents(List<SceneEvent> sceneEvents) {
+        for (SceneEvent event : sceneEvents) {
+            handleSceneEvent(event);
         }
-
-        finishScene(containsExplore, nextSceneId);
     }
 
-    // EFFECTS: determines what will happen after this scene.
+    // EFFECTS: executes given scene event, with varying effects depending on its type and supplied keyword
+    private void handleSceneEvent(SceneEvent event) {
+        switch (event.getType()) {
+            case DISPLAY_TEXT:
+                System.out.println(event.getKeyword());
+                break;
+            case CHANGE_LOCATION:
+                changeLocation(event.getKeyword());
+                break;
+            case LEARN_SPELL:
+                break;
+            case ACQUIRE_ITEM:
+                break;
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: determines what will happen after a scene, based on the parameters taken from its ending exception
     private void finishScene(boolean explore, String nextSceneId) {
         if (explore) {
             isExploring = true;
@@ -85,13 +88,14 @@ public class Printer {
         }
     }
 
-    // EFFECTS: pauses program until player inputs something.
+    // EFFECTS: pauses program until player inputs something
     public void continueText() {
         System.out.print("[Enter to continue]");
         SCANNER.nextLine();
     }
 
-    // EFFECTS:
+    // EFFECTS: keeps querying player for input actions and executing corresponding effects, as long as isExploring
+    //          is true.
     private void handleExploring() {
         while (isExploring) {
             try {
@@ -103,30 +107,28 @@ public class Printer {
     }
 
     // MODIFIES: story
-    // EFFECTS: receives user input from Interpreter and carries the action out with the StoryController, if valid.
+    // EFFECTS: receives user input from Interpreter and carries the action out with the StoryController, if valid
     private void executeUserInput() throws InvalidActionException {
         String[] actionWords = interpreter.userInput(SCANNER.nextLine());
 
         System.out.println("ActionCode: " + actionWords[0]); // TODO: REMOVE DEBUGGING PRINT
-
-        if (actionWords[0].equals("goto")) {
-            changeLocation(actionWords[1]);
-        } else {
-            story.executeAction(actionWords);
-        }
-
+        handleSceneEvents(story.executeAction(actionWords));
     }
 
     // MODIFIES: story
-    // EFFECTS: updates player's location, prints corresponding message.
-    private void changeLocation(String newLocation) throws InvalidActionException {
+    // EFFECTS: updates player's location, prints corresponding message
+    private void changeLocation(String newLocation) {
         System.out.println(story.changeLocation(newLocation));
     }
 
-    // EFFECTS: prints message telling the player their previous action was invalid.
+    // EFFECTS: prints message telling the player their previous action was invalid
     private void printInvalidAction(InvalidActionException e) {
         if (e.invalidObject()) {
-            System.out.println("You cannot reach a " + e.getInvalidObject() + " from where you are.");
+            if (random.nextBoolean()) {
+                System.out.println("You cannot reach a " + e.getInvalidObject() + " from where you are.");
+            } else {
+                System.out.println("There is no " + e.getInvalidObject() + " where you are.");
+            }
         } else {
             System.out.println("You cannot do that.");
         }
