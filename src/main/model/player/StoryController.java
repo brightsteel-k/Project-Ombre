@@ -7,6 +7,7 @@ import exceptions.SceneEndingException;
 import model.Location;
 import model.Spell;
 import model.scenes.*;
+import util.Deserializer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,8 @@ public class StoryController {
 
     public StoryController(Player player) {
         this.player = player;
+        Deserializer.loadSpells(ALL_SPELLS);
+        System.out.println(ALL_SPELLS.get("gelez").getDamage());
         initializeScenes();
         initializeLocations();
     }
