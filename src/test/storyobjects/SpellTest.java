@@ -29,5 +29,4 @@ public class SpellTest {
         assertEquals("souvenez-vous", testSpell.getIncantation());
         assertEquals(0.5f, testSpell.getDamage());
     }
-
 }
