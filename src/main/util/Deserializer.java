@@ -36,6 +36,11 @@ public class Deserializer {
         GSON = new GsonBuilder().setExclusionStrategies(GSON_STRATEGY).create();
     }
 
+    // EFFECTS: returns true iff this object's Gson json reader has been initialized
+    public static boolean hasGson() {
+        return GSON != null;
+    }
+
     // REQUIRES: pathName leads to a folder in the project data folder exclusively containing .json files that have
     //           been formatted to encode objects of the type classType.
     // MODIFIES: finalMap
@@ -58,6 +63,12 @@ public class Deserializer {
     public static void loadSynonymsToMap(String pathName, Map<String, String> finalMap) {
         Map<String, String> readData = GSON.fromJson(readFile(pathName), HashMap.class);
         finalMap.putAll(readData);
+    }
+
+    // REQUIRES: pathName leads to a .json file that has been formatted to encode an object of the type classType
+    // EFFECTS: reads and deserializes given data file, returns resulting object
+    public static <T> T loadObject(Class<T> classType, String pathName) {
+        return GSON.fromJson(readFile(pathName), classType);
     }
 
     // REQUIRES: path leads to an existing file

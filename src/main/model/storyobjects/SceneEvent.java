@@ -52,4 +52,16 @@ public class SceneEvent {
     public SceneEventCondition[] getConditions() {
         return conditions;
     }
+
+    // EFFECTS: returns true iff this and the given object are identical SceneEvents
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != SceneEvent.class) {
+            return false;
+        }
+        SceneEvent other = (SceneEvent)obj;
+        boolean keywordsMatch = (keyword == null && other.keyword == null) || keyword.equals(other.keyword);
+        boolean conditionsMatch = (conditions == null && other.conditions == null) || conditions.equals(other.conditions);
+        return type.equals(other.type) && keywordsMatch && conditionsMatch;
+    }
 }

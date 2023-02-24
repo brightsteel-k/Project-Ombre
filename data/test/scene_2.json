@@ -1,0 +1,12 @@
+{
+  "texts": [ ],
+  "endSceneEvents": [
+    {
+      "type": "learn_spell",
+      "keyword": "brulez"
+    },
+    {
+      "type": "start_exploring"
+    }
+  ]
+}

@@ -19,4 +19,14 @@ public class SceneEventCondition {
     public String getExpected() {
         return expected;
     }
+
+    // EFFECTS: returns true iff this and the given object are identical SceneEventConditions
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != SceneEventCondition.class) {
+            return false;
+        }
+        SceneEventCondition other = (SceneEventCondition)obj;
+        return key.equals(other.key) && expected.equals(other.expected);
+    }
 }

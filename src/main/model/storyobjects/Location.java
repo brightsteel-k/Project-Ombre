@@ -31,4 +31,15 @@ public class Location {
         }
         return events;
     }
+
+    // EFFECTS: returns true iff this and the given object are identical Locations
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != Location.class) {
+            return false;
+        }
+        Location other = (Location)obj;
+        return name.equals(other.name) && objectsOfInterest.equals(other.objectsOfInterest)
+                && actionEvents.equals(other.actionEvents);
+    }
 }

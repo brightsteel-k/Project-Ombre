@@ -1,0 +1,19 @@
+{
+  "texts": [
+    "A flicker of arcane light.",
+    "Punctured by the black edge of a falchion.",
+    "\"Do not think that you are stronger than me just because you sparked one more band.\"",
+    "Eryx flexed his hands and a tattooed metallic ring around each of his biceps suddenly flared to life, one a stunning auburn and one fiery ember.",
+    "Jace grimaced, blood pouring from the cut across his right palm as he tried to muster the concentration to harness his own magic again. ",
+    "\"General Eryx, think carefully on your next moves,\" he managed to spit. \"Killing a sergeant of the Black Tranchant is punishable by death.\"",
+    "\"Perhaps for you,\" Eryx spoke quietly as arcane bands of light swirled from his forearms, forming three concentric shimmering rings of molten gold in a line in front of him.",
+    "Jace stumbled backwards, eyes wide as he realized his last bluff had failed. \"E-Eryx wait. Wait, friend. I can help you. I can be of use to you. I still have the money from--\"",
+    "He was cut short by a brilliant flash of white, followed by a roaring thunderclap that shook the pillars of the palace around them. Through the three rings of sand magic in front of Eryx, a beam of white split the air and struck Jace right in the chest, erupting into a fulmination so intense it set the very air on fire."
+  ],
+  "endSceneEvents": [
+    {
+      "type": "next_scene",
+      "keyword": "destruction"
+    }
+  ]
+}
