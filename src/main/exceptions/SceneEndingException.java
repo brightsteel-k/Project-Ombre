@@ -1,6 +1,6 @@
 package exceptions;
 
-import model.scenes.SceneEvent;
+import model.storyobjects.SceneEvent;
 
 import java.util.List;
 

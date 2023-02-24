@@ -2,13 +2,12 @@ package ui;
 
 import exceptions.InvalidActionException;
 import exceptions.SceneEndingException;
-import model.player.Player;
-import model.player.StoryController;
+import model.Player;
+import model.StoryController;
 import model.Interpreter;
-import model.scenes.SceneEvent;
+import model.storyobjects.SceneEvent;
 import util.Deserializer;
 
-import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -20,7 +19,6 @@ public class Printer {
     private final StoryController story;
     private final Interpreter interpreter;
     private static final Scanner SCANNER = new Scanner(System.in);
-    private boolean isPrinting = false;
     private boolean isExploring = false;
     private final Random random;
 
@@ -52,7 +50,7 @@ public class Printer {
     // MODIFIES: this, this object's story instance, this object's player instance
     // EFFECTS: prints the successive lines in an exposition scene, one by one, separated by a call to continueText()
     public void printScene() {
-        isPrinting = true;
+        boolean isPrinting = true;
         while (isPrinting) {
             try {
                 System.out.println(story.getCurrentNextLine());
@@ -76,7 +74,7 @@ public class Printer {
     // MODIFIES: this object's story instance, this object's player instance
     // EFFECTS: executes given scene event, with varying effects depending on its type and supplied keyword
     private void handleSceneEvent(SceneEvent event) {
-        if (event.hasCondition() && !story.conditionFulfilled(event.getCondition())) {
+        if (event.hasConditions() && !story.conditionsFulfilled(event.getConditions())) {
             return;
         }
         switch (event.getType()) {

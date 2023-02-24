@@ -1,7 +1,6 @@
 package model;
 
 import exceptions.InvalidActionException;
-import model.player.StoryController;
 import util.Deserializer;
 
 import java.util.*;
@@ -13,7 +12,7 @@ public class Interpreter {
     private static final List<String> DETERMINERS = new ArrayList<>();
     private static final List<String> VAGUE_PRONOUNS = new ArrayList<>();
 
-    // MODIFIES: this, Interpreter.ACTION_SYNONYMS, Interpreter.DETERMINERS, Interpreter.VAGUE_PRONOUNS
+    // MODIFIES: this, Interpreter
     // EFFECTS: maps action keywords to valid synonyms, loads blacklist of unwanted input words to facilitate
     //          the parsing process.
     public Interpreter() {
@@ -23,7 +22,7 @@ public class Interpreter {
         }
     }
 
-    // MODIFIES: Interpreter.DETERMINERS, Interpreter.VAGUE_PRONOUNS
+    // MODIFIES: Interpreter
     // EFFECTS: populates master maps of determiners and vague pronouns that should be deleted from user input
     private void initializeBlacklistWords() {
         DETERMINERS.add("a");

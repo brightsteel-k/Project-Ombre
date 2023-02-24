@@ -1,4 +1,4 @@
-package model.scenes;
+package model.storyobjects;
 
 // A condition that needs to be tested in order for a scene event to run.
 public class SceneEventCondition {

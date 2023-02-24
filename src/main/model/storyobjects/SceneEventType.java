@@ -1,4 +1,4 @@
-package model.scenes;
+package model.storyobjects;
 
 import com.google.gson.annotations.SerializedName;
 

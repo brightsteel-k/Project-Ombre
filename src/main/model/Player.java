@@ -1,6 +1,7 @@
-package model.player;
+package model;
 
-import model.Spell;
+import model.StoryController;
+import model.storyobjects.Spell;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,10 +24,9 @@ public class Player {
 
     // REQUIRES: name.length() > 0
     // MODIFIES: this
-    // EFFECTS: adds the item name to the player's list of acquired items, returns true iff the item wasn't already
-    //          there.
-    public boolean addItem(String name) {
-        return items.add(name);
+    // EFFECTS: adds the item name to the player's list of acquired items
+    public void addItem(String name) {
+        items.add(name);
     }
 
     // REQUIRES: name.length() > 0
@@ -62,7 +62,7 @@ public class Player {
     }
 
     // REQUIRES: key.length() > 0, value.length() > 0
-    // MODIFIES: returns true iff the player's map of conditions contains one with the given key and it has the given
+    // MODIFIES: returns true iff the player's map of conditions contains one with the given key, and it has the given
     //           expected value.
     public boolean conditionMet(String key, String expected) {
         String value = progressConditions.get(key);

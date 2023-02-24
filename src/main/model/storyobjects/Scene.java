@@ -1,10 +1,8 @@
-package model.scenes;
+package model.storyobjects;
 
 import exceptions.SceneEndingException;
 import util.Exclude;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 // A distinct section of the story text with which the user will interact

@@ -1,7 +1,7 @@
-package model;
+package model.storyobjects;
 
 import exceptions.InvalidActionException;
-import model.scenes.SceneEvent;
+import model.storyobjects.SceneEvent;
 
 import java.util.*;
 
