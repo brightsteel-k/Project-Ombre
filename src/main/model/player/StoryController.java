@@ -25,10 +25,7 @@ public class StoryController {
 
     public StoryController(Player player) {
         this.player = player;
-        Deserializer.loadSpells(ALL_SPELLS);
-        System.out.println(ALL_SPELLS.get("gelez").getDamage());
-        initializeScenes();
-        initializeLocations();
+        initializeObjects();
     }
 
     public Scene getCurrentScene() {
@@ -58,65 +55,10 @@ public class StoryController {
         return ALL_LOCATIONS.get(id);
     }
 
-    // MODIFIES: this
-    // EFFECTS: defines all the scenes in the game, puts them into one giant map.
-    //          Eventually will read data from serialized json files instead.
-    @SuppressWarnings("methodlength")
-    private void initializeScenes() {
-        ALL_SCENES.put("intro",
-                new Scene(
-                        new String[]{"A flash of brilliant violet light blinds your vision, making your head "
-                                + "swirl in a vortex of freezing amethyst. Your mind feels numb. You steel yourself \n"
-                                + "and step into the cool stonebrick chamber, shielding your eyes from the shining "
-                                + "purple crystal in front of you. A moment later, the blazing light fades and \n"
-                                + "you're left blinking spots away at the front of a large heptagonal chamber. ",
-                                "What were you doing, again?",
-                                "The giant crystal in front of you sputters, a shifting maelstrom of violet energy and "
-                                + "abyssal darkness mounted on a dark gray metal frame.",
-                                "Right. The Voidstone.",
-                                "An unnatural artifact constructed with forbidden shadow magic in an attempt to "
-                                + "manipulate the very fabric of time. Built by an overzealous mage noir with \n"
-                                + "demented aspirations of becoming the greatest magic user to ever live: Kallim "
-                                + "Dythanos. ",
-                                "You represent the efforts of the entire council of lord sorciers within the Azyrean "
-                                + "Kingdom, who had gone to great lengths to locate and discreetly transport you to \n"
-                                + "Dythanos’s lair just as the Voidstone began to act up.",
-                                "Now here you are, in the heart of a dangerous rogue mage’s most ambitious project, "
-                                + "with one goal in mind: destroy Dythanos and the Voidstone. "
-                        },
-                        new SceneEvent[] {
-                                new SceneEvent(SceneEventType.NEXT_SCENE, "home")
-                        }));
-        ALL_SCENES.put("test",
-                new Scene(
-                        new String[]{"A flash of brilliant violet light blinds your vision, making your head "
-                                + "swirl in a vortex of freezing amethyst. Your mind feels numb. You steel yourself \n"
-                                + "and step into the cool stonebrick chamber, shielding your eyes from the shining "
-                                + "purple crystal in front of you. A moment later, the blazing light fades and \n"
-                                + "you're left blinking spots away at the front of a large heptagonal chamber. ",
-                                "Wow, coding is hard."
-                        },
-                        new SceneEvent[] {
-                                new SceneEvent(SceneEventType.NEXT_SCENE, "home")
-                        }));
-        ALL_SCENES.put("home", new Scene(new String[] { "Looking around, the room seems very spooky." },
-                new SceneEvent[] {
-                        new SceneEvent(SceneEventType.DISPLAY_TEXT,"What would you like to do?"),
-                        new SceneEvent(SceneEventType.START_EXPLORING) }));
-    }
-
-    // MODIFIES: this
-    // EFFECTS: defines all the locations in the game, puts them into one giant map.
-    //          Eventually will read data from serialized json files instead.
-    private void initializeLocations() {
-        Location front = new Location("front", "the front of the room", ALL_LOCATIONS);
-        front.addObjectOfInterest("desk", "desk");
-        front.addObjectOfInterest("table", "desk");
-        front.addObjectOfInterest("worktable", "desk");
-        Location desk = new Location("desk", "the worktable", ALL_LOCATIONS);
-        desk.addObjectOfInterest("drawers", "drawers");
-        desk.addObjectOfInterest("desk", "drawers");
-        desk.addObjectOfInterest("worktable", "drawers");
+    private void initializeObjects() {
+        Deserializer.loadObjectsToMap(Spell.class, "data/spells", ALL_SPELLS);
+        Deserializer.loadObjectsToMap(Scene.class, "data/scenes", ALL_SCENES);
+        Deserializer.loadObjectsToMap(Location.class, "data/locations", ALL_LOCATIONS);
     }
 
     // EFFECTS: returns the next line of the current scene, or throws an exception if the scene has ended
@@ -150,7 +92,7 @@ public class StoryController {
         } else {
             String obj = CURRENT_LOCATION.getObjectOfInterest(actionWords[1]);
             if (obj == null) {
-                throw new InvalidActionException(actionWords[1]);
+                throw new InvalidActionException(1, actionWords[1]);
             }
             actionCode = actionWords[0] + "@" + obj;
         }

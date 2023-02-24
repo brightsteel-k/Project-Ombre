@@ -1,0 +1,14 @@
+{
+  "texts": [
+    "What a fascinating predicament."
+  ],
+  "endSceneEvents": [
+    {
+      "type": "display_text",
+      "keyword": "What would you like to do?"
+    },
+    {
+      "type": "start_exploring"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 package model.scenes;
 
 import exceptions.SceneEndingException;
+import util.Exclude;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +12,7 @@ public class Scene {
 
     private String[] texts;
     private List<SceneEvent> endSceneEvents;
+    @Exclude
     private int index;
 
     // EFFECTS: Scene has the given texts as its script, and its index set to 0

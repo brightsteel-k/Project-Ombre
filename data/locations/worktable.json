@@ -1,0 +1,19 @@
+{
+  "name": "the worktable",
+  "objectsOfInterest": {
+    "front": "front",
+    "door": "front",
+    "worktable": "worktable",
+    "desk": "worktable",
+    "table": "worktable",
+    "drawers": "worktable"
+  },
+  "actionEvents": {
+    "goto@front": [
+      {
+        "type": "change_location",
+        "keyword": "front"
+      }
+    ]
+  }
+}

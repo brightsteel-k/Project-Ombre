@@ -6,7 +6,9 @@ import model.player.Player;
 import model.player.StoryController;
 import model.Interpreter;
 import model.scenes.SceneEvent;
+import util.Deserializer;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -23,10 +25,11 @@ public class Printer {
     private final Random random;
 
     public Printer() {
+        Deserializer.initializeGson();
+        random = new Random();
         player = new Player();
         story = new StoryController(player);
         interpreter = new Interpreter(story);
-        random = new Random();
         story.setCurrentScene("test");
         story.setCurrentLocation("front");
         game();
@@ -66,7 +69,7 @@ public class Printer {
 
     // EFFECTS: executes given scene event, with varying effects depending on its type and supplied keyword
     private void handleSceneEvent(SceneEvent event) {
-        if (!event.hasCondition() || !story.conditionFulfilled(event.getCondition())) {
+        if (event.hasCondition() && !story.conditionFulfilled(event.getCondition())) {
             return;
         }
 
@@ -135,14 +138,20 @@ public class Printer {
 
     // EFFECTS: prints message telling the player their previous action was invalid
     private void printInvalidAction(InvalidActionException e) {
-        if (e.invalidObject()) {
-            if (random.nextBoolean()) {
-                System.out.println("You cannot reach a " + e.getInvalidObject() + " from where you are.");
-            } else {
-                System.out.println("There is no " + e.getInvalidObject() + " where you are.");
-            }
-        } else {
-            System.out.println("You cannot do that.");
+        switch (e.getType()) {
+            case 1:
+                if (random.nextBoolean()) {
+                    System.out.println("You cannot reach any " + e.getInvalidObject() + " from where you are.");
+                } else {
+                    System.out.println("There is no " + e.getInvalidObject() + " where you are.");
+                }
+                break;
+            case 2:
+                System.out.println("Please be more specific.");
+                break;
+            default:
+                System.out.println("You cannot do that.");
+                break;
         }
     }
 }

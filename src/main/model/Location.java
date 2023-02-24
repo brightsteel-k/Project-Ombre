@@ -9,13 +9,11 @@ import java.util.*;
 // and interact with.
 public class Location {
 
+    private String name;
     private Map<String, String> objectsOfInterest = new HashMap<>();
     private Map<String, List<SceneEvent>> actionEvents = new HashMap<>();
-    private String id;
-    private String name;
 
     public Location(String id, String name, Map<String, Location> allLocations) {
-        this.id = id;
         this.name = name;
         allLocations.put(id, this);
     }
@@ -47,7 +45,7 @@ public class Location {
     public List<SceneEvent> tryActionCode(String actionCode) throws InvalidActionException {
         List<SceneEvent> events = actionEvents.get(actionCode);
         if (events == null) {
-            throw new InvalidActionException();
+            throw new InvalidActionException(0);
         }
         return events;
     }

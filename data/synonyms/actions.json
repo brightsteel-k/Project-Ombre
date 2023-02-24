@@ -1,0 +1,14 @@
+{
+  "view": "view",
+  "check": "view",
+  "observe": "view",
+  "analyze": "view",
+  "analyse": "view",
+  "look at": "view",
+  "stare at": "view",
+  "search": "search",
+  "investigate": "search",
+  "go to": "goto",
+  "move to": "goto",
+  "walk to": "goto"
+}

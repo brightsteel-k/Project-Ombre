@@ -1,0 +1,11 @@
+{
+  "texts": [
+    "A flash of brilliant violet light blinds your vision, making your head swirl in a vortex of freezing amethyst. Your mind feels numb. You steel yourself \nand step into the cool stonebrick chamber, shielding your eyes from the shining purple crystal in front of you. A moment later, the blazing light fades \nand you're left blinking spots away at the front of a large heptagonal chamber. "
+  ],
+  "endSceneEvents": [
+    {
+      "type": "next_scene",
+      "keyword": "home"
+    }
+  ]
+}

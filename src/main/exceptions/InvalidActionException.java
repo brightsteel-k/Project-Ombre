@@ -4,19 +4,22 @@ package exceptions;
 public class InvalidActionException extends Exception {
 
     private String invalidObject;
+    private int type;
 
-    public InvalidActionException() {
-        this(null);
+    public InvalidActionException(int type) {
+        this(type, null);
     }
 
-    public InvalidActionException(String obj) {
+    // InvalidActionException has given message and type; 1 is an invalid object, 2 is an ambiguous pronoun
+    public InvalidActionException(int type, String invalidObject) {
         super();
-        invalidObject = obj;
+        this.type = type;
+        this.invalidObject = invalidObject;
     }
 
-    // EFFECTS: returns true iff this was triggered by an invalid object
-    public boolean invalidObject() {
-        return invalidObject != null;
+    // EFFECTS: returns the type; 0 is invalid action, 1 is invalid object, 2 is ambiguous pronoun
+    public int getType() {
+        return type;
     }
 
     public String getInvalidObject() {

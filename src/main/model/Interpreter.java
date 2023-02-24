@@ -2,6 +2,7 @@ package model;
 
 import exceptions.InvalidActionException;
 import model.player.StoryController;
+import util.Deserializer;
 
 import java.util.*;
 
@@ -10,10 +11,31 @@ public class Interpreter {
 
     private final StoryController story;
     private static final Map<String, String> ACTION_SYNONYMS = new HashMap<>();
+    private static final List<String> DETERMINERS = new ArrayList<>();
+    private static final List<String> VAGUE_PRONOUNS = new ArrayList<>();
 
     public Interpreter(StoryController story) {
         this.story = story;
-        initializeActions();
+        Deserializer.loadSynonymsToMap("data/synonyms/actions.json", ACTION_SYNONYMS);
+        if (DETERMINERS.size() == 0) {
+            initializeBlacklistWords();
+        }
+    }
+
+    private void initializeBlacklistWords() {
+        DETERMINERS.add("a");
+        DETERMINERS.add("the");
+        DETERMINERS.add("some");
+        DETERMINERS.add("every");
+        DETERMINERS.add("all");
+        DETERMINERS.add("of");
+        DETERMINERS.add("this");
+        DETERMINERS.add("that");
+        DETERMINERS.add("those");
+        VAGUE_PRONOUNS.add("them");
+        VAGUE_PRONOUNS.add("it");
+        VAGUE_PRONOUNS.add("him");
+        VAGUE_PRONOUNS.add("her");
     }
 
     // MODIFIES: this
@@ -38,7 +60,7 @@ public class Interpreter {
     public String[] userInput(String input) throws InvalidActionException {
         input = removeLeadingPronoun(removeLeadingSpaces(removeTrailingSpaces(input.toLowerCase())));
         if (input.contains("@")) {
-            throw new InvalidActionException();
+            throw new InvalidActionException(0);
         }
         return processAction(input.split(" "));
     }
@@ -54,7 +76,7 @@ public class Interpreter {
         while (action == null) {
             keyNum++;
             if (keyNum == 4) {
-                throw new InvalidActionException();
+                throw new InvalidActionException(0);
             }
             action = tryParseAction(actionWords, keyNum);
         }
@@ -70,7 +92,7 @@ public class Interpreter {
     //          exception if unable. Otherwise, translates keyword to an action code and returns result.
     private String tryParseAction(List<String> actionWords, int relevantWords) throws InvalidActionException {
         if (actionWords.size() < relevantWords) {
-            throw new InvalidActionException();
+            throw new InvalidActionException(0);
         }
 
         String possibleKeyword = "";
@@ -84,12 +106,27 @@ public class Interpreter {
     }
 
     // MODIFIES: this
-    // EFFECTS: removes determiners from 2nd position, return list as an array
-    private String[] configureWordsList(List<String> actionWords) {
-        if (actionWords.size() > 1 && (actionWords.get(1).equals("a") || actionWords.get(1).equals("the"))) {
-            actionWords.remove(1);
+    // EFFECTS: removes determiners from 2nd position, throws exception if input contains "and" or operates on
+    //          ambiguous pronouns, otherwise returns given list as an array of length 2
+    private String[] configureWordsList(List<String> actionWords) throws InvalidActionException {
+        if (actionWords.contains("and")) {
+            throw new InvalidActionException(0);
         }
 
+        if (actionWords.size() > 1) {
+            String det = actionWords.get(1);
+            while (DETERMINERS.contains(det)) {
+                actionWords.remove(1);
+                if (actionWords.size() == 1) {
+                    throw new InvalidActionException(2, null);
+                } else {
+                    det = actionWords.get(1);
+                }
+            }
+            if (VAGUE_PRONOUNS.contains(actionWords.get(1))) {
+                throw new InvalidActionException(2, null);
+            }
+        }
         return actionWords.subList(0, Math.min(actionWords.size(), 2)).toArray(new String[]{});
     }
 
