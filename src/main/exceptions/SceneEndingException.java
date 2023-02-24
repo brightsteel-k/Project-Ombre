@@ -11,9 +11,9 @@ public class SceneEndingException extends Exception {
     private String nextScene;
 
     // EFFECTS: SceneEndingException is attached to the given events and post-scene behaviour
-    public SceneEndingException(List<SceneEvent> events, boolean startExporing, String nextScene) {
+    public SceneEndingException(List<SceneEvent> events, boolean startExploring, String nextScene) {
         this.events = events;
-        this.startExploring = startExporing;
+        this.startExploring = startExploring;
         this.nextScene = nextScene;
     }
 

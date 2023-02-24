@@ -7,25 +7,6 @@ public class SceneEvent {
     private String keyword;
     private SceneEventCondition condition;
 
-
-    public SceneEvent(SceneEventType type) {
-        this(type, null, null);
-    }
-
-    public SceneEvent(SceneEventType type, String keyword) {
-        this(type, keyword, null);
-    }
-
-    public SceneEvent(SceneEventType type, SceneEventCondition condition) {
-        this(type, null, condition);
-    }
-
-    public SceneEvent(SceneEventType type, String keyword, SceneEventCondition condition) {
-        this.type = type;
-        this.keyword = keyword;
-        this.condition = condition;
-    }
-
     // EFFECTS: returns true iff this SceneEvent is of the given SceneEventType
     public boolean isType(SceneEventType typeIn) {
         return type == typeIn;
@@ -39,6 +20,7 @@ public class SceneEvent {
         return keyword;
     }
 
+    // EFFECTS: returns true iff this SceneEvent has a non-null condition
     public boolean hasCondition() {
         return condition != null;
     }

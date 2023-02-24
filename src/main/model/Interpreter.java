@@ -9,19 +9,22 @@ import java.util.*;
 // Contains logic to process and partially parse player input into usable set of action words
 public class Interpreter {
 
-    private final StoryController story;
     private static final Map<String, String> ACTION_SYNONYMS = new HashMap<>();
     private static final List<String> DETERMINERS = new ArrayList<>();
     private static final List<String> VAGUE_PRONOUNS = new ArrayList<>();
 
-    public Interpreter(StoryController story) {
-        this.story = story;
+    // MODIFIES: this, Interpreter.ACTION_SYNONYMS, Interpreter.DETERMINERS, Interpreter.VAGUE_PRONOUNS
+    // EFFECTS: maps action keywords to valid synonyms, loads blacklist of unwanted input words to facilitate
+    //          the parsing process.
+    public Interpreter() {
         Deserializer.loadSynonymsToMap("data/synonyms/actions.json", ACTION_SYNONYMS);
         if (DETERMINERS.size() == 0) {
             initializeBlacklistWords();
         }
     }
 
+    // MODIFIES: Interpreter.DETERMINERS, Interpreter.VAGUE_PRONOUNS
+    // EFFECTS: populates master maps of determiners and vague pronouns that should be deleted from user input
     private void initializeBlacklistWords() {
         DETERMINERS.add("a");
         DETERMINERS.add("the");
@@ -36,24 +39,6 @@ public class Interpreter {
         VAGUE_PRONOUNS.add("it");
         VAGUE_PRONOUNS.add("him");
         VAGUE_PRONOUNS.add("her");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: Relates synonyms to their corresponding actions in the game in one giant map.
-    //          Eventually will read data from serialized json files instead.
-    public void initializeActions() {
-        ACTION_SYNONYMS.put("view", "view");
-        ACTION_SYNONYMS.put("check", "view");
-        ACTION_SYNONYMS.put("observe", "view");
-        ACTION_SYNONYMS.put("analyze", "view");
-        ACTION_SYNONYMS.put("analyse", "view");
-        ACTION_SYNONYMS.put("look at", "view");
-        ACTION_SYNONYMS.put("stare at", "view");
-        ACTION_SYNONYMS.put("search", "search");
-        ACTION_SYNONYMS.put("investigate", "search");
-        ACTION_SYNONYMS.put("go to", "goto");
-        ACTION_SYNONYMS.put("move to", "goto");
-        ACTION_SYNONYMS.put("walk to", "goto");
     }
 
     // EFFECTS: gets and returns the processed input that the user types
@@ -105,7 +90,7 @@ public class Interpreter {
         return ACTION_SYNONYMS.get(possibleKeyword);
     }
 
-    // MODIFIES: this
+    // MODIFIES: actionWords
     // EFFECTS: removes determiners from 2nd position, throws exception if input contains "and" or operates on
     //          ambiguous pronouns, otherwise returns given list as an array of length 2
     private String[] configureWordsList(List<String> actionWords) throws InvalidActionException {
@@ -118,13 +103,13 @@ public class Interpreter {
             while (DETERMINERS.contains(det)) {
                 actionWords.remove(1);
                 if (actionWords.size() == 1) {
-                    throw new InvalidActionException(2, null);
+                    throw new InvalidActionException(2);
                 } else {
                     det = actionWords.get(1);
                 }
             }
             if (VAGUE_PRONOUNS.contains(actionWords.get(1))) {
-                throw new InvalidActionException(2, null);
+                throw new InvalidActionException(2);
             }
         }
         return actionWords.subList(0, Math.min(actionWords.size(), 2)).toArray(new String[]{});
@@ -149,14 +134,11 @@ public class Interpreter {
     // EFFECTS: if given string begins with "i ", "i would like to ", or "i will ", get rid of that prefix
     //          and return the rest; else, return the given string.
     private String removeLeadingPronoun(String input) {
-        if (input.startsWith("i would like to ")) {
-            return input.substring(16);
-        }
-        if (input.startsWith("i will ")) {
-            return input.substring(7);
-        }
-        if (input.startsWith("i ")) {
-            return input.substring(2);
+        String[] prefixes = new String[] { "i would like to ", "i will ", "i " };
+        for (String prefix : prefixes) {
+            if (input.startsWith(prefix)) {
+                return input.substring(prefix.length());
+            }
         }
         return input;
     }

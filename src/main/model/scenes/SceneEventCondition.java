@@ -6,7 +6,7 @@ public class SceneEventCondition {
     private String expected;
 
     // SceneEventCondition expects the value of the condition with given key name to match the given value.
-    // Keys can also be codes "@hasItem", "@hasSpell", "@missingItem", or "@missingSpell", to depend on Player stats.
+    // Keys can also be codes "@hasItem", "@hasSpell", "@missingItem", or "@missingSpell", to depend on player's stats.
     public SceneEventCondition(String key, String expected) {
         this.key = key;
         this.expected = expected;

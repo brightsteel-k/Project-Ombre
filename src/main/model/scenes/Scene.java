@@ -15,20 +15,11 @@ public class Scene {
     @Exclude
     private int index;
 
-    // EFFECTS: Scene has the given texts as its script, and its index set to 0
-    public Scene(String[] texts) {
-        this.texts = texts;
+    // MODIFIES: this
+    // EFFECTS: prepares scene to play from the beginning
+    public void startScene() {
         index = 0;
     }
-
-    // EFFECTS: Scene has the given texts as its script, the given events as its actions to execute upon completion,
-    //          and its index set to 0.
-    public Scene(String[] texts, SceneEvent[] endSceneEvents) {
-        this(texts);
-        this.endSceneEvents = new ArrayList<>();
-        this.endSceneEvents.addAll(Arrays.asList(endSceneEvents));
-    }
-
 
     // REQUIRES: index <= texts.length
     // MODIFIES: this

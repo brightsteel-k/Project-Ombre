@@ -13,11 +13,6 @@ public class Location {
     private Map<String, String> objectsOfInterest = new HashMap<>();
     private Map<String, List<SceneEvent>> actionEvents = new HashMap<>();
 
-    public Location(String id, String name, Map<String, Location> allLocations) {
-        this.name = name;
-        allLocations.put(id, this);
-    }
-
     public String getName() {
         return name;
     }

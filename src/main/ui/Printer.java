@@ -24,18 +24,20 @@ public class Printer {
     private boolean isExploring = false;
     private final Random random;
 
+    // EFFECTS: Printer has its own deserializer, random number generator, interpreter, and initialized story objects
+    //          that will work together to present the user with a text-based adventure experience.
     public Printer() {
         Deserializer.initializeGson();
         random = new Random();
         player = new Player();
         story = new StoryController(player);
-        interpreter = new Interpreter(story);
+        interpreter = new Interpreter();
         story.setCurrentScene("test");
         story.setCurrentLocation("front");
         game();
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, this object's story instance, this object's player instance
     // EFFECTS: starts the gameplay loop
     public void game() {
         while (true) {
@@ -47,7 +49,7 @@ public class Printer {
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, this object's story instance, this object's player instance
     // EFFECTS: prints the successive lines in an exposition scene, one by one, separated by a call to continueText()
     public void printScene() {
         isPrinting = true;
@@ -63,6 +65,7 @@ public class Printer {
         }
     }
 
+    // MODIFIES: this object's story instance, this object's player instance
     // EFFECTS: triggers all given scene events
     private void handleSceneEvents(List<SceneEvent> sceneEvents) {
         for (SceneEvent event : sceneEvents) {
@@ -70,12 +73,12 @@ public class Printer {
         }
     }
 
+    // MODIFIES: this object's story instance, this object's player instance
     // EFFECTS: executes given scene event, with varying effects depending on its type and supplied keyword
     private void handleSceneEvent(SceneEvent event) {
         if (event.hasCondition() && !story.conditionFulfilled(event.getCondition())) {
             return;
         }
-
         switch (event.getType()) {
             case DISPLAY_TEXT:
                 System.out.println(event.getKeyword());
@@ -92,10 +95,11 @@ public class Printer {
             case SET_CONDITION:
                 String[] info = event.getKeyword().split(":");
                 player.setCondition(info[0], info[1]);
+                break;
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, this object's story instance
     // EFFECTS: determines what will happen after a scene, based on the parameters taken from its ending exception
     private void finishScene(boolean explore, String nextSceneId) {
         if (explore) {
@@ -112,8 +116,9 @@ public class Printer {
         SCANNER.nextLine();
     }
 
-    // EFFECTS: keeps querying player for input actions and executing corresponding effects, as long as isExploring
-    //          is true.
+    // MODIFIES: this object's story instance, this object's player instance
+    // EFFECTS: keeps querying player for input actions and executing corresponding effects, as long as player is
+    //          exploring.
     private void handleExploring() {
         while (isExploring) {
             try {
@@ -124,8 +129,9 @@ public class Printer {
         }
     }
 
-    // MODIFIES: story
-    // EFFECTS: receives user input from Interpreter and carries the action out with the StoryController, if valid
+    // MODIFIES: this object's story instance, this object's player instance
+    // EFFECTS: receives user input, passes it to the story object for formatting into an action code,
+    //          carries the action out the action if valid. Else, throws exception.
     private void executeUserInput() throws InvalidActionException {
         String[] actionWords = interpreter.userInput(SCANNER.nextLine());
 
@@ -133,8 +139,8 @@ public class Printer {
         handleSceneEvents(story.executeAction(actionWords));
     }
 
-    // MODIFIES: story
-    // EFFECTS: updates player's location, prints corresponding message
+    // MODIFIES: this object's story instance
+    // EFFECTS: updates player's location in the story, prints corresponding message
     private void changeLocation(String newLocation) {
         System.out.println(story.changeLocation(newLocation));
     }

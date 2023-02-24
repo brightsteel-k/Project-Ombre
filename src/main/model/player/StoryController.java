@@ -24,31 +24,37 @@ public class StoryController {
     private static Location CURRENT_LOCATION;
     private final Player player;
 
+    // MODIFIES: StoryController.ALL_SPELLS, StoryController.ALL_SCENES, StoryController.ALL_LOCATIONS
+    // EFFECTS: StoryController has a reference to the player instance, and a master map of all scenes, locations,
+    //          and spells in the game.
     public StoryController(Player player) {
         this.player = player;
-        initializeObjects();
+        registerObjects();
     }
 
     public Scene getCurrentScene() {
         return CURRENT_SCENE;
     }
 
-    // MODIFIES: this
-    // EFFECTS: sets current scene to the one with the corresponding id, or throws exception if one does not exist
+    // MODIFIES: StoryController.CURRENT_SCENE
+    // EFFECTS: sets current scene to the one registered to the corresponding ID and resets it,
+    //          or throws exception if one does not exist.
     public void setCurrentScene(String id) {
         Scene nextScene = ALL_SCENES.get(id);
         if (nextScene == null) {
             throw new InvalidSceneException();
         }
         CURRENT_SCENE = nextScene;
+        CURRENT_SCENE.startScene();
     }
 
     public Location getCurrentLocation() {
         return CURRENT_LOCATION;
     }
 
-    // MODIFIES: this
-    // EFFECTS: sets current location to the one with the corresponding id, or throws exception if one does not exist
+    // MODIFIES: StoryController.CURRENT_LOCATION
+    // EFFECTS: sets current location to the one registered to the corresponding ID, or throws exception if one
+    //          does not exist.
     public void setCurrentLocation(String id) {
         Location nextLocation = ALL_LOCATIONS.get(id);
         if (nextLocation == null) {
@@ -57,25 +63,23 @@ public class StoryController {
         CURRENT_LOCATION = nextLocation;
     }
 
-    public Location getLocation(String id) {
-        return ALL_LOCATIONS.get(id);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: uses the Deserializer class to populate master maps of all spells, scenes, and locations in the game
-    private void initializeObjects() {
+    // MODIFIES: StoryController.ALL_SPELLS, StoryController.ALL_SCENES, StoryController.ALL_LOCATIONS
+    // EFFECTS: populates master maps of all spells, scenes, and locations in the game
+    private void registerObjects() {
         Deserializer.loadObjectsToMap(Spell.class, "data/spells", ALL_SPELLS);
         Deserializer.loadObjectsToMap(Scene.class, "data/scenes", ALL_SCENES);
         Deserializer.loadObjectsToMap(Location.class, "data/locations", ALL_LOCATIONS);
     }
 
-    // EFFECTS: returns the next line of the current scene, or throws an exception if the scene has ended
+    // MODIFIES: StoryController.CURRENT_SCENE
+    // EFFECTS: returns the next line of the current scene and prepares the next line,
+    //          or throws an exception if the scene has ended.
     public String getCurrentNextLine() throws SceneEndingException {
         return CURRENT_SCENE.getNextLine();
     }
 
     // REQUIRES: loc is a valid location in ALL_LOCATIONS
-    // MODIFIES: this
+    // MODIFIES: StoryController.CURRENT_LOCATION
     // EFFECTS: changes the current location to the one with the given id, returns the appropriate feedback message
     public String changeLocation(String loc) {
         String previousName = CURRENT_LOCATION.getName();
@@ -100,7 +104,7 @@ public class StoryController {
         } else {
             String obj = CURRENT_LOCATION.getObjectOfInterest(actionWords[1]);
             if (obj == null) {
-                throw new InvalidActionException(1, actionWords[1]);
+                throw new InvalidActionException(actionWords[1]);
             }
             actionCode = actionWords[0] + "@" + obj;
         }
