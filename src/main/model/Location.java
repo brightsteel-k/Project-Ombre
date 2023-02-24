@@ -18,25 +18,12 @@ public class Location {
         allLocations.put(id, this);
     }
 
-    // REQUIRES: synonym.length() > 1, synonym.length() > 1
-    // MODIFIES: this
-    // EFFECTS: records an alternate name for a specific object id
-    public void addObjectOfInterest(String synonym, String id) {
-        objectsOfInterest.put(synonym, id);
-    }
-
-    // REQUIRES: actionCode.length() > 1, sceneEventsIn.length >= 1
-    // MODIFIES: this
-    // EFFECTS: records a specific action code that triggers the given scene events
-    public void addActionEvent(String actionCode, SceneEvent[] sceneEventsIn) {
-        List<SceneEvent> sceneEvents = new ArrayList<>(Arrays.asList(sceneEventsIn));
-        actionEvents.put(actionCode, sceneEvents);
-    }
-
     public String getName() {
         return name;
     }
 
+    // REQUIRES: objectsOfInterest.containsKey(keyword)
+    // EFFECTS: returns translation of the given word to a corresponding object id
     public String getObjectOfInterest(String keyword) {
         return objectsOfInterest.get(keyword);
     }

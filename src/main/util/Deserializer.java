@@ -4,10 +4,8 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import model.Spell;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -15,6 +13,8 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+// Handles automatic deserialization of data objects like locations, spells, scenes, scene events, and scene conditions,
+// as well as maps of synonyms. These make up the material of the story and game itself.
 public class Deserializer {
 
     private static Gson GSON;
@@ -30,11 +30,16 @@ public class Deserializer {
         }
     };
 
+    // MODIFIES: this
+    // EFFECTS: initializes the Gson object that deserializes Json text and obeys the custom Exclude annotation
     public static void initializeGson() {
         GSON = new GsonBuilder().setExclusionStrategies(GSON_STRATEGY).create();
     }
 
-    // TODO: Add GSON dependency to lib: https://github.com/google/gson
+    // REQUIRES: pathName leads to a folder in the project data folder exclusively containing .json files that have
+    //           been formatted to encode objects of the type classType.
+    // MODIFIES: finalMap
+    // EFFECTS: reads and deserializes all files in the given data folder, maps each resulting object to its name
     public static <T> void loadObjectsToMap(Class<T> classType, String pathName, Map<String, T> finalMap) {
         File directory = new File(pathName);
         String[] fileNames = directory.list();
@@ -46,11 +51,17 @@ public class Deserializer {
         }
     }
 
+    // REQUIRES: pathName leads to a .json file that has been formatted to encode a map with values and keys that are
+    //           Strings.
+    // MODIFIES: finalMap
+    // EFFECTS: reads and deserializes given data file, adds all internal mapped values to given map
     public static void loadSynonymsToMap(String pathName, Map<String, String> finalMap) {
         Map<String, String> readData = GSON.fromJson(readFile(pathName), HashMap.class);
         finalMap.putAll(readData);
     }
 
+    // REQUIRES: path leads to an existing file
+    // EFFECTS: returns the contents of the given file, assuming it was encoded text, in a String
     private static String readFile(String path) {
         try {
             byte[] encoded = Files.readAllBytes(Paths.get(path));

@@ -51,16 +51,22 @@ and add them to an inventory-like collection that could be Y.
 
 
 ### User Stories
+There are actually two different kinds of users for this program: *creators* and *players*. 
+
 *As a user, I would like to be able to...*
 
-- become immersed in a dangerous high-stakes espionage mission within a custom-built fantasy world
+- ~~become immersed in a dangerous high-stakes espionage mission within a custom-built fantasy world~~
 - have fun mastering the combat system and learning how to guide the story towards a goal
-- explore the possible actions and objects of interest within the game through natural text prompts
+- ~~explore the possible actions and objects of interest within the game through natural text prompts~~
 - understand the overarching story between multiple runs of the game
-- become invested in defeating the enemy by learning more
-- add arcane spells to a list of possible abilities they can utilize throughout the story
+- ~~become invested in defeating the enemy by learning more~~
+- ~~add arcane spells to a list of possible abilities they can utilize throughout the story~~
 - learn the effects of each spell and experiment with the keywords to build a rudimentary understanding 
 of some French vocabulary
 - utilize the fact that the game resets upon death to jump into preparing for the next battle
 - win the game in around 5-8 runs, depending on effort put in
 
+*As a creator, I would like to be able to...*
+- ~~Add distinct Scenes to a central, interconnecting storyline in the form of simple, intuitive Json files~~
+- ~~Chain Scenes together in the Json files using simple and efficient encoded event objects~~
+- ~~Populate Scenes with conditions and events that create an emergent exploration mechanic~~

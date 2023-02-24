@@ -2,6 +2,7 @@ package model.player;
 
 
 import exceptions.InvalidActionException;
+import exceptions.InvalidLocationException;
 import exceptions.InvalidSceneException;
 import exceptions.SceneEndingException;
 import model.Location;
@@ -33,8 +34,7 @@ public class StoryController {
     }
 
     // MODIFIES: this
-    // EFFECTS: sets current scene to the one with the corresponding id,
-    //          OR throws exception if one does not exist.
+    // EFFECTS: sets current scene to the one with the corresponding id, or throws exception if one does not exist
     public void setCurrentScene(String id) {
         Scene nextScene = ALL_SCENES.get(id);
         if (nextScene == null) {
@@ -47,14 +47,22 @@ public class StoryController {
         return CURRENT_LOCATION;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets current location to the one with the corresponding id, or throws exception if one does not exist
     public void setCurrentLocation(String id) {
-        CURRENT_LOCATION = ALL_LOCATIONS.get(id);
+        Location nextLocation = ALL_LOCATIONS.get(id);
+        if (nextLocation == null) {
+            throw new InvalidLocationException();
+        }
+        CURRENT_LOCATION = nextLocation;
     }
 
     public Location getLocation(String id) {
         return ALL_LOCATIONS.get(id);
     }
 
+    // MODIFIES: this
+    // EFFECTS: uses the Deserializer class to populate master maps of all spells, scenes, and locations in the game
     private void initializeObjects() {
         Deserializer.loadObjectsToMap(Spell.class, "data/spells", ALL_SPELLS);
         Deserializer.loadObjectsToMap(Scene.class, "data/scenes", ALL_SCENES);
@@ -103,10 +111,14 @@ public class StoryController {
     // EFFECTS: returns true if the given condition is met, based on state of values in the Player class
     public boolean conditionFulfilled(SceneEventCondition condition) {
         switch (condition.getKey()) {
-            case "#hasItem":
+            case "@hasItem":
                 return player.hasItem(condition.getExpected());
-            case "#hasSpell":
+            case "@hasSpell":
                 return player.hasSpell(condition.getExpected());
+            case "@missingItem":
+                return !player.hasItem(condition.getExpected());
+            case "@missingSpell":
+                return !player.hasSpell(condition.getExpected());
             default:
                 return player.conditionMet(condition.getKey(), condition.getExpected());
         }

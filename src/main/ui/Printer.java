@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-// Controls text and interface with which the user interacts
+// Controls text and interface with which the user interacts, runs the model code together
 public class Printer {
 
     private final Player player;
@@ -35,6 +35,8 @@ public class Printer {
         game();
     }
 
+    // MODIFIES: this
+    // EFFECTS: starts the gameplay loop
     public void game() {
         while (true) {
             printScene();
@@ -45,6 +47,7 @@ public class Printer {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: prints the successive lines in an exposition scene, one by one, separated by a call to continueText()
     public void printScene() {
         isPrinting = true;
