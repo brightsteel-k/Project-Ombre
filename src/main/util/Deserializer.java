@@ -31,14 +31,12 @@ public class Deserializer {
     };
 
     // MODIFIES: this
-    // EFFECTS: initializes the Gson object that deserializes Json text and obeys the custom Exclude annotation
+    // EFFECTS: if it's null, initializes the Gson object that deserializes Json text and obeys the custom
+    //          Exclude annotation.
     public static void initializeGson() {
-        GSON = new GsonBuilder().setExclusionStrategies(GSON_STRATEGY).create();
-    }
-
-    // EFFECTS: returns true iff this object's Gson json reader has been initialized
-    public static boolean hasGson() {
-        return GSON != null;
+        if (GSON == null) {
+            GSON = new GsonBuilder().setExclusionStrategies(GSON_STRATEGY).create();
+        }
     }
 
     // REQUIRES: pathName leads to a folder in the project data folder exclusively containing .json files that have

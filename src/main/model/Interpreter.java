@@ -26,6 +26,7 @@ public class Interpreter {
     // EFFECTS: populates master maps of determiners and vague pronouns that should be deleted from user input
     private void initializeBlacklistWords() {
         DETERMINERS.add("a");
+        DETERMINERS.add("an");
         DETERMINERS.add("the");
         DETERMINERS.add("some");
         DETERMINERS.add("every");

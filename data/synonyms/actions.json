@@ -10,5 +10,8 @@
   "investigate": "search",
   "go to": "goto",
   "move to": "goto",
-  "walk to": "goto"
+  "walk to": "goto",
+  "take": "take",
+  "grab": "take",
+  "pick up": "take"
 }

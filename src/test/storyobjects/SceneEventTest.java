@@ -22,9 +22,7 @@ public class SceneEventTest {
 
     @BeforeAll
     static void init() {
-        if (!Deserializer.hasGson()) {
-            Deserializer.initializeGson();
-        }
+        Deserializer.initializeGson();
     }
 
     @BeforeEach
