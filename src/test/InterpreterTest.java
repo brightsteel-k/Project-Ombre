@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.Deserializer;
+import util.Operations;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -115,22 +116,10 @@ public class InterpreterTest {
     }
 
     private void assertOutput(String expected0, String[] actual) {
-        assertTrue(arraysEqual(new String[] { expected0 }, actual));
+        assertTrue(Operations.arraysEqual(new String[] { expected0 }, actual));
     }
 
     private void assertOutput(String expected0, String expected1, String[] actual) {
-        assertTrue(arraysEqual(new String[] { expected0, expected1 }, actual));
-    }
-
-    private boolean arraysEqual(String[] actual, String ... expected) {
-        if (expected.length != actual.length) {
-            return false;
-        }
-        for (int i = 0; i < expected.length; i++) {
-            if (!expected[i].equals(actual[i])) {
-                return false;
-            }
-        }
-        return true;
+        assertTrue(Operations.arraysEqual(new String[] { expected0, expected1 }, actual));
     }
 }

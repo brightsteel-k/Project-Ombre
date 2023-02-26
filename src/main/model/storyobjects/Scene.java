@@ -2,6 +2,7 @@ package model.storyobjects;
 
 import exceptions.SceneEndingException;
 import util.Exclude;
+import util.Operations;
 
 import java.util.List;
 
@@ -48,5 +49,14 @@ public class Scene {
     private String nextScene() {
         SceneEvent lastEvent = endSceneEvents.get(endSceneEvents.size() - 1);
         return lastEvent.isType(SceneEventType.NEXT_SCENE) ? lastEvent.getKeyword() : null;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != Scene.class) {
+            return false;
+        }
+        Scene other = (Scene)obj;
+        return Operations.arraysEqual(texts, other.texts) && endSceneEvents.equals(other.endSceneEvents);
     }
 }

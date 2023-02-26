@@ -66,6 +66,9 @@ public class Player {
     //           expected value.
     public boolean conditionMet(String key, String expected) {
         String value = progressConditions.get(key);
+        if (expected.equals("@f") && value == null) {
+            return true;
+        }
         return value != null && value.equals(expected);
     }
 }

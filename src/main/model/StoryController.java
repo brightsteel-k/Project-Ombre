@@ -123,7 +123,6 @@ public class StoryController {
         return true;
     }
 
-
     // EFFECTS: returns true iff the given condition is met, based on the state of the player
     public boolean conditionFulfilled(SceneEventCondition condition) {
         switch (condition.getKey()) {
