@@ -32,7 +32,7 @@ public class Location {
         return events;
     }
 
-    // EFFECTS: returns true iff this and the given object are identical Locations
+    // EFFECTS: returns true iff this and the given object are identical locations
     @Override
     public boolean equals(Object obj) {
         if (obj.getClass() != Location.class) {

@@ -1,13 +1,14 @@
 package storyobjects;
 
+import model.storyobjects.Location;
 import model.storyobjects.SceneEventCondition;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.Deserializer;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class SceneEventConditionTest {
 
@@ -33,5 +34,12 @@ public class SceneEventConditionTest {
         assertEquals("true", testSceneEventCond1.getExpected());
         assertEquals("@missingSpell", testSceneEventCond2.getKey());
         assertEquals("brulez", testSceneEventCond2.getExpected());
+    }
+
+    @Test
+    void testEquals() {
+        assertNotEquals(testSceneEventCond1, "String");
+        assertNotEquals(testSceneEventCond1, testSceneEventCond2);
+        assertEquals(testSceneEventCond1, testSceneEventCond1);
     }
 }

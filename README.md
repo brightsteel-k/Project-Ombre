@@ -51,9 +51,9 @@ and add them to an inventory-like collection that could be Y.
 
 
 ### User Stories
-There are actually two different kinds of users for this program: *creators* and *players*. 
+This program caters to two different kinds of users: *creators* and *players*.
 
-*As a user, I would like to be able to...*
+*As a **player**, I would like to be able to...*
 
 - ~~become immersed in a dangerous high-stakes espionage mission within a custom-built fantasy world~~
 - have fun mastering the combat system and learning how to guide the story towards a goal
@@ -66,7 +66,8 @@ of some French vocabulary
 - utilize the fact that the game resets upon death to jump into preparing for the next battle
 - win the game in around 5-8 runs, depending on effort put in
 
-*As a creator, I would like to be able to...*
-- ~~Add distinct Scenes to a central, interconnecting storyline in the form of simple, intuitive Json files~~
-- ~~Chain Scenes together in the Json files using simple and efficient encoded event objects~~
-- ~~Populate Scenes with conditions and events that create an emergent exploration mechanic~~
+*As a **creator**, I would like to be able to...*
+- ~~Use intuitive JSON files to add distinct scenes to a central, interconnected collection, populating a set of scripts through which the storyline will automatically deserialize and navigate~~
+- ~~Chain scenes together in the JSON files by adding simple and efficient encoded event objects to the scene objects~~
+- ~~Effectively control behaviour of each event object in the JSON file by adding a collection of versatile condition objects to it~~
+- ~~Use intuitive JSON files to add distinct location to a central collection that, together with the scenes and event objects, provide the necessary data to create an emergent explorative experience~~

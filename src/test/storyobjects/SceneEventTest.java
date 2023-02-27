@@ -79,4 +79,12 @@ public class SceneEventTest {
         assertTrue(testSceneEvent3.hasConditions());
         assertTrue(testSceneEvent4.hasConditions());
     }
+
+    @Test
+    void testEquals() {
+        assertNotEquals(testSceneEvent1, "String");
+        assertNotEquals(testSceneEvent1, testSceneEvent2);
+        assertNotEquals(testSceneEvent3, testSceneEvent4);
+        assertEquals(testSceneEvent1, testSceneEvent1);
+    }
 }

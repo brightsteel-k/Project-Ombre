@@ -65,4 +65,11 @@ public class LocationTest {
 
         }
     }
+
+    @Test
+    void testEquals() {
+        assertNotEquals(testLocation, "String");
+        assertNotEquals(testLocation, new Location());
+        assertEquals(testLocation, testLocation);
+    }
 }

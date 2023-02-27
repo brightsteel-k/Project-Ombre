@@ -147,9 +147,10 @@ public class StoryControllerTest {
         testPlayer.setCondition("custom_key", "@t");
         testPlayer.addSpell("riez");
         testPlayer.addSpell("tombez");
+        testPlayer.addItem("pearl");
         assertTrue(testStory.conditionFulfilled(cond1));
         assertFalse(testStory.conditionFulfilled(cond2));
-        assertTrue(testStory.conditionFulfilled(cond3));
+        assertFalse(testStory.conditionFulfilled(cond3));
         assertTrue(testStory.conditionFulfilled(cond4));
         assertFalse(testStory.conditionFulfilled(cond5));
     }
@@ -178,7 +179,7 @@ public class StoryControllerTest {
             story.executeAction(input);
             fail();
         } catch (InvalidActionException e) {
-            assertSame(e.getClass(), InvalidActionException.class);
+            assertSame(InvalidActionException.class, e.getClass());
         }
     }
 
@@ -187,7 +188,7 @@ public class StoryControllerTest {
             story.executeAction(input);
             fail();
         } catch (InvalidActionException e) {
-            assertSame(e.getClass(), ActionSubjectException.class);
+            assertSame(ActionSubjectException.class, e.getClass());
             String invalidSubject = ((ActionSubjectException)e).getInvalidObject();
             assertEquals(invalidSubject, expectedSubject);
         }
