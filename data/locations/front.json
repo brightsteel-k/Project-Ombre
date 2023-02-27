@@ -12,6 +12,10 @@
       {
         "type": "change_location",
         "keyword": "worktable"
+      },
+      {
+        "type": "next_scene",
+        "keyword": "approach_worktable"
       }
     ]
   }

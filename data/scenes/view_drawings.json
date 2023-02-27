@@ -1,0 +1,15 @@
+{
+  "texts": [
+    "All of the notes seem to be printed in a complex cipher, but you come across multiple diagrams of frames not dissimilar to the one \nharnessing the Voidstone behind you right now. In fact, you spy at least six iterations of the crystal’s shape and structure across the pages, \neach one experimenting with a different crystal cut and inscription.",
+    "There are also esoteric runes scrawled in dark black and violet inks under each image, and though you recognize them as Shadow magic, \nthe exact purpose and power of the designs escapes you."
+  ],
+  "endSceneEvents": [
+    {
+      "type": "display_text",
+      "keyword": "Dythanos seems to know far more about Shadow magic than even the wisest lord sorciers in the Azyrean Kingdom."
+    },
+    {
+      "type": "start_exploring"
+    }
+  ]
+}

@@ -33,9 +33,10 @@ public class Scene {
 
     // EFFECTS: returns the event that should occur at the end of the scene
     private SceneEndingException getSceneEnd() {
-        return new SceneEndingException(endSceneEvents, shouldStartExploring(), nextScene());
+        return new SceneEndingException(endSceneEvents);
     }
 
+    /*
     // REQUIRES: if a SceneEvent signalling the start of exploration is in endSceneEvents, it's in the final
     //           position.
     // EFFECTS: returns true iff exploration should start at the end of this scene
@@ -49,7 +50,7 @@ public class Scene {
     private String nextScene() {
         SceneEvent lastEvent = endSceneEvents.get(endSceneEvents.size() - 1);
         return lastEvent.isType(SceneEventType.NEXT_SCENE) ? lastEvent.getKeyword() : null;
-    }
+    }*/
 
     @Override
     public boolean equals(Object obj) {

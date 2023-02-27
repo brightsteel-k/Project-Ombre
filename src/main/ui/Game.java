@@ -32,7 +32,7 @@ public class Game {
         player = new Player();
         story = new StoryController(player);
         interpreter = new Interpreter();
-        story.setCurrentScene("test");
+        story.setCurrentScene("intro");
         story.setCurrentLocation("front");
         game();
     }
@@ -60,7 +60,7 @@ public class Game {
             } catch (SceneEndingException e) {
                 isPrinting = false;
                 handleSceneEvents(e.getEvents());
-                finishScene(e.shouldStartExploring(), e.getNextScene());
+                //finishScene(e.shouldStartExploring(), e.getNextScene());
             }
         }
     }
@@ -96,17 +96,13 @@ public class Game {
                 String[] info = event.getKeyword().split(":");
                 player.setCondition(info[0], info[1]);
                 break;
-        }
-    }
-
-    // MODIFIES: this, this object's story instance
-    // EFFECTS: determines what will happen after a scene, based on the parameters taken from its ending exception
-    private void finishScene(boolean explore, String nextSceneId) {
-        if (explore) {
-            isExploring = true;
-        } else if (nextSceneId != null) {
-            story.setCurrentScene(nextSceneId);
-            isExploring = false;
+            case START_EXPLORING:
+                isExploring = true;
+                break;
+            case NEXT_SCENE:
+                story.setCurrentScene(event.getKeyword());
+                isExploring = false;
+                break;
         }
     }
 
@@ -135,7 +131,6 @@ public class Game {
     private void executeUserInput() throws InvalidActionException {
         String[] actionWords = interpreter.userInput(SCANNER.nextLine());
 
-        System.out.println("ActionCode: " + actionWords[0]); // TODO: REMOVE DEBUGGING PRINT
         handleSceneEvents(story.executeAction(actionWords));
     }
 

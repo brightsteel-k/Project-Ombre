@@ -1,0 +1,19 @@
+{
+  "texts": [
+    "You start pulling random books off the shelf, glancing at the covers in search of something that might help your situation. \nBefore long, you uncover a hidden alcove in the wall of the left bookshelf, secreting away a scroll bound with a purple ribbon.",
+    "Unwrapping it, you recognize an incantation for a powerful offense spell that channels frost at an enemy: gelez."
+  ],
+  "endSceneEvents": [
+    {
+      "type": "learn_spell",
+      "keyword": "gelez"
+    },
+    {
+      "type": "display_text",
+      "keyword": "Memorizing the spell, you turn back to the desk."
+    },
+    {
+      "type": "start_exploring"
+    }
+  ]
+}

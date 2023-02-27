@@ -96,7 +96,7 @@ public class StoryControllerTest {
                 fail();
             }
         }
-        assertNextLineEndsScene("home", false, testStory);
+        assertNextLineEndsScene(testStory);
     }
 
     @Test
@@ -169,15 +169,13 @@ public class StoryControllerTest {
     }
 
     // EFFECTS: fails if requesting the next line of the current scene in the given story does not throw a
-    //          SceneEndingException with the given qualities.
-    private void assertNextLineEndsScene(String nextScene, boolean shouldExplore, StoryController story) {
+    //          SceneEndingException.
+    private void assertNextLineEndsScene(StoryController story) {
         try {
             testStory.getCurrentNextLine();
             fail();
         } catch (SceneEndingException e) {
-            if (e.shouldStartExploring() != shouldExplore || !e.getNextScene().equals(nextScene)) {
-                fail();
-            }
+
         }
     }
 

@@ -1,0 +1,15 @@
+{
+  "texts": [
+    "The wooden desk is in a state of disarray, covered in old papers and scrawled charcoal diagrams that drape across the surface and into the two \nhalf-open drawers.",
+    "On either side of it, tall spruce bookshelves filled with faded books are set into the wall."
+  ],
+  "endSceneEvents": [
+    {
+      "type": "display_text",
+      "keyword": "What do you do?"
+    },
+    {
+      "type": "start_exploring"
+    }
+  ]
+}

@@ -6,13 +6,36 @@
     "worktable": "worktable",
     "desk": "worktable",
     "table": "worktable",
-    "drawers": "worktable"
+    "drawers": "worktable",
+    "bookshelves": "bookshelves",
+    "bookshelf": "bookshelves",
+    "drawings": "drawings",
+    "papers": "drawings",
+    "diagrams": "drawings"
   },
   "actionEvents": {
     "goto@front": [
       {
         "type": "change_location",
         "keyword": "front"
+      }
+    ],
+    "search@worktable": [
+      {
+        "type": "next_scene",
+        "keyword": "search_worktable"
+      }
+    ],
+    "view@drawings": [
+      {
+        "type": "next_scene",
+        "keyword": "view_drawings"
+      }
+    ],
+    "search@bookshelves": [
+      {
+        "type": "next_scene",
+        "keyword": "search_bookshelves"
       }
     ]
   }

@@ -1,0 +1,19 @@
+{
+  "texts": [
+    "You rummage through the desk drawers, brushing aside old fountain pens and loosely-bound notebooks to uncover a scroll bound tightly in a purple ribbon.",
+    "Unwrapping it, you realize it’s the incantation and rituals for an attacking fire spell: brûlez."
+  ],
+  "endSceneEvents": [
+    {
+      "type": "learn_spell",
+      "keyword": "brulez"
+    },
+    {
+      "type": "display_text",
+      "keyword": "Memorizing the spell, you turn back to the desk."
+    },
+    {
+      "type": "start_exploring"
+    }
+  ]
+}
