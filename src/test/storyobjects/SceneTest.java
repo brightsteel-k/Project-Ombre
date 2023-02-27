@@ -53,8 +53,6 @@ public class SceneTest {
             testScene.getNextLine();
             fail();
         } catch (SceneEndingException e) {
-            assertEquals(e.getNextScene(), "destruction");
-            assertFalse(e.shouldStartExploring());
             List<SceneEvent> endSceneEvents = e.getEvents();
             assertEquals(1, endSceneEvents.size());
             assertEquals(new SceneEvent(SceneEventType.NEXT_SCENE, "destruction"), endSceneEvents.get(0));
@@ -69,8 +67,6 @@ public class SceneTest {
             testScene2.getNextLine();
             fail();
         } catch (SceneEndingException e) {
-            assertTrue(e.shouldStartExploring());
-            assertNull(e.getNextScene());
             List<SceneEvent> endSceneEvents = e.getEvents();
             assertEquals(2, endSceneEvents.size());
             assertEquals(new SceneEvent(SceneEventType.LEARN_SPELL, "brulez"), endSceneEvents.get(0));
