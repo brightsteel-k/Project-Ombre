@@ -82,9 +82,19 @@ public class SceneEventTest {
 
     @Test
     void testEquals() {
-        assertNotEquals("String", testSceneEvent1);
-        assertNotEquals(testSceneEvent2, testSceneEvent3);
-        assertNotEquals(testSceneEvent1, testSceneEvent3);
-        assertNotEquals(testSceneEvent4, new SceneEvent(SceneEventType.DISPLAY_TEXT, "gelez"));
+        assertFalse(testSceneEvent1.equals("String"));
+        assertFalse(testSceneEvent1.equals(testSceneEvent2));
+        assertTrue(testSceneEvent2.equals(new SceneEvent(SceneEventType.ACQUIRE_ITEM, "oridur_ingot")));
+
+        assertFalse(testSceneEvent4.equals(new SceneEvent(SceneEventType.LEARN_SPELL, "brulez")));
+        assertFalse(testSceneEvent4.equals(new SceneEvent(SceneEventType.DISPLAY_TEXT, "gelez")));
+        assertFalse(testSceneEvent3.equals(new SceneEvent(SceneEventType.ACQUIRE_ITEM, "silver",
+                new SceneEventCondition[] { sceneEventCond1 })));
+        assertFalse(testSceneEvent4.equals(new SceneEvent(SceneEventType.LEARN_SPELL, "gelez")));
+        assertFalse(testSceneEvent4.equals(new SceneEvent(SceneEventType.LEARN_SPELL, "brulez",
+                new SceneEventCondition[] { sceneEventCond1, sceneEventCond2 })));
+        assertFalse(testSceneEvent3.equals(new SceneEvent(SceneEventType.DISPLAY_TEXT, null,
+                new SceneEventCondition[] { sceneEventCond1, sceneEventCond2 })));
+
     }
 }

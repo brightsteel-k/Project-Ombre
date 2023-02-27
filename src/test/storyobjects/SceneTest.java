@@ -82,8 +82,9 @@ public class SceneTest {
     void testEquals() {
         Scene testScene2 = Deserializer.loadObject(Scene.class, "data/test/scene_2.json");
         Scene testScene3 = Deserializer.loadObject(Scene.class, "data/test/scene_3.json");
-        assertNotEquals("String", testScene);
-        assertNotEquals(testScene2, testScene3);
-        assertNotEquals(testScene, testScene3);
+        assertFalse(testScene.equals("String"));
+        assertFalse(testScene2.equals(testScene3));
+        assertFalse(testScene.equals(testScene3));
+        assertTrue(testScene3.equals(testScene3));
     }
 }

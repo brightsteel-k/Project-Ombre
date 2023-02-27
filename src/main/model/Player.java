@@ -1,6 +1,5 @@
 package model;
 
-import model.StoryController;
 import model.storyobjects.Spell;
 
 import java.util.ArrayList;
