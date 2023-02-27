@@ -1,0 +1,9 @@
+{
+  "texts": [ ],
+  "endSceneEvents": [
+    {
+      "type": "next_scene",
+      "keyword": "destruction"
+    }
+  ]
+}

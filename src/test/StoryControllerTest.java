@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class StoryControllerTest {
 
     private StoryController testStory;
-    private Player testPlayer = new Player();
+    private Player testPlayer;
     private static SceneEventCondition cond1;
     private static SceneEventCondition cond2;
     private static SceneEventCondition cond3;
@@ -34,6 +34,7 @@ public class StoryControllerTest {
 
     @BeforeEach
     void setup() {
+        testPlayer = new Player();
         testStory = new StoryController(testPlayer);
     }
 
@@ -59,8 +60,11 @@ public class StoryControllerTest {
     void testSetCurrentLocation() {
         try {
             testStory.setCurrentLocation("front");
-            assertEquals(Deserializer.loadObject(Location.class, "data/locations/front.json"),
-                    testStory.getCurrentLocation());
+            assertEquals("the front of the room", testStory.getCurrentLocation().getName());
+            testStory.setCurrentLocation("test_location");
+            assertEquals("the Azyrean armoury", testStory.getCurrentLocation().getName());
+            testStory.setCurrentLocation("worktable");
+            assertEquals("the worktable", testStory.getCurrentLocation().getName());
         } catch (InvalidLocationException e1) {
             fail();
         }

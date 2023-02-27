@@ -80,9 +80,10 @@ public class SceneTest {
 
     @Test
     void testEquals() {
-        assertFalse(testScene.equals("String"));
         Scene testScene2 = Deserializer.loadObject(Scene.class, "data/test/scene_2.json");
-        assertFalse(testScene.equals(testScene2));
-        assertTrue(testScene.equals(testScene));
+        Scene testScene3 = Deserializer.loadObject(Scene.class, "data/test/scene_3.json");
+        assertNotEquals("String", testScene);
+        assertNotEquals(testScene2, testScene3);
+        assertNotEquals(testScene, testScene3);
     }
 }

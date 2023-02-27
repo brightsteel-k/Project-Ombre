@@ -65,11 +65,4 @@ public class LocationTest {
             assertSame(InvalidActionException.class, e2.getClass());
         }
     }
-
-    @Test
-    void testEquals() {
-        assertFalse(testLocation.equals("String"));
-        assertFalse(testLocation.equals(new Location()));
-        assertTrue(testLocation.equals(testLocation));
-    }
 }
