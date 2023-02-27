@@ -1,5 +1,7 @@
 package ui;
 
+import exceptions.ActionSubjectException;
+import exceptions.AmbiguousActionException;
 import exceptions.InvalidActionException;
 import exceptions.SceneEndingException;
 import model.Player;
@@ -13,7 +15,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 // Controls text and interface with which the user interacts, runs the model code together
-public class Printer {
+public class Game {
 
     private final Player player;
     private final StoryController story;
@@ -24,7 +26,7 @@ public class Printer {
 
     // EFFECTS: Printer has its own deserializer, random number generator, interpreter, and initialized story objects
     //          that will work together to present the user with a text-based adventure experience.
-    public Printer() {
+    public Game() {
         Deserializer.initializeGson();
         random = new Random();
         player = new Player();
@@ -143,22 +145,19 @@ public class Printer {
         System.out.println(story.changeLocation(newLocation));
     }
 
-    // EFFECTS: prints message telling the player their previous action was invalid
+    // EFFECTS: prints message telling the player their previous action was invalid, depending on the type of exception
     private void printInvalidAction(InvalidActionException e) {
-        switch (e.getType()) {
-            case 1:
-                if (random.nextBoolean()) {
-                    System.out.println("You cannot reach any " + e.getInvalidObject() + " from where you are.");
-                } else {
-                    System.out.println("There is no " + e.getInvalidObject() + " where you are.");
-                }
-                break;
-            case 2:
-                System.out.println("Please be more specific.");
-                break;
-            default:
-                System.out.println("You cannot do that.");
-                break;
+        if (e.getClass() == ActionSubjectException.class) {
+            String invalidObject = ((ActionSubjectException) e).getInvalidObject();
+            if (random.nextBoolean()) {
+                System.out.println("You cannot reach any " + invalidObject + " from where you are.");
+            } else {
+                System.out.println("There is no " + invalidObject + " where you are.");
+            }
+        } else if (e.getClass() == AmbiguousActionException.class) {
+            System.out.println("Please be more specific.");
+        } else {
+            System.out.println("You cannot do that.");
         }
     }
 }

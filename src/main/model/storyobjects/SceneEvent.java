@@ -1,5 +1,7 @@
 package model.storyobjects;
 
+import util.Operations;
+
 // An event that can be triggered during the game in response to the end of a scene or player interaction.
 // Some possible effects include starting a new scene, displaying a message, or teaching the player a spell.
 public class SceneEvent {
@@ -60,8 +62,8 @@ public class SceneEvent {
             return false;
         }
         SceneEvent other = (SceneEvent)obj;
-        boolean keywordsMatch = (keyword == null && other.keyword == null) || keyword.equals(other.keyword);
-        boolean conditionsMatch = (conditions == null && other.conditions == null) || conditions.equals(other.conditions);
+        boolean keywordsMatch = Operations.objectsEqual(keyword, other.keyword);
+        boolean conditionsMatch = Operations.objectsEqual(conditions, other.conditions);
         return type.equals(other.type) && keywordsMatch && conditionsMatch;
     }
 }

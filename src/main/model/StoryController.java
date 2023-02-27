@@ -1,10 +1,7 @@
 package model;
 
 
-import exceptions.InvalidActionException;
-import exceptions.InvalidLocationException;
-import exceptions.InvalidSceneException;
-import exceptions.SceneEndingException;
+import exceptions.*;
 import model.storyobjects.Location;
 import model.storyobjects.Spell;
 import model.storyobjects.*;
@@ -81,9 +78,9 @@ public class StoryController {
     // REQUIRES: loc is a valid location in ALL_LOCATIONS
     // MODIFIES: this
     // EFFECTS: changes the current location to the one with the given id, returns the appropriate feedback message
-    public String changeLocation(String loc) {
+    public String changeLocation(String id) {
         String previousName = currentLocation.getName();
-        setCurrentLocation(loc);
+        setCurrentLocation(id);
         return "You leave " + previousName + " and make your way to " + currentLocation.getName() + ".";
     }
 
@@ -104,7 +101,7 @@ public class StoryController {
         } else {
             String obj = currentLocation.getObjectOfInterest(actionWords[1]);
             if (obj == null) {
-                throw new InvalidActionException(actionWords[1]);
+                throw new ActionSubjectException(actionWords[1]);
             }
             actionCode = actionWords[0] + "@" + obj;
         }

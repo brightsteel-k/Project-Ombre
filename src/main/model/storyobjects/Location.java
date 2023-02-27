@@ -27,7 +27,7 @@ public class Location {
     public List<SceneEvent> tryActionCode(String actionCode) throws InvalidActionException {
         List<SceneEvent> events = actionEvents.get(actionCode);
         if (events == null) {
-            throw new InvalidActionException(0);
+            throw new InvalidActionException();
         }
         return events;
     }

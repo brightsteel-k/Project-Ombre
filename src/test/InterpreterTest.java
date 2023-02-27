@@ -1,3 +1,4 @@
+import exceptions.AmbiguousActionException;
 import exceptions.InvalidActionException;
 import model.Interpreter;
 import org.junit.jupiter.api.BeforeAll;
@@ -5,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.Deserializer;
 import util.Operations;
+
+import javax.swing.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -95,21 +98,21 @@ public class InterpreterTest {
 
     @Test
     void testUserInputPronouns() {
-        assertInvalidAction(2, testInterpreter, "view it");
-        assertInvalidAction(2, testInterpreter, "go to him");
-        assertInvalidAction(2, testInterpreter, "stare at that");
+        assertInvalidAction(AmbiguousActionException.class, testInterpreter, "view it");
+        assertInvalidAction(AmbiguousActionException.class, testInterpreter, "go to him");
+        assertInvalidAction(AmbiguousActionException.class, testInterpreter, "stare at that");
     }
 
     private void assertInvalidAction(Interpreter interpreter, String input) {
-        assertInvalidAction(0, interpreter, input);
+        assertInvalidAction(InvalidActionException.class, interpreter, input);
     }
 
-    private void assertInvalidAction(int expectedType, Interpreter interpreter, String input) {
+    private void assertInvalidAction(Class expectedType, Interpreter interpreter, String input) {
         try {
             interpreter.userInput(input);
             fail();
         } catch (InvalidActionException e) {
-            if (e.getType() != expectedType || e.getInvalidObject() != null) {
+            if (e.getClass() != expectedType) {
                 fail();
             }
         }

@@ -1,0 +1,55 @@
+{
+  "name": "the Azyrean armoury",
+  "objectsOfInterest": {
+    "throneroom": "throneroom",
+    "throne": "throneroom",
+    "sword": "sword",
+    "broadsword": "sword",
+    "longsword": "sword",
+    "shortsword": "sword",
+    "dagger": "dagger",
+    "knife": "dagger",
+    "polearm": "polearm",
+    "spear": "polearm",
+    "halberd": "polearm",
+    "poleaxe": "polearm"
+  },
+  "actionEvents": {
+    "goto@throneroom": [
+      {
+        "type": "change_location",
+        "keyword": "throneroom"
+      }
+    ],
+    "take@sword": [
+      {
+        "type": "display_text",
+        "keyword": "You swiftly grab the sword."
+      },
+      {
+        "type": "acquire_item",
+        "keyword": "sword"
+      }
+    ],
+    "take@dagger": [
+      {
+        "type": "display_text",
+        "keyword": "You discreetly pocket the dagger."
+      },
+      {
+        "type": "acquire_item",
+        "keyword": "dagger"
+      }
+    ],
+    "take@polearm": [
+      {
+        "type": "display_text",
+        "keyword": "You eagerly take the polearm."
+      },
+      {
+        "type": "acquire_item",
+        "keyword": "polearm"
+      }
+    ]
+  }
+}

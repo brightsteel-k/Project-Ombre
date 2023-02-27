@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.AmbiguousActionException;
 import exceptions.InvalidActionException;
 import util.Deserializer;
 
@@ -45,7 +46,7 @@ public class Interpreter {
     public String[] userInput(String input) throws InvalidActionException {
         input = removeLeadingPronoun(removeLeadingSpaces(removeTrailingSpaces(input.toLowerCase())));
         if (input.contains("@")) {
-            throw new InvalidActionException(0);
+            throw new InvalidActionException();
         }
         return processAction(input.split(" "));
     }
@@ -61,7 +62,7 @@ public class Interpreter {
         while (action == null) {
             keyNum++;
             if (keyNum == 4) {
-                throw new InvalidActionException(0);
+                throw new InvalidActionException();
             }
             action = tryParseAction(actionWords, keyNum);
         }
@@ -77,17 +78,17 @@ public class Interpreter {
     //          exception if unable. Otherwise, translates keyword to an action code and returns result.
     private String tryParseAction(List<String> actionWords, int relevantWords) throws InvalidActionException {
         if (actionWords.size() < relevantWords) {
-            throw new InvalidActionException(0);
+            throw new InvalidActionException();
         }
 
-        String possibleKeyword = "";
+        StringBuilder possibleKeyword = new StringBuilder();
         for (int n = 0; n < relevantWords; n++) {
-            possibleKeyword += actionWords.get(n);
+            possibleKeyword.append(actionWords.get(n));
             if (n < relevantWords - 1) {
-                possibleKeyword += " ";
+                possibleKeyword.append(" ");
             }
         }
-        return ACTION_SYNONYMS.get(possibleKeyword);
+        return ACTION_SYNONYMS.get(possibleKeyword.toString());
     }
 
     // MODIFIES: actionWords
@@ -95,7 +96,7 @@ public class Interpreter {
     //          ambiguous pronouns, otherwise returns given list as an array of length 2
     private String[] configureWordsList(List<String> actionWords) throws InvalidActionException {
         if (actionWords.contains("and")) {
-            throw new InvalidActionException(0);
+            throw new InvalidActionException();
         }
 
         if (actionWords.size() > 1) {
@@ -103,13 +104,13 @@ public class Interpreter {
             while (DETERMINERS.contains(det)) {
                 actionWords.remove(1);
                 if (actionWords.size() == 1) {
-                    throw new InvalidActionException(2);
+                    throw new AmbiguousActionException();
                 } else {
                     det = actionWords.get(1);
                 }
             }
             if (VAGUE_PRONOUNS.contains(actionWords.get(1))) {
-                throw new InvalidActionException(2);
+                throw new AmbiguousActionException();
             }
         }
         return actionWords.subList(0, Math.min(actionWords.size(), 2)).toArray(new String[]{});
