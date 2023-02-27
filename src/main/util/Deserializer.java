@@ -46,9 +46,6 @@ public class Deserializer {
     public static <T> void loadObjectsToMap(Class<T> classType, String pathName, Map<String, T> finalMap) {
         File directory = new File(pathName);
         String[] fileNames = directory.list();
-        if (fileNames == null) {
-            return;
-        }
 
         for (String name : fileNames) {
             String key = name.substring(0, name.length() - 5);

@@ -51,7 +51,7 @@ public class Interpreter {
         return processAction(input.split(" "));
     }
 
-    // REQUIRES: keywords is a non-empty array of words without spaces or "@"
+    // REQUIRES: keywords is an array of words without spaces or "@"
     // EFFECTS: configures set of input words to contain a valid action in position 0 and optionally an object
     //          in position 1, or throws exception if unable.
     private String[] processAction(String[] keywords) throws InvalidActionException {

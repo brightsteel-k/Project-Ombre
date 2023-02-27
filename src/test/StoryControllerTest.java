@@ -159,6 +159,7 @@ public class StoryControllerTest {
         assertFalse(testStory.conditionFulfilled(cond5));
     }
 
+    // EFFECTS: fails if the next line of the current scene in the given story does not match the given expected line
     private void assertNextLine(String expected, StoryController story) {
         try {
             assertEquals(expected, story.getCurrentNextLine());
@@ -167,6 +168,8 @@ public class StoryControllerTest {
         }
     }
 
+    // EFFECTS: fails if requesting the next line of the current scene in the given story does not throw a
+    //          SceneEndingException with the given qualities.
     private void assertNextLineEndsScene(String nextScene, boolean shouldExplore, StoryController story) {
         try {
             testStory.getCurrentNextLine();
@@ -178,6 +181,8 @@ public class StoryControllerTest {
         }
     }
 
+    // EFFECTS: fails if attempting to execute an action on the given story with the given input does not
+    //          throw an InvalidActionException.
     private void assertInvalidAction(StoryController story, String[] input) {
         try {
             story.executeAction(input);
@@ -187,6 +192,8 @@ public class StoryControllerTest {
         }
     }
 
+    // EFFECTS: fails if attempting to execute an action on the given story with the given input does not
+    //          throw an ActionSubjectException caused by the given expected subject.
     private void assertInvalidActionSubject(String expectedSubject, StoryController story, String[] input) {
         try {
             story.executeAction(input);

@@ -103,10 +103,14 @@ public class InterpreterTest {
         assertInvalidAction(AmbiguousActionException.class, testInterpreter, "stare at that");
     }
 
+    // EFFECTS: fails if passing the given input into the given interpreter as user input does not throw an
+    //          InvalidActionException.
     private void assertInvalidAction(Interpreter interpreter, String input) {
         assertInvalidAction(InvalidActionException.class, interpreter, input);
     }
 
+    // EFFECTS: fails if passing the given input into the given interpreter as user input does not throw an
+    //          exception of the given type.
     private void assertInvalidAction(Class expectedType, Interpreter interpreter, String input) {
         try {
             interpreter.userInput(input);
@@ -118,10 +122,12 @@ public class InterpreterTest {
         }
     }
 
+    // EFFECTS: fails if the given actual string array does not match one made up of expected0
     private void assertOutput(String expected0, String[] actual) {
         assertTrue(Operations.arraysEqual(new String[] { expected0 }, actual));
     }
 
+    // EFFECTS: fails if the given actual string array does not match one made up of expected0 and expected1
     private void assertOutput(String expected0, String expected1, String[] actual) {
         assertTrue(Operations.arraysEqual(new String[] { expected0, expected1 }, actual));
     }
