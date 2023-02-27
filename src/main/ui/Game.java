@@ -75,9 +75,9 @@ public class Game {
 
     // MODIFIES: this object's story instance, this object's player instance
     // EFFECTS: executes given scene event, with varying effects depending on its type and supplied keyword
-    // NOTE FOR TA: this method is greater than 25 lines. Since there is no way to decompose it, I intend to
-    //              get the @SuppressWarnings annotation added as soon as I have permission, as instructed
-    //              by the project requirements on EdX.
+    // NOTE FOR TA: this method is greater than 25 lines. Since there is no way to effectively decompose it, I
+    //              intend to get the @SuppressWarnings annotation added as soon as I have permission, as
+    //              instructed by the project requirements on EdX.
     //              My autograder report will show this error until I can get it fixed.
     private void handleSceneEvent(SceneEvent event) {
         if (event.hasConditions() && !story.conditionsFulfilled(event.getConditions())) {
