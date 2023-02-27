@@ -62,14 +62,14 @@ public class LocationTest {
             testLocation.tryActionCode("take@lightsaber");
             fail();
         } catch (InvalidActionException e2) {
-
+            assertSame(InvalidActionException.class, e2.getClass());
         }
     }
 
     @Test
     void testEquals() {
-        assertNotEquals(testLocation, "String");
-        assertNotEquals(testLocation, new Location());
-        assertEquals(testLocation, testLocation);
+        assertFalse(testLocation.equals("String"));
+        assertFalse(testLocation.equals(new Location()));
+        assertTrue(testLocation.equals(testLocation));
     }
 }

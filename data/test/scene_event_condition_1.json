@@ -1,4 +1,4 @@
 {
-  "key": "explored_icer",
-  "expected": "true"
+  "key": "visited_icer?",
+  "expected": "@t"
 }

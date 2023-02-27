@@ -82,9 +82,9 @@ public class SceneEventTest {
 
     @Test
     void testEquals() {
-        assertNotEquals(testSceneEvent1, "String");
-        assertNotEquals(testSceneEvent1, testSceneEvent2);
-        assertNotEquals(testSceneEvent3, testSceneEvent4);
-        assertEquals(testSceneEvent1, testSceneEvent1);
+        assertFalse(testSceneEvent1.equals("String"));
+        assertFalse(testSceneEvent1.equals(testSceneEvent2));
+        assertFalse(testSceneEvent3.equals(testSceneEvent4));
+        assertTrue(testSceneEvent1.equals(testSceneEvent1));
     }
 }

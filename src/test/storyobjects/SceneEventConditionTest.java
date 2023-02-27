@@ -30,16 +30,18 @@ public class SceneEventConditionTest {
 
     @Test
     void testCreation() {
-        assertEquals("explored_icer", testSceneEventCond1.getKey());
-        assertEquals("true", testSceneEventCond1.getExpected());
+        assertEquals("visited_icer?", testSceneEventCond1.getKey());
+        assertEquals("@t", testSceneEventCond1.getExpected());
         assertEquals("@missingSpell", testSceneEventCond2.getKey());
         assertEquals("brulez", testSceneEventCond2.getExpected());
     }
 
     @Test
     void testEquals() {
-        assertNotEquals(testSceneEventCond1, "String");
-        assertNotEquals(testSceneEventCond1, testSceneEventCond2);
-        assertEquals(testSceneEventCond1, testSceneEventCond1);
+        assertFalse(testSceneEventCond1.equals("String"));
+        assertFalse(testSceneEventCond1.equals(testSceneEventCond2));
+        assertFalse(testSceneEventCond1.equals(new SceneEventCondition(" ", "@t")));
+        assertFalse(testSceneEventCond2.equals(new SceneEventCondition("@missingSpell", " ")));
+        assertTrue(testSceneEventCond1.equals(testSceneEventCond1));
     }
 }

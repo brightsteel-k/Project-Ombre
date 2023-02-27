@@ -27,4 +27,9 @@ public class DeserializerTest {
             assertSame(NoSuchFileException.class, e.getCause().getClass());
         }
     }
+
+    @Test
+    void testConstructor() {
+        Deserializer deserializer = new Deserializer();
+    }
 }
