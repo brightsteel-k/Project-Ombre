@@ -69,12 +69,35 @@ public class Deserializer {
         return GSON.fromJson(readFile(pathName), classType);
     }
 
+    // EFFECTS: returns true iff the given path leads to an existing file
+    public static boolean foundFile(String path) {
+        try {
+            Files.readAllBytes(Paths.get(path));
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    public static <T> void writeObject(T obj, String pathName) {
+        writeFile(pathName, GSON.toJson(obj));
+    }
+
     // REQUIRES: path leads to an existing file
     // EFFECTS: returns the contents of the given file, assuming it was encoded text, in a String
     private static String readFile(String path) {
         try {
             byte[] encoded = Files.readAllBytes(Paths.get(path));
             return new String(encoded, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void writeFile(String path, String contents) {
+        byte[] encoded = path.getBytes(StandardCharsets.UTF_8);
+        try {
+            Files.write(Paths.get(path), encoded);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

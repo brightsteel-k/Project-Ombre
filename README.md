@@ -51,23 +51,16 @@ and add them to an inventory-like collection that could be Y.
 
 
 ### User Stories
-This program caters to two different kinds of users: *creators* and *players*.
+*As a user, I would like to be able to...*
 
-*As a **player**, I would like to be able to...*
-
-- ~~become immersed in a dangerous high-stakes espionage mission within a custom-built fantasy world~~
-- have fun mastering the combat system and learning how to guide the story towards a goal
-- ~~explore the possible actions and objects of interest within the game through natural text prompts~~
-- understand the overarching story between multiple runs of the game
-- ~~become invested in defeating the enemy by learning more~~
-- ~~add arcane spells to a list of possible abilities they can utilize throughout the story~~
-- learn the effects of each spell and experiment with the keywords to build a rudimentary understanding 
-of some French vocabulary
-- utilize the fact that the game resets upon death to jump into preparing for the next battle
-- win the game in around 5-8 runs, depending on effort put in
-
-*As a **creator**, I would like to be able to...*
-- ~~Use intuitive JSON files to add distinct scenes to a central, interconnected collection, populating a set of scripts through which the storyline will automatically deserialize and navigate~~
-- ~~Chain scenes together in the JSON files by adding simple and efficient encoded event objects to the scene objects~~
-- ~~Effectively control behaviour of each event object in the JSON file by adding a collection of versatile condition objects to it~~
-- ~~Use intuitive JSON files to add distinct location to a central collection that, together with the scenes and event objects, provide the necessary data to create an emergent explorative experience~~
+- ~~explore the possible actions and objects of interest within the game~~
+- ~~input natural text prompts and receive feedback about them dynamically~~
+- ~~Maneuver between different locations in-game and investigate objects between them~~
+- ~~add arcane spells to a list of possible tools to use later~~
+- play the game multiple times in a row and understand the overarching story
+- utilize collected spells to engage in a combat encounter against an enemy
+- utilize collected spells/items to unlock features in the story
+- ~~learn about a custom-build fantasy world in a dangerous high-stakes espionage mission~~
+- learn the effects of each spell and experiment with the keywords to build a rudimentary understanding
+  of some French vocabulary
+- win the game in around 4-8 runs, depending on effort put in

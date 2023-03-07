@@ -19,14 +19,21 @@ public class StoryController {
     public static final Map<String, Spell> ALL_SPELLS = new HashMap<>();
     private Scene currentScene;
     private Location currentLocation;
-    private final Player player;
+    private Player player;
 
     // MODIFIES: StoryController.ALL_SPELLS, StoryController.ALL_SCENES, StoryController.ALL_LOCATIONS
     // EFFECTS: StoryController has a reference to the player instance, and a master map of all scenes, locations,
     //          and spells in the game.
-    public StoryController(Player player) {
-        this.player = player;
+    public StoryController() {
         registerObjects();
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public Scene getCurrentScene() {

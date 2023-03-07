@@ -34,8 +34,7 @@ public class StoryControllerTest {
 
     @BeforeEach
     void setup() {
-        testPlayer = new Player();
-        testStory = new StoryController(testPlayer);
+        testStory = new StoryController();
     }
 
     @Test

@@ -36,22 +36,6 @@ public class Scene {
         return new SceneEndingException(endSceneEvents);
     }
 
-    /*
-    // REQUIRES: if a SceneEvent signalling the start of exploration is in endSceneEvents, it's in the final
-    //           position.
-    // EFFECTS: returns true iff exploration should start at the end of this scene
-    private boolean shouldStartExploring() {
-        return endSceneEvents.get(endSceneEvents.size() - 1).isType(SceneEventType.START_EXPLORING);
-    }
-
-    // REQUIRES: if a SceneEvent signalling the transition to the next scene is in endSceneEvents, it's in the final
-    //           position.
-    // EFFECTS: returns the next scene's id, or null if there is none
-    private String nextScene() {
-        SceneEvent lastEvent = endSceneEvents.get(endSceneEvents.size() - 1);
-        return lastEvent.isType(SceneEventType.NEXT_SCENE) ? lastEvent.getKeyword() : null;
-    }*/
-
     @Override
     public boolean equals(Object obj) {
         if (obj.getClass() != Scene.class) {

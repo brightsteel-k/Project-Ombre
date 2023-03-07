@@ -5,6 +5,7 @@ import exceptions.AmbiguousActionException;
 import exceptions.InvalidActionException;
 import exceptions.SceneEndingException;
 import model.Player;
+import model.SaveSystem;
 import model.StoryController;
 import model.Interpreter;
 import model.storyobjects.SceneEvent;
@@ -17,29 +18,30 @@ import java.util.Scanner;
 // Controls text and interface with which the user interacts, runs the model code together
 public class Game {
 
-    private final Player player;
     private final StoryController story;
     private final Interpreter interpreter;
+    private final SaveSystem saveSystem;
     private static final Scanner SCANNER = new Scanner(System.in);
-    private boolean isExploring = false;
     private final Random random;
+    private boolean isExploring = false;
+    private Player player;
 
     // EFFECTS: Printer has its own deserializer, random number generator, interpreter, and initialized story objects
     //          that will work together to present the user with a text-based adventure experience.
     public Game() {
         Deserializer.initializeGson();
         random = new Random();
-        player = new Player();
-        story = new StoryController(player);
+        story = new StoryController();
+        saveSystem = new SaveSystem();
         interpreter = new Interpreter();
         story.setCurrentScene("intro");
         story.setCurrentLocation("front");
-        game();
+        startGame();
     }
 
     // MODIFIES: this, this object's story instance, this object's player instance
     // EFFECTS: starts the gameplay loop
-    public void game() {
+    private void game() {
         while (true) {
             printScene();
 
@@ -47,6 +49,39 @@ public class Game {
                 handleExploring();
             }
         }
+    }
+
+    private void startGame() {
+        if (!saveSystem.isSaveDetected()) {
+            newGame();
+            return;
+        }
+        System.out.println("New game (N) or continue (C) from saved game?");
+        boolean waiting = true;
+        while (waiting) {
+            String input = SCANNER.nextLine();
+            if (input.equals("N")) {
+                newGame();
+                waiting = false;
+            } else if (input.equals("C")) {
+                loadGame();
+                waiting = false;
+            }
+        }
+        game();
+    }
+
+    private void newGame() {
+        player = new Player();
+        story.setPlayer(player);
+    }
+
+    private void loadGame() {
+        saveSystem.loadGame();
+        player = saveSystem.getPlayer();
+        story.setPlayer(player);
+        story.setCurrentScene(saveSystem.getCurrentScene());
+        story.setCurrentLocation(saveSystem.getCurrentLocation());
     }
 
     // MODIFIES: this, this object's story instance, this object's player instance
@@ -60,7 +95,6 @@ public class Game {
             } catch (SceneEndingException e) {
                 isPrinting = false;
                 handleSceneEvents(e.getEvents());
-                //finishScene(e.shouldStartExploring(), e.getNextScene());
             }
         }
     }

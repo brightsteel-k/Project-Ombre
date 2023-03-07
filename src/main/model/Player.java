@@ -61,8 +61,8 @@ public class Player {
     }
 
     // REQUIRES: key.length() > 0, value.length() > 0
-    // MODIFIES: returns true iff the player's map of conditions contains one with the given key, and it has the given
-    //           expected value.
+    // EFFECTS: returns true iff the player's map of conditions contains one with the given key, and it has the given
+    //          expected value.
     public boolean conditionMet(String key, String expected) {
         String value = progressConditions.get(key);
         if (expected.equals("@f") && value == null) {
