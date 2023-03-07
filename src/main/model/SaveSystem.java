@@ -35,10 +35,9 @@ public class SaveSystem {
     public void saveGame(Player player, String currentState, String currentLocation) {
         SaveState state = new SaveState(player, currentState, currentLocation);
         if (saveDetected) {
-            Deserializer.writeObject(state, savePath);
-        } else {
-            // TODO: Create file
+            Deserializer.makeFile(savePath);
         }
+        Deserializer.writeObject(state, savePath);
     }
 
     private class SaveState {

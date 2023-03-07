@@ -54,18 +54,18 @@ public class Game {
     private void startGame() {
         if (!saveSystem.isSaveDetected()) {
             newGame();
-            return;
-        }
-        System.out.println("New game (N) or continue (C) from saved game?");
-        boolean waiting = true;
-        while (waiting) {
-            String input = SCANNER.nextLine();
-            if (input.equals("N")) {
-                newGame();
-                waiting = false;
-            } else if (input.equals("C")) {
-                loadGame();
-                waiting = false;
+        } else {
+            System.out.println("New game (N) or continue (C) from saved game?");
+            boolean waiting = true;
+            while (waiting) {
+                String input = SCANNER.nextLine();
+                if (input.equals("N")) {
+                    newGame();
+                    waiting = false;
+                } else if (input.equals("C")) {
+                    loadGame();
+                    waiting = false;
+                }
             }
         }
         game();
@@ -109,11 +109,6 @@ public class Game {
 
     // MODIFIES: this object's story instance, this object's player instance
     // EFFECTS: executes given scene event, with varying effects depending on its type and supplied keyword
-    // NOTE FOR TA: this method is greater than 25 lines. Since there is no way to effectively decompose it, I
-    //              intend to get the @SuppressWarnings annotation added as soon as I have permission, as
-    //              instructed by the project requirements on EdX.
-    //              My autograder report will show this error until I can get it fixed.
-    // (I did not realize AutoTest would not grade me if I didn't include the tag, so I've added it temporarily)
     @SuppressWarnings("methodlength")
     private void handleSceneEvent(SceneEvent event) {
         if (event.hasConditions() && !story.conditionsFulfilled(event.getConditions())) {
@@ -171,7 +166,12 @@ public class Game {
     private void executeUserInput() throws InvalidActionException {
         String[] actionWords = interpreter.userInput(SCANNER.nextLine());
 
-        handleSceneEvents(story.executeAction(actionWords));
+        if (actionWords[0].equals("savegame")) {
+            story.writeValuesToSaveSystem(saveSystem);
+            System.out.println("Game successfully saved!");
+        } else {
+            handleSceneEvents(story.executeAction(actionWords));
+        }
     }
 
     // MODIFIES: this object's story instance

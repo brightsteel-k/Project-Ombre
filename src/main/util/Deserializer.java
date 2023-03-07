@@ -83,6 +83,16 @@ public class Deserializer {
         writeFile(pathName, GSON.toJson(obj));
     }
 
+    public static void makeFile(String pathName) {
+        File f = new File(pathName);
+        f.getParentFile().mkdirs();
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     // REQUIRES: path leads to an existing file
     // EFFECTS: returns the contents of the given file, assuming it was encoded text, in a String
     private static String readFile(String path) {
@@ -95,7 +105,7 @@ public class Deserializer {
     }
 
     private static void writeFile(String path, String contents) {
-        byte[] encoded = path.getBytes(StandardCharsets.UTF_8);
+        byte[] encoded = contents.getBytes(StandardCharsets.UTF_8);
         try {
             Files.write(Paths.get(path), encoded);
         } catch (IOException e) {

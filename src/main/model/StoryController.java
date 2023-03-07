@@ -17,6 +17,8 @@ public class StoryController {
     public static final Map<String, Scene> ALL_SCENES = new HashMap<>();
     public static final Map<String, Location> ALL_LOCATIONS = new HashMap<>();
     public static final Map<String, Spell> ALL_SPELLS = new HashMap<>();
+    private String currentSceneId;
+    private String currentLocationId;
     private Scene currentScene;
     private Location currentLocation;
     private Player player;
@@ -40,6 +42,10 @@ public class StoryController {
         return currentScene;
     }
 
+    public void writeValuesToSaveSystem(SaveSystem system) {
+        system.saveGame(player, currentSceneId, currentLocationId);
+    }
+
     // MODIFIES: this
     // EFFECTS: sets current scene to the one registered to the corresponding ID and resets it,
     //          or throws exception if one does not exist.
@@ -49,6 +55,7 @@ public class StoryController {
             throw new InvalidSceneException();
         }
         currentScene = nextScene;
+        currentSceneId = id;
         currentScene.startScene();
     }
 
@@ -64,6 +71,7 @@ public class StoryController {
         if (nextLocation == null) {
             throw new InvalidLocationException();
         }
+        currentLocationId = id;
         currentLocation = nextLocation;
     }
 

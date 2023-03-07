@@ -1,4 +1,6 @@
 {
+  "saveprogress": "savegame",
+  "savegame": "savegame",
   "view": "view",
   "check": "view",
   "observe": "view",
