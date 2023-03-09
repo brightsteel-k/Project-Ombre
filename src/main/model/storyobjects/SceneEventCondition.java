@@ -1,5 +1,7 @@
 package model.storyobjects;
 
+import java.util.Objects;
+
 // A condition that needs to be tested in order for a scene event to run.
 public class SceneEventCondition {
     private String key;
@@ -22,11 +24,19 @@ public class SceneEventCondition {
 
     // EFFECTS: returns true iff this and the given object are identical SceneEventConditions
     @Override
-    public boolean equals(Object obj) {
-        if (obj.getClass() != SceneEventCondition.class) {
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        SceneEventCondition other = (SceneEventCondition)obj;
-        return key.equals(other.key) && expected.equals(other.expected);
+        SceneEventCondition that = (SceneEventCondition) o;
+        return Objects.equals(key, that.key) && Objects.equals(expected, that.expected);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, expected);
     }
 }

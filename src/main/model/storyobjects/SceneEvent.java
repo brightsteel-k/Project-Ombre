@@ -1,6 +1,7 @@
 package model.storyobjects;
 
-import util.Operations;
+import java.util.Arrays;
+import java.util.Objects;
 
 // An event that can be triggered during the game in response to the end of a scene or player interaction.
 // Some possible effects include starting a new scene, displaying a message, or teaching the player a spell.
@@ -57,13 +58,21 @@ public class SceneEvent {
 
     // EFFECTS: returns true iff this and the given object are identical SceneEvents
     @Override
-    public boolean equals(Object obj) {
-        if (obj.getClass() != SceneEvent.class) {
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        SceneEvent other = (SceneEvent)obj;
-        boolean keywordsMatch = Operations.objectsEqual(keyword, other.keyword);
-        boolean conditionsMatch = Operations.objectsEqual(conditions, other.conditions);
-        return type.equals(other.type) && keywordsMatch && conditionsMatch;
+        SceneEvent that = (SceneEvent) o;
+        return type == that.type && Objects.equals(keyword, that.keyword) && Arrays.equals(conditions, that.conditions);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(type, keyword);
+        result = 31 * result + Arrays.hashCode(conditions);
+        return result;
     }
 }

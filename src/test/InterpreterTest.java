@@ -5,9 +5,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.Deserializer;
-import util.Operations;
 
 import javax.swing.*;
+
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -124,11 +125,11 @@ public class InterpreterTest {
 
     // EFFECTS: fails if the given actual string array does not match one made up of expected0
     private void assertOutput(String expected0, String[] actual) {
-        assertTrue(Operations.arraysEqual(new String[] { expected0 }, actual));
+        assertTrue(Arrays.equals(new String[] { expected0 }, actual));
     }
 
     // EFFECTS: fails if the given actual string array does not match one made up of expected0 and expected1
     private void assertOutput(String expected0, String expected1, String[] actual) {
-        assertTrue(Operations.arraysEqual(new String[] { expected0, expected1 }, actual));
+        assertTrue(Arrays.equals(new String[] { expected0, expected1 }, actual));
     }
 }

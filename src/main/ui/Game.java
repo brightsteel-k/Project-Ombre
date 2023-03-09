@@ -42,6 +42,9 @@ public class Game {
     // MODIFIES: this, this object's story instance, this object's player instance
     // EFFECTS: starts the gameplay loop
     private void game() {
+        String a = "🌟 This game does not have an autosave feature. Type the code 'savegame' to save your progress 🌟";
+        System.out.println(a);
+        SCANNER.nextLine();
         while (true) {
             printScene();
 
@@ -51,6 +54,9 @@ public class Game {
         }
     }
 
+    // MODIFIES: this, this object's story instance, this object's player instance
+    // EFFECTS: offers player the choice to load a new game, iff one has been saved; then, calls method to start
+    //          gameplay loop.
     private void startGame() {
         if (!saveSystem.isSaveDetected()) {
             newGame();
@@ -59,10 +65,10 @@ public class Game {
             boolean waiting = true;
             while (waiting) {
                 String input = SCANNER.nextLine();
-                if (input.equals("N")) {
+                if (input.equalsIgnoreCase("n")) {
                     newGame();
                     waiting = false;
-                } else if (input.equals("C")) {
+                } else if (input.equalsIgnoreCase("c")) {
                     loadGame();
                     waiting = false;
                 }
@@ -71,11 +77,16 @@ public class Game {
         game();
     }
 
+    // MODIFIES: this object's story instance, this object's player instance
+    // EFFECTS: creates a new player, starting the game from the very beginning
     private void newGame() {
         player = new Player();
         story.setPlayer(player);
     }
 
+    // REQUIRES: previous player object is already serialized to a Json file at the correct directory
+    // MODIFIES: this object's story instance, this object's player instance
+    // EFFECTS: loads player from previous Json file
     private void loadGame() {
         saveSystem.loadGame();
         player = saveSystem.getPlayer();

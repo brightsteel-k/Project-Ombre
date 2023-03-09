@@ -82,6 +82,7 @@ public class SceneEventTest {
 
     @Test
     void testEquals() {
+        assertFalse(testSceneEvent1.equals(null));
         assertFalse(testSceneEvent1.equals("String"));
         assertFalse(testSceneEvent1.equals(testSceneEvent2));
         assertTrue(testSceneEvent2.equals(new SceneEvent(SceneEventType.ACQUIRE_ITEM, "oridur_ingot")));
@@ -95,6 +96,10 @@ public class SceneEventTest {
                 new SceneEventCondition[] { sceneEventCond1, sceneEventCond2 })));
         assertFalse(testSceneEvent3.equals(new SceneEvent(SceneEventType.DISPLAY_TEXT, null,
                 new SceneEventCondition[] { sceneEventCond1, sceneEventCond2 })));
+    }
 
+    @Test
+    void testHashCode() {
+        assertEquals(testSceneEvent1.hashCode(), testSceneEvent1.hashCode());
     }
 }

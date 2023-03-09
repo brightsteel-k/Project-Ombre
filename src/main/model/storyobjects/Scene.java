@@ -2,9 +2,10 @@ package model.storyobjects;
 
 import exceptions.SceneEndingException;
 import util.Exclude;
-import util.Operations;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 // A distinct section of the story text with which the user will interact
 public class Scene {
@@ -36,12 +37,23 @@ public class Scene {
         return new SceneEndingException(endSceneEvents);
     }
 
+    // EFFECTS: returns true iff this and the given object are identical Scenes
     @Override
-    public boolean equals(Object obj) {
-        if (obj.getClass() != Scene.class) {
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Scene other = (Scene)obj;
-        return Operations.arraysEqual(texts, other.texts) && endSceneEvents.equals(other.endSceneEvents);
+        Scene scene = (Scene) o;
+        return Arrays.equals(texts, scene.texts) && Objects.equals(endSceneEvents, scene.endSceneEvents);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(endSceneEvents);
+        result = 31 * result + Arrays.hashCode(texts);
+        return result;
     }
 }

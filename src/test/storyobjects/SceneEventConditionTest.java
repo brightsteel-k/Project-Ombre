@@ -1,6 +1,5 @@
 package storyobjects;
 
-import model.storyobjects.Location;
 import model.storyobjects.SceneEventCondition;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import util.Deserializer;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class SceneEventConditionTest {
 
@@ -38,10 +36,16 @@ public class SceneEventConditionTest {
 
     @Test
     void testEquals() {
+        assertFalse(testSceneEventCond1.equals(null));
         assertFalse(testSceneEventCond1.equals("String"));
         assertFalse(testSceneEventCond1.equals(testSceneEventCond2));
         assertFalse(testSceneEventCond1.equals(new SceneEventCondition(" ", "@t")));
         assertFalse(testSceneEventCond2.equals(new SceneEventCondition("@missingSpell", " ")));
         assertTrue(testSceneEventCond1.equals(testSceneEventCond1));
+    }
+
+    @Test
+    void testHashCode() {
+        assertEquals(testSceneEventCond1.hashCode(), testSceneEventCond1.hashCode());
     }
 }

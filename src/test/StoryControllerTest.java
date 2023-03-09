@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class StoryControllerTest {
 
     private StoryController testStory;
-    private Player testPlayer;
     private static SceneEventCondition cond1;
     private static SceneEventCondition cond2;
     private static SceneEventCondition cond3;
@@ -35,6 +34,7 @@ public class StoryControllerTest {
     @BeforeEach
     void setup() {
         testStory = new StoryController();
+        testStory.setPlayer(new Player());
     }
 
     @Test
@@ -147,10 +147,10 @@ public class StoryControllerTest {
 
     @Test
     void testConditionFulfilled() {
-        testPlayer.setCondition("custom_key", "@t");
-        testPlayer.addSpell("riez");
-        testPlayer.addSpell("tombez");
-        testPlayer.addItem("pearl");
+        testStory.getPlayer().setCondition("custom_key", "@t");
+        testStory.getPlayer().addSpell("riez");
+        testStory.getPlayer().addSpell("tombez");
+        testStory.getPlayer().addItem("pearl");
         assertTrue(testStory.conditionFulfilled(cond1));
         assertFalse(testStory.conditionFulfilled(cond2));
         assertFalse(testStory.conditionFulfilled(cond3));
