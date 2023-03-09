@@ -4,8 +4,11 @@
     "worktable": "worktable",
     "desk": "worktable",
     "table": "worktable",
+    "bookshelf": "worktable",
+    "bookshelves": "worktable",
     "voidstone": "voidstone",
-    "crystal": "voidstone"
+    "crystal": "voidstone",
+    "room": "room"
   },
   "actionEvents": {
     "goto@worktable": [
@@ -16,6 +19,18 @@
       {
         "type": "next_scene",
         "keyword": "approach_worktable"
+      }
+    ],
+    "view@room": [
+      {
+        "type": "next_scene",
+        "keyword": "view_front"
+      }
+    ],
+    "view": [
+      {
+        "type": "next_scene",
+        "keyword": "view_front"
       }
     ]
   }

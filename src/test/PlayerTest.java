@@ -1,12 +1,26 @@
 import model.Player;
+import model.StoryController;
+import model.storyobjects.Spell;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import util.Deserializer;
+
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
 
     Player testPlayer;
+    static Spell testSpell;
+
+    @BeforeAll
+    static void beforeAll() {
+        Deserializer.initializeGson();
+        testSpell = Deserializer.loadObject(Spell.class, "data/spells/brulez.json");
+        StoryController story = new StoryController();
+    }
 
     @BeforeEach
     void setup() {
@@ -43,5 +57,16 @@ public class PlayerTest {
         assertTrue(testPlayer.conditionMet("chose_weapon", "plasma_sword"));
         assertFalse(testPlayer.conditionMet("chose_armour", "diamond"));
         assertTrue(testPlayer.conditionMet("visited_magnetar?", "@f"));
+    }
+
+    @Test
+    void testGetSpells() {
+        assertTrue(Arrays.equals(new Spell[0], testPlayer.getSpells()));
+        testPlayer.addSpell("oubliez");
+        testPlayer.addSpell("brulez");
+        testPlayer.addSpell("souffrez");
+        testPlayer.addSpell("brulez");
+        Spell[] expected = new Spell[] { null, testSpell, null };
+        assertTrue(Arrays.equals(expected, testPlayer.getSpells()));
     }
 }

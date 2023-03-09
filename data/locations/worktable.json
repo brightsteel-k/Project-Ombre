@@ -18,6 +18,10 @@
       {
         "type": "change_location",
         "keyword": "front"
+      },
+      {
+        "type": "next_scene",
+        "keyword": "home"
       }
     ],
     "search@worktable": [

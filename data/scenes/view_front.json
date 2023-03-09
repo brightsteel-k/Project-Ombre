@@ -1,0 +1,15 @@
+{
+  "texts": [
+    "You glance around the heptagonal stonebrick room. To your left, a worktable sits between two bookshelves brimming with old texts. To your right, a long \nwooden shelf lines the wall, sporting several glass flasks and supplies for alchemical processes.",
+    "Past the volatile Voidstone at the centre of the room, low embers smolder in a furnace of black stone beside a platinum-coloured anvil and a large chest."
+  ],
+  "endSceneEvents": [
+    {
+      "type": "display_text",
+      "keyword": "What would you like to do?"
+    },
+    {
+      "type": "start_exploring"
+    }
+  ]
+}

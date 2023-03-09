@@ -15,6 +15,7 @@ class SaveSystemTest {
 
     @BeforeAll
     static void beforeAll() {
+        Deserializer.initializeGson();
         StoryController story = new StoryController();
         testPlayer = new Player();
         testPlayer.addItem("malachite");

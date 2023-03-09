@@ -11,7 +11,7 @@
   "endSceneEvents": [
     {
       "type": "next_scene",
-      "keyword": "home"
+      "keyword": "view_front"
     }
   ]
 }

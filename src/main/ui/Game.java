@@ -9,6 +9,7 @@ import model.SaveSystem;
 import model.StoryController;
 import model.Interpreter;
 import model.storyobjects.SceneEvent;
+import model.storyobjects.Spell;
 import util.Deserializer;
 
 import java.util.List;
@@ -182,6 +183,8 @@ public class Game {
         if (actionWords[0].equals("savegame")) {
             story.writeValuesToSaveSystem(saveSystem);
             System.out.println("Game successfully saved!");
+        } else if (actionWords[0].equals("meditate")) {
+            printSpells();
         } else {
             handleSceneEvents(story.executeAction(actionWords));
         }
@@ -191,6 +194,27 @@ public class Game {
     // EFFECTS: updates player's location in the story, prints corresponding message
     private void changeLocation(String newLocation) {
         System.out.println(story.changeLocation(newLocation));
+    }
+
+    // EFFECTS: prints info about all the spells the player has collected thus far, or a message about memory
+    //          if they have collected none.
+    private void printSpells() {
+        Spell[] spells = player.getSpells();
+        if (spells.length == 0) {
+            String a = "You take a moment to collect yourself, trying to recall the esotaric shapes and \n"
+                    + "incantations for the spells you know. However, a dark fog seems to clings to your mind\n"
+                    + "obscuring your memory of the spells and training you know you have experienced.";
+            System.out.println(a);
+            return;
+        }
+
+        String b = "You take a moment to collect yourself, visualizing the esoteric shapes and recalling\n"
+                + "the incantations for the spells you know. For some reason, a dark fog seems to cling to your\n"
+                + "mind, obfuscating your memory of any spells beyond the following: \n";
+        System.out.println(b);
+        for (Spell s : spells) {
+            System.out.println("[*]  " + s.getIncantation() + " - " + s.getDamage() + " damage");
+        }
     }
 
     // EFFECTS: prints message telling the player their previous action was invalid, depending on the type of exception

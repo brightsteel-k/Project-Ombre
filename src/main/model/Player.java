@@ -21,6 +21,11 @@ public class Player {
         spells = new HashMap<>();
     }
 
+    // EFFECTS: returns all the spells this player knows
+    public Spell[] getSpells() {
+        return spells.values().toArray(new Spell[0]);
+    }
+
     // REQUIRES: name.length() > 0
     // MODIFIES: this
     // EFFECTS: adds the item name to the player's list of acquired items
@@ -44,7 +49,6 @@ public class Player {
         }
         spells.put(name, StoryController.ALL_SPELLS.get(name));
     }
-
 
     // REQUIRES: name.length() > 0
     // EFFECTS: returns true iff the player's collection of known spells contains the given spell name
