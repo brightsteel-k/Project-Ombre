@@ -91,7 +91,6 @@ public class Deserializer {
     // EFFECTS: creates a new file at the given path
     public static void makeFile(String pathName) {
         File f = new File(pathName);
-        f.getParentFile().mkdirs();
         try {
             f.createNewFile();
         } catch (IOException e) {
