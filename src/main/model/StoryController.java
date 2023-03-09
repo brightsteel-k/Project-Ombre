@@ -42,6 +42,8 @@ public class StoryController {
         return currentScene;
     }
 
+    // MODIFIES: device disk
+    // EFFECTS: sends current state of game to the save system to write to disk
     public void writeValuesToSaveSystem(SaveSystem system) {
         system.saveGame(player, currentSceneId, currentLocationId);
     }

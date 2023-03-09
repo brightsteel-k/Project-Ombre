@@ -26,25 +26,27 @@ public class Game {
     private boolean isExploring = false;
     private Player player;
 
-    // EFFECTS: Printer has its own deserializer, random number generator, interpreter, and initialized story objects
-    //          that will work together to present the user with a text-based adventure experience.
+    // EFFECTS: Printer has its own random number generator, save system, interpreter, and initialized story objects
+    //          that will work together to present the user with a text-based adventure experience. Initalizes
+    //          Deserializer class.
     public Game() {
         Deserializer.initializeGson();
         random = new Random();
-        story = new StoryController();
         saveSystem = new SaveSystem();
         interpreter = new Interpreter();
+        story = new StoryController();
         story.setCurrentScene("intro");
         story.setCurrentLocation("front");
         startGame();
     }
 
-    // MODIFIES: this, this object's story instance, this object's player instance
+    // MODIFIES: this, this object's story instance, this object's player instance, device disk
     // EFFECTS: starts the gameplay loop
     private void game() {
         String a = "🌟 This game does not have an autosave feature. Type the code 'savegame' to save your progress 🌟";
-        System.out.println(a);
+        System.out.println(a + "\n[Enter to continue]");
         SCANNER.nextLine();
+        System.out.println("\n");
         while (true) {
             printScene();
 
@@ -54,7 +56,7 @@ public class Game {
         }
     }
 
-    // MODIFIES: this, this object's story instance, this object's player instance
+    // MODIFIES: this, this object's story instance, this object's player instance, device disk
     // EFFECTS: offers player the choice to load a new game, iff one has been saved; then, calls method to start
     //          gameplay loop.
     private void startGame() {
@@ -158,7 +160,7 @@ public class Game {
         SCANNER.nextLine();
     }
 
-    // MODIFIES: this object's story instance, this object's player instance
+    // MODIFIES: this object's story instance, this object's player instance, device disk
     // EFFECTS: keeps querying player for input actions and executing corresponding effects, as long as player is
     //          exploring.
     private void handleExploring() {
@@ -171,7 +173,7 @@ public class Game {
         }
     }
 
-    // MODIFIES: this object's story instance, this object's player instance
+    // MODIFIES: this object's story instance, this object's player instance, device disk
     // EFFECTS: receives user input, passes it to the story object for formatting into an action code,
     //          carries the action out the action if valid. Else, throws exception.
     private void executeUserInput() throws InvalidActionException {

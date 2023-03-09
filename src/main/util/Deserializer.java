@@ -80,12 +80,14 @@ public class Deserializer {
     }
 
     // REQUIRES: path leads to an existing file
+    // MODIFIES: device disk
     // EFFECTS: serializes the given object using Json, writes the encoded String into the given file
     public static <T> void writeObject(T obj, String pathName) {
         writeFile(pathName, GSON.toJson(obj));
     }
 
     // REQUIRES: path leads to a place on device where a directory & file can be made
+    // MODIFIES: device disk
     // EFFECTS: creates a new file at the given path
     public static void makeFile(String pathName) {
         File f = new File(pathName);
@@ -109,6 +111,7 @@ public class Deserializer {
     }
 
     // REQUIRES: path leads to an existing file
+    // MODIFIES: device disk
     // EFFECTS: write the given contents String to the given file
     private static void writeFile(String path, String contents) {
         byte[] encoded = contents.getBytes(StandardCharsets.UTF_8);

@@ -1,5 +1,6 @@
 import exceptions.*;
 import model.Player;
+import model.SaveSystem;
 import model.StoryController;
 import model.storyobjects.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -134,6 +135,22 @@ public class StoryControllerTest {
         assertInvalidActionSubject("pulsar", testStory, new String[] { "goto", "pulsar" });
         assertInvalidAction(testStory, new String[] { "vaporize", "throneroom" });
         assertInvalidActionSubject("supernova", testStory, new String[] { "view", "supernova" });
+    }
+
+    @Test
+    void testWriteValuesToSaveSystem() {
+        SaveSystem s = new SaveSystem();
+        testStory.setCurrentScene("home");
+        testStory.setCurrentLocation("front");
+        Player p = new Player();
+        p.addItem("obsidian_knife");
+        testStory.setPlayer(p);
+        testStory.writeValuesToSaveSystem(s);
+
+        s.loadGame();
+        assertEquals("home", s.getCurrentScene());
+        assertEquals("front", s.getCurrentLocation());
+        assertTrue(s.getPlayer().hasItem("obsidian_knife"));
     }
 
     @Test
