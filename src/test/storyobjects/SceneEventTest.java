@@ -82,6 +82,7 @@ public class SceneEventTest {
 
     @Test
     void testEquals() {
+        assertTrue(testSceneEvent1.equals(testSceneEvent1));
         assertFalse(testSceneEvent1.equals(null));
         assertFalse(testSceneEvent1.equals("String"));
         assertFalse(testSceneEvent1.equals(testSceneEvent2));

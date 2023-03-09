@@ -41,7 +41,7 @@ public class SceneEventConditionTest {
         assertFalse(testSceneEventCond1.equals(testSceneEventCond2));
         assertFalse(testSceneEventCond1.equals(new SceneEventCondition(" ", "@t")));
         assertFalse(testSceneEventCond2.equals(new SceneEventCondition("@missingSpell", " ")));
-        assertTrue(testSceneEventCond1.equals(testSceneEventCond1));
+        assertTrue(testSceneEventCond1.equals(new SceneEventCondition("visited_icer?","@t")));
     }
 
     @Test

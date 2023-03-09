@@ -39,6 +39,7 @@ public class SpellTest {
     @Test
     void testEquals() {
         assertFalse(testSpell1.equals(null));
+        assertFalse(testSpell1.equals("String"));
         assertFalse(testSpell1.equals(new Spell()));
         assertFalse(testSpell1.equals(testSpell2));
         assertFalse(testSpell1.equals(testSpell3));

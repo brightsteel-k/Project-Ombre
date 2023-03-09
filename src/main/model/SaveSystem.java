@@ -28,14 +28,17 @@ public class SaveSystem {
         savedGame = Deserializer.loadObject(SaveState.class, SAVE_PATH);
     }
 
+    // EFFECTS: returns player stored in saved game
     public Player getPlayer() {
         return savedGame.getPlayer();
     }
 
+    // EFFECTS: returns scene stored in saved game
     public String getCurrentScene() {
         return savedGame.getCurrentScene();
     }
 
+    // EFFECTS: returns location stored in saved game
     public String getCurrentLocation() {
         return savedGame.getCurrentLocation();
     }
@@ -47,6 +50,7 @@ public class SaveSystem {
         SaveState state = new SaveState(player, currentScene, currentLocation);
         if (!saveDetected) {
             Deserializer.makeFile(SAVE_PATH);
+            saveDetected = true;
         }
         Deserializer.writeObject(state, SAVE_PATH);
     }
@@ -61,7 +65,7 @@ public class SaveSystem {
     }
 
     // Single object to store all the relevant information about the current state of the game
-    private class SaveState {
+    public class SaveState {
         private final Player player;
         private final String currentScene;
         private final String currentLocation;

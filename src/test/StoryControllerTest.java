@@ -140,6 +140,11 @@ public class StoryControllerTest {
     @Test
     void testWriteValuesToSaveSystem() {
         SaveSystem s = new SaveSystem();
+        testStory.writeValuesToSaveSystem(s);
+        s.loadGame();
+        assertNull(s.getCurrentScene());
+        assertNull(s.getCurrentLocation());
+
         testStory.setCurrentScene("home");
         testStory.setCurrentLocation("front");
         Player p = new Player();

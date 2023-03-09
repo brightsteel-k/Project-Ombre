@@ -24,7 +24,7 @@ class SaveSystemTest {
     }
 
     @BeforeEach
-    void setUp() {
+    void setup() {
         testSaveSystem = new SaveSystem();
         testSaveSystem.deleteSave();
     }
@@ -40,8 +40,7 @@ class SaveSystemTest {
         assertTrue(testPlayer2.conditionMet("other_thing", "@f"));
         assertEquals("a", testSaveSystem.getCurrentScene());
         assertEquals("b", testSaveSystem.getCurrentLocation());
-        makeTestSave();
-        testSaveSystem.loadGame();
+        makeTestSaveAndLoad();
         testPlayer2 = testSaveSystem.getPlayer();
         assertTrue(testPlayer2.hasItem("malachite"));
         assertTrue(testPlayer2.hasSpell("gelez"));
@@ -52,18 +51,52 @@ class SaveSystemTest {
     }
 
     @Test
+    void testGetPlayer() {
+        makeTestSaveAndLoad();
+        Player testPlayer2 = testSaveSystem.getPlayer();
+        assertTrue(testPlayer2.hasItem("malachite"));
+        assertTrue(testPlayer2.hasSpell("gelez"));
+        assertTrue(testPlayer2.conditionMet("thing", "@t"));
+        assertTrue(testPlayer2.conditionMet("other_thing", "@f"));
+    }
+
+    @Test
+    void testGetCurrentScene() {
+        makeTestSaveAndLoad();
+        assertEquals("scene", testSaveSystem.getCurrentScene());
+    }
+
+    @Test
+    void testGetCurrentLocation() {
+        makeTestSaveAndLoad();
+        assertEquals("location", testSaveSystem.getCurrentLocation());
+    }
+
+    @Test
     void testDeleteSave() {
         testSaveSystem.deleteSave();
         assertFalse(testSaveSystem.isSaveDetected());
-        makeTestSave();
-        testSaveSystem = new SaveSystem();
+        makeTestSaveAndLoad();
         assertTrue(testSaveSystem.isSaveDetected());
         testSaveSystem.deleteSave();
-        testSaveSystem = new SaveSystem();
         assertFalse(testSaveSystem.isSaveDetected());
     }
 
-    private void makeTestSave() {
+    private void makeTestSaveAndLoad() {
         testSaveSystem.saveGame(testPlayer, "scene", "location");
+        testSaveSystem.loadGame();
+    }
+
+
+    @Test
+    void testSaveStateConstructor() {
+        SaveSystem.SaveState state = testSaveSystem.new SaveState(testPlayer, "string1", "string2");
+        Player testPlayer2 = state.getPlayer();
+        assertTrue(testPlayer2.hasItem("malachite"));
+        assertTrue(testPlayer2.hasSpell("gelez"));
+        assertTrue(testPlayer2.conditionMet("thing", "@t"));
+        assertTrue(testPlayer2.conditionMet("other_thing", "@f"));
+        assertEquals("string1", state.getCurrentScene());
+        assertEquals("string2", state.getCurrentLocation());
     }
 }
