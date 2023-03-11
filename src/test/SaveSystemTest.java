@@ -13,26 +13,24 @@ public class SaveSystemTest {
     SaveSystem testSaveSystem;
     static Player testPlayer;
 
-//    @BeforeAll
-//    public static void beforeAll() {
-//
-//    }
-
-    @BeforeEach
-    public void setup() {
+    @BeforeAll
+    public static void beforeAll() {
         Deserializer.initializeGson();
         StoryController story = new StoryController();
         testPlayer = new Player();
         testPlayer.addItem("malachite");
         testPlayer.addSpell("gelez");
         testPlayer.setCondition("thing", "@t");
+    }
 
+    @BeforeEach
+    void setup() {
         testSaveSystem = new SaveSystem();
         testSaveSystem.deleteSave();
     }
 
     @Test
-    public void testSaveAndLoadGame() {
+    void testSaveAndLoadGame() {
         testSaveSystem.saveGame(new Player(), "a", "b");
         testSaveSystem.loadGame();
         Player testPlayer2 = testSaveSystem.getPlayer();
@@ -53,7 +51,7 @@ public class SaveSystemTest {
     }
 
     @Test
-    public void testGetPlayer() {
+    void testGetPlayer() {
         makeTestSaveAndLoad();
         Player testPlayer2 = testSaveSystem.getPlayer();
         assertTrue(testPlayer2.hasItem("malachite"));
@@ -63,19 +61,19 @@ public class SaveSystemTest {
     }
 
     @Test
-    public void testGetCurrentScene() {
+    void testGetCurrentScene() {
         makeTestSaveAndLoad();
         assertEquals("scene", testSaveSystem.getCurrentScene());
     }
 
     @Test
-    public void testGetCurrentLocation() {
+    void testGetCurrentLocation() {
         makeTestSaveAndLoad();
         assertEquals("location", testSaveSystem.getCurrentLocation());
     }
 
     @Test
-    public void testDeleteSave() {
+    void testDeleteSave() {
         testSaveSystem.deleteSave();
         assertFalse(testSaveSystem.isSaveDetected());
         makeTestSaveAndLoad();
@@ -91,7 +89,7 @@ public class SaveSystemTest {
 
 
     @Test
-    public void testSaveStateConstructor() {
+    void testSaveStateConstructor() {
         SaveSystem.SaveState state = testSaveSystem.new SaveState(testPlayer, "string1", "string2");
         Player testPlayer2 = state.getPlayer();
         assertTrue(testPlayer2.hasItem("malachite"));

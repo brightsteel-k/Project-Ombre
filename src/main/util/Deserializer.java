@@ -94,7 +94,7 @@ public class Deserializer {
         try {
             f.createNewFile();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            // throw new RuntimeException(e); TODO: FIND A PERMANENT SOLUTION
         }
     }
 
@@ -117,7 +117,7 @@ public class Deserializer {
         try {
             Files.write(Paths.get(path), encoded);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            // throw new RuntimeException(e); # TODO: FIND A PERMANENT SOLUTION
         }
     }
 }
