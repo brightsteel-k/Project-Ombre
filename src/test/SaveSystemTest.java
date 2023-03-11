@@ -8,29 +8,31 @@ import util.Deserializer;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SaveSystemTest {
+public class SaveSystemTest {
 
     SaveSystem testSaveSystem;
     static Player testPlayer;
 
-    @BeforeAll
-    static void beforeAll() {
+//    @BeforeAll
+//    public static void beforeAll() {
+//
+//    }
+
+    @BeforeEach
+    public void setup() {
         Deserializer.initializeGson();
         StoryController story = new StoryController();
         testPlayer = new Player();
         testPlayer.addItem("malachite");
         testPlayer.addSpell("gelez");
         testPlayer.setCondition("thing", "@t");
-    }
 
-    @BeforeEach
-    void setup() {
         testSaveSystem = new SaveSystem();
         testSaveSystem.deleteSave();
     }
 
     @Test
-    void testSaveAndLoadGame() {
+    public void testSaveAndLoadGame() {
         testSaveSystem.saveGame(new Player(), "a", "b");
         testSaveSystem.loadGame();
         Player testPlayer2 = testSaveSystem.getPlayer();
@@ -51,7 +53,7 @@ class SaveSystemTest {
     }
 
     @Test
-    void testGetPlayer() {
+    public void testGetPlayer() {
         makeTestSaveAndLoad();
         Player testPlayer2 = testSaveSystem.getPlayer();
         assertTrue(testPlayer2.hasItem("malachite"));
@@ -61,19 +63,19 @@ class SaveSystemTest {
     }
 
     @Test
-    void testGetCurrentScene() {
+    public void testGetCurrentScene() {
         makeTestSaveAndLoad();
         assertEquals("scene", testSaveSystem.getCurrentScene());
     }
 
     @Test
-    void testGetCurrentLocation() {
+    public void testGetCurrentLocation() {
         makeTestSaveAndLoad();
         assertEquals("location", testSaveSystem.getCurrentLocation());
     }
 
     @Test
-    void testDeleteSave() {
+    public void testDeleteSave() {
         testSaveSystem.deleteSave();
         assertFalse(testSaveSystem.isSaveDetected());
         makeTestSaveAndLoad();
@@ -89,7 +91,7 @@ class SaveSystemTest {
 
 
     @Test
-    void testSaveStateConstructor() {
+    public void testSaveStateConstructor() {
         SaveSystem.SaveState state = testSaveSystem.new SaveState(testPlayer, "string1", "string2");
         Player testPlayer2 = state.getPlayer();
         assertTrue(testPlayer2.hasItem("malachite"));
