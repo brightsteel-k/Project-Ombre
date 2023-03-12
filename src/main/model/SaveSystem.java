@@ -7,7 +7,7 @@ import java.io.File;
 // Handles saving and loading game states to and from the data folder
 public class SaveSystem {
 
-    public static final String SAVE_PATH = "./data/saves/game0.json";
+    public static final String SAVE_PATH = "data/saves/game0.json";
     private boolean saveDetected;
     private SaveState savedGame;
 
