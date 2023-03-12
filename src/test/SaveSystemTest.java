@@ -83,8 +83,17 @@ public class SaveSystemTest {
     }
 
     private void makeTestSaveAndLoad() {
-        testSaveSystem.saveGame(testPlayer, "scene", "location");
-        testSaveSystem.loadGame();
+        try {
+            testSaveSystem.saveGame(testPlayer, "scene", "location");
+        } catch (RuntimeException e) {
+            fail("SaveSystem.saveGame() could not run - " + e.getMessage());
+        }
+
+        try {
+            testSaveSystem.loadGame();
+        } catch (RuntimeException e) {
+            fail("SaveSystem.loadGame() could not run - " + e.getMessage());
+        }
     }
 
 

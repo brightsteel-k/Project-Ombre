@@ -41,7 +41,7 @@ public class DeserializerTest {
     void testInvalidMakeFile() {
         try {
             Deserializer.makeFile("enneacontaka::eneagon..");
-//            fail();
+            fail();
         } catch (RuntimeException e) {
             assertSame(IOException.class, e.getCause().getClass());
         }

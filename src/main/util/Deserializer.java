@@ -94,7 +94,7 @@ public class Deserializer {
         try {
             f.createNewFile();
         } catch (IOException e) {
-            // throw new RuntimeException(e); TODO: FIND A PERMANENT SOLUTION
+            throw new RuntimeException("Deserializer.makeFile() failed. Path: " + pathName, e);
         }
     }
 
@@ -105,7 +105,7 @@ public class Deserializer {
             byte[] encoded = Files.readAllBytes(Paths.get(path));
             return new String(encoded, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Deserializer.readFile() failed. Path: " + path, e);
         }
     }
 
@@ -117,7 +117,7 @@ public class Deserializer {
         try {
             Files.write(Paths.get(path), encoded);
         } catch (IOException e) {
-            // throw new RuntimeException(e); # TODO: FIND A PERMANENT SOLUTION
+            throw new RuntimeException("Deserializer.writeFile() failed. Path: " + path, e);
         }
     }
 }
