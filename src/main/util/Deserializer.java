@@ -93,7 +93,7 @@ public class Deserializer {
         File f = new File(pathName);
         try {
             f.createNewFile();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException("Deserializer.makeFile() failed. Path: " + pathName, e);
         }
     }
@@ -116,7 +116,7 @@ public class Deserializer {
         byte[] encoded = contents.getBytes(StandardCharsets.UTF_8);
         try {
             Files.write(Paths.get(path), encoded);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException("Deserializer.writeFile() failed. Path: " + path, e);
         }
     }

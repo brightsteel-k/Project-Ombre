@@ -32,6 +32,8 @@ public class DeserializerTest {
             fail();
         } catch (RuntimeException e) {
             assertSame(NoSuchFileException.class, e.getCause().getClass());
+            assertEquals("Deserializer.readFile() failed. Path: pneumonoultramicroscopicsilicavolcanoconiosis.",
+                    e.getMessage());
         }
     }
 
@@ -43,7 +45,7 @@ public class DeserializerTest {
             Deserializer.makeFile("enneacontaka::eneagon..");
             fail();
         } catch (RuntimeException e) {
-            assertSame(IOException.class, e.getCause().getClass());
+            assertEquals("Deserializer.makeFile() failed. Path: enneacontaka::eneagon..", e.getMessage());
         }
     }
 
@@ -55,7 +57,7 @@ public class DeserializerTest {
             Deserializer.writeObject("Object", "enneacontaka::eneagon..");
             fail();
         } catch (RuntimeException e) {
-            assertSame(InvalidPathException.class, e.getClass());
+            assertEquals("Deserializer.writeFile() failed. Path: enneacontaka::eneagon..", e.getMessage());
         }
     }
 }
