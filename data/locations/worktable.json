@@ -30,6 +30,12 @@
         "keyword": "search_worktable"
       }
     ],
+    "lookin@worktable": [
+      {
+        "type": "next_scene",
+        "keyword": "search_worktable"
+      }
+    ],
     "view@drawings": [
       {
         "type": "next_scene",

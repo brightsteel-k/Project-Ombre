@@ -60,8 +60,8 @@ and add them to an inventory-like collection that could be Y.
 - play the game multiple times in a row and understand the overarching story
 - utilize collected spells to engage in a combat encounter against an enemy
 - utilize collected spells/items to unlock features in the story
-- ~~save the state of the entire game to a data file at any point using the savegame keyword~~
-- ~~load a saved game state from the data file when the program starts, to continue from their last play-through~~
+- ~~save the state of the entire game to a data file at any point I choose, using the savegame keyword~~
+- ~~be presented with the choice to resume a saved game from the data file when the program starts~~
 - ~~learn about a custom-build fantasy world in a dangerous high-stakes espionage mission~~
 - learn the effects of each spell and experiment with the keywords to build a rudimentary understanding
   of some French vocabulary
