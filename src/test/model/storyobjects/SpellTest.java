@@ -27,7 +27,7 @@ public class SpellTest {
     }
 
     @Test
-    void testCreation() {
+    void testConstructor() {
         assertEquals("Recall", testSpell1.getName());
         assertEquals("souvenez-vous", testSpell1.getIncantation());
         assertEquals("silk", testSpell1.getSchool());

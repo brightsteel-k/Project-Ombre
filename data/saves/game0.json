@@ -1,0 +1,15 @@
+{
+    "currentScene": "home",
+    "currentLocation": "front",
+    "player": {
+        "progressConditions": {},
+        "spells": [{
+            "damage": 4,
+            "school": "ember",
+            "name": "Burn",
+            "description": "Summons a swirling ray of blazing flame.",
+            "incantation": "brulez"
+        }],
+        "items": ["obsidian_knife"]
+    }
+}
