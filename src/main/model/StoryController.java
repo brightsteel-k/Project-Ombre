@@ -5,7 +5,7 @@ import exceptions.*;
 import model.storyobjects.Location;
 import model.storyobjects.Spell;
 import model.storyobjects.*;
-import util.Deserializer;
+import util.DataManager;
 
 import java.util.HashMap;
 import java.util.List;
@@ -80,9 +80,9 @@ public class StoryController {
     // MODIFIES: StoryController.ALL_SPELLS, StoryController.ALL_SCENES, StoryController.ALL_LOCATIONS
     // EFFECTS: populates master maps of all spells, scenes, and locations in the game
     private void registerObjects() {
-        Deserializer.loadObjectsToMap(Spell.class, "data/spells", ALL_SPELLS);
-        Deserializer.loadObjectsToMap(Scene.class, "data/scenes", ALL_SCENES);
-        Deserializer.loadObjectsToMap(Location.class, "data/locations", ALL_LOCATIONS);
+        DataManager.loadObjectsToMap(Spell.class, "data/spells", ALL_SPELLS);
+        DataManager.loadObjectsToMap(Scene.class, "data/scenes", ALL_SCENES);
+        DataManager.loadObjectsToMap(Location.class, "data/locations", ALL_LOCATIONS);
     }
 
     // MODIFIES: this

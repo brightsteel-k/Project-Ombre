@@ -1,10 +1,10 @@
-package storyobjects;
+package model.storyobjects;
 
 import model.storyobjects.SceneEventCondition;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import util.Deserializer;
+import util.DataManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,14 +15,14 @@ public class SceneEventConditionTest {
 
     @BeforeAll
     static void init() {
-        Deserializer.initializeGson();
+        DataManager.initializeGson();
     }
 
     @BeforeEach
     void setup() {
-        testSceneEventCond1 = Deserializer.loadObject(SceneEventCondition.class,
+        testSceneEventCond1 = DataManager.loadObject(SceneEventCondition.class,
                 "data/test/scene_event_condition_1.json");
-        testSceneEventCond2 = Deserializer.loadObject(SceneEventCondition.class,
+        testSceneEventCond2 = DataManager.loadObject(SceneEventCondition.class,
                 "data/test/scene_event_condition_2.json");
     }
 

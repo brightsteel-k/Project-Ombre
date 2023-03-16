@@ -21,9 +21,24 @@ public class Player {
         spells = new HashMap<>();
     }
 
+    // EFFECTS: Player is initialized with empty collections of conditions, items, and spells.
+    public Player(Map<String, String> progressConditions, List<String> items, Map<String, Spell> spells) {
+        this.progressConditions = progressConditions;
+        this.items = items;
+        this.spells = spells;
+    }
+
     // EFFECTS: returns all the spells this player knows
     public Spell[] getSpells() {
         return spells.values().toArray(new Spell[0]);
+    }
+
+    public List<String> getItems() {
+        return items;
+    }
+
+    public Map<String, String> getProgressConditions() {
+        return progressConditions;
     }
 
     // REQUIRES: name.length() > 0

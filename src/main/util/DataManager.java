@@ -15,7 +15,7 @@ import java.util.Map;
 
 // Handles automatic deserialization of data objects like locations, spells, scenes, scene events, and scene conditions,
 // as well as maps of synonyms. These make up the material of the story and game itself.
-public class Deserializer {
+public class DataManager {
 
     private static Gson GSON;
     private static final ExclusionStrategy GSON_STRATEGY = new ExclusionStrategy() {
@@ -94,30 +94,30 @@ public class Deserializer {
         try {
             f.createNewFile();
         } catch (Exception e) {
-            throw new RuntimeException("Deserializer.makeFile() failed. Path: " + pathName, e);
+            throw new RuntimeException("DataManager.makeFile() failed. Path: " + pathName, e);
         }
     }
 
     // REQUIRES: path leads to an existing file
     // EFFECTS: returns the contents of the given file, assuming it was encoded text, in a String
-    private static String readFile(String path) {
+    public static String readFile(String path) {
         try {
             byte[] encoded = Files.readAllBytes(Paths.get(path));
             return new String(encoded, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            throw new RuntimeException("Deserializer.readFile() failed. Path: " + path, e);
+            throw new RuntimeException("DataManager.readFile() failed. Path: " + path, e);
         }
     }
 
     // REQUIRES: path leads to an existing file
     // MODIFIES: device disk
     // EFFECTS: write the given contents String to the given file
-    private static void writeFile(String path, String contents) {
+    public static void writeFile(String path, String contents) {
         byte[] encoded = contents.getBytes(StandardCharsets.UTF_8);
         try {
             Files.write(Paths.get(path), encoded);
         } catch (Exception e) {
-            throw new RuntimeException("Deserializer.writeFile() failed. Path: " + path, e);
+            throw new RuntimeException("DataManager.writeFile() failed. Path: " + path, e);
         }
     }
 }

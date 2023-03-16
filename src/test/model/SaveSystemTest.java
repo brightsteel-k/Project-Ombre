@@ -1,10 +1,12 @@
+package model;
+
 import model.Player;
 import model.SaveSystem;
 import model.StoryController;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import util.Deserializer;
+import util.DataManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +17,7 @@ public class SaveSystemTest {
 
     @BeforeAll
     public static void beforeAll() {
-        Deserializer.initializeGson();
+        DataManager.initializeGson();
         StoryController story = new StoryController();
         testPlayer = new Player();
         testPlayer.addItem("malachite");

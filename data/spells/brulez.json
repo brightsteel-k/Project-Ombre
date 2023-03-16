@@ -1,4 +1,7 @@
 {
+  "name": "Burn",
   "incantation": "brulez",
+  "school": "ember",
+  "description": "Summons a swirling ray of blazing flame.",
   "damage": 4
 }

@@ -1,4 +1,7 @@
 {
+  "name": "Freeze",
   "incantation": "gelez",
+  "school": "breath",
+  "description": "Channel the heat from your opponent, inflicting rapid frostbite.",
   "damage": 3
 }

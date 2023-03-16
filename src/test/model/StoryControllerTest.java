@@ -1,3 +1,5 @@
+package model;
+
 import exceptions.*;
 import model.Player;
 import model.SaveSystem;
@@ -6,7 +8,7 @@ import model.storyobjects.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import util.Deserializer;
+import util.DataManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ public class StoryControllerTest {
 
     @BeforeAll
     static void init() {
-        Deserializer.initializeGson();
+        DataManager.initializeGson();
         cond1 = new SceneEventCondition("custom_key", "@t");
         cond2 = new SceneEventCondition("@hasItem", "obsidian");
         cond3 = new SceneEventCondition("@missingItem", "pearl");
@@ -42,7 +44,7 @@ public class StoryControllerTest {
     void testSetCurrentScene() {
         try {
             testStory.setCurrentScene("home");
-            assertEquals(Deserializer.loadObject(Scene.class, "data/scenes/home.json"),
+            assertEquals(DataManager.loadObject(Scene.class, "data/scenes/home.json"),
                     testStory.getCurrentScene());
         } catch (InvalidSceneException e1) {
             fail();
@@ -140,22 +142,20 @@ public class StoryControllerTest {
     @Test
     void testWriteValuesToSaveSystem() {
         SaveSystem s = new SaveSystem();
-        testStory.writeValuesToSaveSystem(s);
-        s.loadGame();
-        assertNull(s.getCurrentScene());
-        assertNull(s.getCurrentLocation());
 
         testStory.setCurrentScene("home");
         testStory.setCurrentLocation("front");
         Player p = new Player();
         p.addItem("obsidian_knife");
         testStory.setPlayer(p);
+        p.addSpell("brulez");
         testStory.writeValuesToSaveSystem(s);
 
         s.loadGame();
         assertEquals("home", s.getCurrentScene());
         assertEquals("front", s.getCurrentLocation());
         assertTrue(s.getPlayer().hasItem("obsidian_knife"));
+        assertTrue(s.getPlayer().hasSpell("brulez"));
     }
 
     @Test

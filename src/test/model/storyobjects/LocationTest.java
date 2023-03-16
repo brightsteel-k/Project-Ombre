@@ -1,4 +1,4 @@
-package storyobjects;
+package model.storyobjects;
 
 import exceptions.InvalidActionException;
 import model.storyobjects.Location;
@@ -7,7 +7,7 @@ import model.storyobjects.SceneEventType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import util.Deserializer;
+import util.DataManager;
 
 import java.util.List;
 
@@ -19,12 +19,12 @@ public class LocationTest {
 
     @BeforeAll
     static void init() {
-        Deserializer.initializeGson();
+        DataManager.initializeGson();
     }
 
     @BeforeEach
     void setup() {
-        testLocation = Deserializer.loadObject(Location.class, "data/test/location.json");
+        testLocation = DataManager.loadObject(Location.class, "data/test/location.json");
     }
 
     @Test

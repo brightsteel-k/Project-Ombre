@@ -1,4 +1,4 @@
-package storyobjects;
+package model.storyobjects;
 
 import exceptions.SceneEndingException;
 import model.storyobjects.Scene;
@@ -7,7 +7,7 @@ import model.storyobjects.SceneEventType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import util.Deserializer;
+import util.DataManager;
 
 import java.util.List;
 
@@ -19,12 +19,12 @@ public class SceneTest {
 
     @BeforeAll
     static void init() {
-        Deserializer.initializeGson();
+        DataManager.initializeGson();
     }
 
     @BeforeEach
     void setup() {
-        testScene = Deserializer.loadObject(Scene.class, "data/test/scene_1.json");
+        testScene = DataManager.loadObject(Scene.class, "data/test/scene_1.json");
         testScene.startScene();
     }
 
@@ -61,7 +61,7 @@ public class SceneTest {
 
     @Test
     void testEndStartExploring() {
-        Scene testScene2 = Deserializer.loadObject(Scene.class, "data/test/scene_2.json");
+        Scene testScene2 = DataManager.loadObject(Scene.class, "data/test/scene_2.json");
         testScene2.startScene();
         try {
             testScene2.getNextLine();
@@ -76,8 +76,8 @@ public class SceneTest {
 
     @Test
     void testEquals() {
-        Scene testScene2 = Deserializer.loadObject(Scene.class, "data/test/scene_2.json");
-        Scene testScene3 = Deserializer.loadObject(Scene.class, "data/test/scene_3.json");
+        Scene testScene2 = DataManager.loadObject(Scene.class, "data/test/scene_2.json");
+        Scene testScene3 = DataManager.loadObject(Scene.class, "data/test/scene_3.json");
         assertFalse(testScene.equals(null));
         assertFalse(testScene.equals("String"));
         assertFalse(testScene2.equals(testScene3));

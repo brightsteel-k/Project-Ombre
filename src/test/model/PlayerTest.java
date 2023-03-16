@@ -1,10 +1,12 @@
+package model;
+
 import model.Player;
 import model.StoryController;
 import model.storyobjects.Spell;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import util.Deserializer;
+import util.DataManager;
 
 import java.util.Arrays;
 
@@ -17,8 +19,8 @@ public class PlayerTest {
 
     @BeforeAll
     static void beforeAll() {
-        Deserializer.initializeGson();
-        testSpell = Deserializer.loadObject(Spell.class, "data/spells/brulez.json");
+        DataManager.initializeGson();
+        testSpell = DataManager.loadObject(Spell.class, "data/spells/brulez.json");
         StoryController story = new StoryController();
     }
 

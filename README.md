@@ -65,4 +65,3 @@ and add them to an inventory-like collection that could be Y.
 - ~~learn about a custom-build fantasy world in a dangerous high-stakes espionage mission~~
 - learn the effects of each spell and experiment with the keywords to build a rudimentary understanding
   of some French vocabulary
-- win the game in around 4-8 runs, depending on effort put in

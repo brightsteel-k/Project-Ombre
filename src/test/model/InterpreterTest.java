@@ -1,12 +1,12 @@
+package model;
+
 import exceptions.AmbiguousActionException;
 import exceptions.InvalidActionException;
 import model.Interpreter;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import util.Deserializer;
-
-import javax.swing.*;
+import util.DataManager;
 
 import java.util.Arrays;
 
@@ -18,7 +18,7 @@ public class InterpreterTest {
 
     @BeforeAll
     static void init() {
-        Deserializer.initializeGson();
+        DataManager.initializeGson();
     }
 
     @BeforeEach

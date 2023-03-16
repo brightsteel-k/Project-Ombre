@@ -1,6 +1,8 @@
 package model;
 
-import util.Deserializer;
+import persistence.ManualJsonDeserializer;
+import persistence.ManualJsonSerializer;
+import util.DataManager;
 
 import java.io.File;
 
@@ -13,7 +15,7 @@ public class SaveSystem {
 
     // EFFECTS: saveDetected is true iff a file exists in the appropriate save directory
     public SaveSystem() {
-        saveDetected = Deserializer.foundFile(SAVE_PATH);
+        saveDetected = DataManager.foundFile(SAVE_PATH);
     }
 
     public boolean isSaveDetected() {
@@ -25,7 +27,9 @@ public class SaveSystem {
     // EFFECTS: reads and deserializes the saved game state from the appropriate save directory, stores it in
     //          savedGame.
     public void loadGame() {
-        savedGame = Deserializer.loadObject(SaveState.class, SAVE_PATH);
+        // savedGame = DataManager.loadObject(SaveState.class, SAVE_PATH);
+        String data = DataManager.readFile(SAVE_PATH);
+        savedGame = ManualJsonDeserializer.loadStateFromJson(data, this);
     }
 
     // EFFECTS: returns player stored in saved game
@@ -49,10 +53,11 @@ public class SaveSystem {
     public void saveGame(Player player, String currentScene, String currentLocation) {
         SaveState state = new SaveState(player, currentScene, currentLocation);
         if (!saveDetected) {
-            Deserializer.makeFile(SAVE_PATH);
+            DataManager.makeFile(SAVE_PATH);
             saveDetected = true;
         }
-        Deserializer.writeObject(state, SAVE_PATH);
+        // DataManager.writeObject(state, SAVE_PATH);
+        DataManager.writeFile(SAVE_PATH, ManualJsonSerializer.saveStateToJson(state));
     }
 
     // EFFECTS: if and only if a save file exists at the appropriate save directory, delete the file

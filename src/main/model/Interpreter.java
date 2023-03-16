@@ -2,7 +2,7 @@ package model;
 
 import exceptions.AmbiguousActionException;
 import exceptions.InvalidActionException;
-import util.Deserializer;
+import util.DataManager;
 
 import java.util.*;
 
@@ -17,7 +17,7 @@ public class Interpreter {
     // EFFECTS: maps action keywords to valid synonyms, loads blacklist of unwanted input words to facilitate
     //          the parsing process.
     public Interpreter() {
-        Deserializer.loadSynonymsToMap("data/synonyms/actions.json", ACTION_SYNONYMS);
+        DataManager.loadSynonymsToMap("data/synonyms/actions.json", ACTION_SYNONYMS);
         if (DETERMINERS.size() == 0) {
             initializeBlacklistWords();
         }

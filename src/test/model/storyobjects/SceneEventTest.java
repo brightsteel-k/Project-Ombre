@@ -1,4 +1,4 @@
-package storyobjects;
+package model.storyobjects;
 
 import model.storyobjects.SceneEvent;
 import model.storyobjects.SceneEventCondition;
@@ -6,7 +6,7 @@ import model.storyobjects.SceneEventType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import util.Deserializer;
+import util.DataManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,14 +22,14 @@ public class SceneEventTest {
 
     @BeforeAll
     static void init() {
-        Deserializer.initializeGson();
+        DataManager.initializeGson();
     }
 
     @BeforeEach
     void setup() {
-        sceneEventCond1 = Deserializer.loadObject(SceneEventCondition.class,
+        sceneEventCond1 = DataManager.loadObject(SceneEventCondition.class,
                 "data/test/scene_event_condition_1.json");
-        sceneEventCond2 = Deserializer.loadObject(SceneEventCondition.class,
+        sceneEventCond2 = DataManager.loadObject(SceneEventCondition.class,
                 "data/test/scene_event_condition_1.json");
         testSceneEvent1 = new SceneEvent(SceneEventType.START_EXPLORING);
         testSceneEvent2 = new SceneEvent(SceneEventType.ACQUIRE_ITEM, "oridur_ingot");

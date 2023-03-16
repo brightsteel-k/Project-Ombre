@@ -10,7 +10,7 @@ import model.StoryController;
 import model.Interpreter;
 import model.storyobjects.SceneEvent;
 import model.storyobjects.Spell;
-import util.Deserializer;
+import util.DataManager;
 
 import java.util.List;
 import java.util.Random;
@@ -31,7 +31,7 @@ public class Game {
     //          that will work together to present the user with a text-based adventure experience. Initalizes
     //          Deserializer class.
     public Game() {
-        Deserializer.initializeGson();
+        DataManager.initializeGson();
         random = new Random();
         saveSystem = new SaveSystem();
         interpreter = new Interpreter();
@@ -201,8 +201,8 @@ public class Game {
     private void printSpells() {
         Spell[] spells = player.getSpells();
         if (spells.length == 0) {
-            String a = "You take a moment to collect yourself, trying to recall the esotaric shapes and \n"
-                    + "incantations for the spells you know. However, a dark fog seems to clings to your mind\n"
+            String a = "You take a moment to collect yourself, trying to recall the esoteric shapes and \n"
+                    + "incantations for the spells you know. However, a dark fog seems to clings to your mind,\n"
                     + "obscuring your memory of the spells and training you know you have experienced.";
             System.out.println(a);
             return;
