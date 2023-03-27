@@ -60,8 +60,26 @@ and add them to an inventory-like collection that could be Y.
 - play the game multiple times in a row and understand the overarching story
 - utilize collected spells to engage in a combat encounter against an enemy
 - utilize collected spells/items to unlock features in the story
+- load data from a file when the application starts, and be prompted with the option to save data to file when the application ends
 - ~~save the state of the entire game to a data file at any point I choose, using the savegame keyword~~
 - ~~be presented with the choice to resume a saved game from the data file when the program starts~~
 - ~~learn about a custom-build fantasy world in a dangerous high-stakes espionage mission~~
 - learn the effects of each spell and experiment with the keywords to build a rudimentary understanding
   of some French vocabulary
+
+### Instructions for Grader
+
+**First Required Action (adding Xs to Y):** Type "go to desk" into the interface, 
+then "search bookshelves" to find a spell.
+
+**Second Required Action (viewing details of X):** Click on the button with the 
+fireball label to open the spells menu, then click a spell to learn 
+more about it.
+
+**Visual Component:** Visual components for the buttons can be found in the data/images folder.
+
+**Saving & Loading:** The player will be prompted with the option
+to save upon closing the application. They can also use the button
+labelled with a save icon. If a save file already exists, the player
+will be prompted with the option to load upon starting the application.
+

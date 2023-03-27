@@ -17,7 +17,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 // Controls text and interface with which the user interacts, runs the model code together
-public class Game {
+public class ConsoleGame {
 
     private final StoryController story;
     private final Interpreter interpreter;
@@ -27,10 +27,10 @@ public class Game {
     private boolean isExploring = false;
     private Player player;
 
-    // EFFECTS: Printer has its own random number generator, save system, interpreter, and initialized story objects
-    //          that will work together to present the user with a text-based adventure experience. Initalizes
+    // EFFECTS: ConsoleGame has its own random number generator, save system, interpreter, and initialized story
+    //          objects that will work together to present the user with a text-based adventure experience. Initalizes
     //          Deserializer class.
-    public Game() {
+    public ConsoleGame() {
         DataManager.initializeGson();
         random = new Random();
         saveSystem = new SaveSystem();
