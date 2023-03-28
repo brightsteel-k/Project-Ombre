@@ -143,7 +143,7 @@ public class Game {
         }
     }
 
-    // REQUIRES: StoryController.ALL_SCENES.containsKey(id)
+    // REQUIRES: id is the valid id of a registered game scene
     // MODIFIES: this object's story instance, this object's console panel instance
     // EFFECTS: prepares story controller for the given scene, disables input to console, prints first line
     private void startScene(String id) {
@@ -175,7 +175,7 @@ public class Game {
         return true;
     }
 
-    // REQUIRES: StoryController.ALL_LOCATIONS.containsKey(newLocation)
+    // REQUIRES: newLocation is the valid id of a registered game location
     // MODIFIES: this object's story instance, this object's console panel instance
     // EFFECTS: updates player's location in the story, prints corresponding message
     private void changeLocation(String newLocation) {

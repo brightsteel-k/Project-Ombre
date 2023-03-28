@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
+// A helper class to keep track of all GUI colours and operations on them
 public class Colours {
 
     private static Map<String, Color> ALL_COLOURS = new HashMap<>();
@@ -38,6 +39,7 @@ public class Colours {
         return ALL_COLOURS.get(id);
     }
 
+    // EFFECTS: linearly interpolates between the two given colours, returns colour at t% between them.
     public static Color lerp(Color color1, Color color2, double t) {
         int r0 = color1.getRed();
         int g0 = color1.getGreen();
@@ -53,14 +55,20 @@ public class Colours {
     private double flashProgress;
     private Timer timer;
 
+    // EFFECTS: Colours instance is made
     public Colours() {
 
     }
 
+    // MODIFIES: this, component
+    // EFFECTS: calls flashColour using the colours in ALL_COLOURS with the given ids
     public void flashColour(Component component, String original, String flash) {
         flashColour(component, getColour(original), getColour(flash));
     }
 
+    // MODIFIES: this, component
+    // EFFECTS: uses Timer to quickly interpolate the foreground colour of the component from original to flash and
+    //          back according to a cosine curve.
     public void flashColour(Component component, Color original, Color flash) {
         ActionListener al = new ActionListener() {
             @Override

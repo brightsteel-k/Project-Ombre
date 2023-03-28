@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-// Prints story text to a scrollable viewport, receives user input text
+// Panel that prints story text to a scrollable viewport and receives user input text
 public class ConsolePanel extends JPanel implements KeyListener {
 
     private final JTextArea textOut;
@@ -18,8 +18,8 @@ public class ConsolePanel extends JPanel implements KeyListener {
     private boolean isWaitingForEnter = false;
     private boolean isPaused = false;
 
-    // EFFECTS: ConsolePanel configures its layout, border, background, output text panel, and input text panel, and
-    //          adds the two panels to itself.
+    // EFFECTS: ConsolePanel has a border layout, empty border, coloured background, output text panel, and
+    //          input text panel.
     public ConsolePanel() {
         setLayout(new BorderLayout());
         EmptyBorder outerBorder = new EmptyBorder(new Insets(20, 20, 20, 0));
@@ -63,7 +63,7 @@ public class ConsolePanel extends JPanel implements KeyListener {
     }
 
     // MODIFIES: game, this
-    // EFFECTS: tells this object's game instance to print the next line of the story's current scene.
+    // EFFECTS: tells this object's game instance to print the next line of the story's current scene
     public void inputEnterPressed() {
         game.printNextLine();
     }
@@ -83,8 +83,8 @@ public class ConsolePanel extends JPanel implements KeyListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: changes appearance of input bar to alert user that they can press enter to continue if waiting == true,
-    //          reverts aforementioned changes if not.
+    // EFFECTS: if waiting == true, changes appearance of input bar to alert user that they can press enter to continue.
+    //          Else, reverts aforementioned changes.
     public void setWaitingForEnter(boolean waiting) {
         isWaitingForEnter = waiting;
         if (waiting) {

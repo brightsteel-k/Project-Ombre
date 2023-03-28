@@ -9,6 +9,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.ArrayList;
 
+// Panel that displays the spells that the player knows
 public class SpellsPanel extends JPanel {
 
     private JTextArea spellTitle;
@@ -16,6 +17,8 @@ public class SpellsPanel extends JPanel {
     private JPanel bottomPanel;
     private List<Spell> spellList = new ArrayList<>();
 
+    // EFFECTS: SpellsPanel has a box layout, line border, coloured background, spell title text area, and spell
+    //          description text area.
     public SpellsPanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new LineBorder(Colours.getColour("main_border")));
@@ -28,20 +31,30 @@ public class SpellsPanel extends JPanel {
         add(configureBottomPanel());
     }
 
+    // EFFECTS: configures and returns a text area with the appropriate style and size for spell titles
     private JTextArea configureSpellTitle() {
         JTextArea textArea = new JTextArea();
         textArea.setFont(new Font("Times New Roman", Font.BOLD, 18));
+        textArea.setBackground(Colours.getColour("spells_panel_description"));
+        textArea.setForeground(Colours.getColour("text_silk"));
         MainWindow.setComponentSize(textArea, 400, 50);
+        textArea.setEditable(false);
         return textArea;
     }
 
+    // EFFECTS: configures and returns a text area with the appropriate style and size for spell descriptions
     private JTextArea configureSpellDescription() {
         JTextArea textArea = new JTextArea();
         textArea.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+        textArea.setBackground(Colours.getColour("spells_panel_description"));
+        textArea.setForeground(Colours.getColour("text_normal"));
         MainWindow.setComponentSize(textArea, 400, 250);
+        textArea.setEditable(false);
+        textArea.setLineWrap(true);
         return textArea;
     }
 
+    // EFFECTS: configures and returns a panel with a box layout, empty border, spell title, and spell description
     private JPanel configureTopPanel(JTextArea title, JTextArea description) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -49,22 +62,17 @@ public class SpellsPanel extends JPanel {
         MainWindow.setComponentSize(panel, 400, 250);
         panel.add(title);
         panel.add(description);
-        title.setEditable(false);
-        description.setEditable(false);
-        description.setLineWrap(true);
         panel.setBackground(Colours.getColour("spells_panel_description"));
-        title.setBackground(Colours.getColour("spells_panel_description"));
-        description.setBackground(Colours.getColour("spells_panel_description"));
-        title.setForeground(Colours.getColour("text_silk"));
-        description.setForeground(Colours.getColour("text_normal"));
         return panel;
     }
 
+    // EFFECTS: configures and returns a panel and scroll pane with a box layout, empty border, coloured background,
+    //          and vertical scrollbar.
     private JScrollPane configureBottomPanel() {
         bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
-        bottomPanel.setBackground(Colours.getColour("spells_panel_background"));
         bottomPanel.setBorder(new EmptyBorder(new Insets(20, 20, 20, 40)));
+        bottomPanel.setBackground(Colours.getColour("spells_panel_background"));
         JScrollPane scrollPane = new JScrollPane(bottomPanel);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -72,6 +80,10 @@ public class SpellsPanel extends JPanel {
         return scrollPane;
     }
 
+    // REQUIRES: spells.length > 0
+    // MODIFIES: this
+    // EFFECTS: reloads line of spell buttons, displays one for each spell in the given array of spells and adds them
+    //          to spellList.
     public void registerSpells(Spell[] spells) {
         clearSpellList();
         for (int i = 0; i < spells.length; i++) {
@@ -83,8 +95,11 @@ public class SpellsPanel extends JPanel {
         repaint();
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays information from the spell in spell list at the given index, using the spell title and
+    //          spell description text areas.
     public void selectSpell(int index) {
-        if (index >= spellList.size()) {
+        if (index < 0 || index >= spellList.size()) {
             return;
         }
         Spell spell = spellList.get(index);
@@ -95,14 +110,18 @@ public class SpellsPanel extends JPanel {
         spellDescription.setText(contents);
     }
 
+    // MODIFIES: this
+    // EFFECTS: remove all components from this object's bottom panel
     public void clearSpellList() {
         bottomPanel.removeAll();
     }
 
+    // EFFECTS: Formats and returns a String describing a spell with the given magic type
     public String printSpellType(String school) {
         return "TYPE: " + school.substring(0, 1).toUpperCase() + school.substring(1) + " Magic.";
     }
 
+    // EFFECTS: Formats and returns a String describing a spell with the given damage
     public String printSpellDamage(float damage) {
         return "DAMAGE: " + damage;
     }

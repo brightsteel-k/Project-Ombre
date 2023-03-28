@@ -1,7 +1,6 @@
 package ui;
 
 import ui.gui.Game;
-import ui.gui.MainWindow;
 
 public class Main {
 

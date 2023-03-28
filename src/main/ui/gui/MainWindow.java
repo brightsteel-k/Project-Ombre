@@ -14,7 +14,7 @@ public class MainWindow extends JFrame implements WindowListener, WindowStateLis
     private SpellsPanel spellsPanel;
 
     // EFFECTS: MainWindow stores a reference to the given game and configures its size, close operation, listeners,
-    //          layouts, and components, then sets itself to visible.
+    //          layouts, and components. Finally, initializes Colours class and sets itself to visible.
     public MainWindow(Game game) {
         Colours.initializeColours();
         this.game = game;
@@ -41,7 +41,7 @@ public class MainWindow extends JFrame implements WindowListener, WindowStateLis
         addComponentListener(this);
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, this object's sidebar panel, this object's console panel, this object's spells panel
     // EFFECTS: initializes and adds a main panel comprised of a sidebar and console; adds a spells panel on top of
     //          that.
     private void addComponents() {
