@@ -1,0 +1,7 @@
+{
+  "name": "Slow",
+  "incantation": "ralentissez",
+  "school": "sand",
+  "description": "Slows the rate at which the target travels through time.",
+  "damage": 0
+}

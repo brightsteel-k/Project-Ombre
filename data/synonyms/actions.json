@@ -6,6 +6,7 @@
   "view": "view",
   "check": "view",
   "observe": "view",
+  "examine": "view",
   "analyze": "view",
   "analyse": "view",
   "look at": "view",
@@ -30,5 +31,7 @@
   "mosey over to": "goto",
   "take": "take",
   "grab": "take",
-  "pick up": "take"
+  "pick up": "take",
+  "read": "read",
+  "speedread": "read"
 }

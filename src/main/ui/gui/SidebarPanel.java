@@ -8,16 +8,18 @@ import java.awt.*;
 
 public class SidebarPanel extends JPanel {
 
+    private MainWindow mainWindow;
     private Game game;
 
-    public SidebarPanel() {
+    public SidebarPanel(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new EmptyBorder(new Insets(20, 20, 20, 20)));
+        setBackground(Colours.getColour("sidebar_panel"));
 
         add(new SaveButton(this));
         add(Box.createRigidArea(new Dimension(0, 10)));
         add(new SpellsButton(this));
-        setBackground(Colours.getColour("sidebar_panel"));
     }
 
     public SidebarPanel setGame(Game game) {
@@ -27,5 +29,9 @@ public class SidebarPanel extends JPanel {
 
     public void saveGame() {
         game.saveGameState();
+    }
+
+    public MainWindow getMainWindow() {
+        return mainWindow;
     }
 }

@@ -9,10 +9,6 @@
       "keyword": "gelez"
     },
     {
-      "type": "acquire_item",
-      "keyword": "book"
-    },
-    {
       "type": "display_text",
       "keyword": "Memorizing the spell, you turn back to the desk."
     },

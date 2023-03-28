@@ -11,11 +11,9 @@ public abstract class SidebarButton extends JButton implements ActionListener {
 
     public SidebarButton(SidebarPanel sidebar) {
         this.sidebar = sidebar;
-        Dimension size = new Dimension(40, 40);
-        setMinimumSize(size);
-        setPreferredSize(size);
-        setMaximumSize(size);
+        MainWindow.setComponentSize(this, 50, 50);
         setAlignmentX(Component.CENTER_ALIGNMENT);
+        setBackground(Colours.getColour("sidebar_button"));
         addActionListener(this);
     }
 

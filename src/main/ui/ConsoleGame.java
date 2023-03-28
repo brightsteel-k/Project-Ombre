@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-// Controls text and interface with which the user interacts, runs the model code together
+// Controls text and interface with which the user interacts
 public class ConsoleGame {
 
     private final StoryController story;

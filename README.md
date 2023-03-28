@@ -60,7 +60,8 @@ and add them to an inventory-like collection that could be Y.
 - play the game multiple times in a row and understand the overarching story
 - utilize collected spells to engage in a combat encounter against an enemy
 - utilize collected spells/items to unlock features in the story
-- load data from a file when the application starts, and be prompted with the option to save data to file when the application ends
+- ~~load data from a file when the application starts, and be prompted with the option to save data to file when the application ends~~
+- ~~read more detailed information about the different spells I collect at different points throughout the game~~
 - ~~save the state of the entire game to a data file at any point I choose, using the savegame keyword~~
 - ~~be presented with the choice to resume a saved game from the data file when the program starts~~
 - ~~learn about a custom-build fantasy world in a dangerous high-stakes espionage mission~~
@@ -69,14 +70,18 @@ and add them to an inventory-like collection that could be Y.
 
 ### Instructions for Grader
 
-**First Required Action (adding Xs to Y):** Type "go to desk" into the interface, 
-then "search bookshelves" to find a spell.
+**First Required Action (adding Xs to Y):** After the intro, type "go to desk" into the interface. Then, the following 
+commands will guide you through the story to several spells:
+- "search bookshelves"
+- "search desk"
+- "examine plant"
+- "read book"
 
 **Second Required Action (viewing details of X):** Click on the button with the 
 fireball label to open the spells menu, then click a spell to learn 
 more about it.
 
-**Visual Component:** Visual components for the buttons can be found in the data/images folder.
+**Visual Component:** Visual components for the buttons can be found in the data/icons folder.
 
 **Saving & Loading:** The player will be prompted with the option
 to save upon closing the application. They can also use the button

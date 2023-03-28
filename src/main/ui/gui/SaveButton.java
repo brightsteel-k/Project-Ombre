@@ -1,5 +1,6 @@
 package ui.gui;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -7,8 +8,7 @@ public class SaveButton extends SidebarButton {
 
     public SaveButton(SidebarPanel sidebar) {
         super(sidebar);
-        setBackground(new Color(0xA455C9));
-        setText("S");
+        setIcon(new ImageIcon("data/icons/save_icon.png", "Floppy disk save icon"));
         setToolTipText("Save game");
     }
 

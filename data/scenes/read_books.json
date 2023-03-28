@@ -1,0 +1,28 @@
+{
+  "texts": [
+    "You open one of the books from the shelves, leafing through the pages until a particular set of symbols catches your eye.",
+    "You realize they are the runes and patterns for two silk magic spells: avez peur and voyez noir."
+
+  ],
+  "endSceneEvents": [
+    {
+      "type": "learn_spell",
+      "keyword": "avez_peur"
+    },
+    {
+      "type": "learn_spell",
+      "keyword": "voyez_noir"
+    },
+    {
+      "type": "acquire_item",
+      "keyword": "book"
+    },
+    {
+      "type": "display_text",
+      "keyword": "Memorizing the spell, you pocket the book."
+    },
+    {
+      "type": "start_exploring"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "texts": [
+    "Examining the plant more closely, you recognize it as ténèbrese, a variety of grass that often grows in the presence of shadow magic.",
+    "You shudder, being sure not to touch the unnatural life form. As you stare, though, you notice a purple ribbon behind its pot.",
+    "Reaching carefully around it, you find that the ribbon binds an old scroll. You unwrap it and recognize the incantation for a dangerous \nattacking spell: avez mal."
+  ],
+  "endSceneEvents": [
+    {
+      "type": "learn_spell",
+      "keyword": "avez_mal"
+    },
+    {
+      "type": "display_text",
+      "keyword": "Memorizing the spell, you turn back to the desk."
+    },
+    {
+      "type": "start_exploring"
+    }
+  ]
+}

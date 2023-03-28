@@ -1,7 +1,5 @@
 package ui.gui;
 
-import exceptions.ActionSubjectException;
-import exceptions.AmbiguousActionException;
 import exceptions.InvalidActionException;
 import exceptions.SceneEndingException;
 import model.Interpreter;
@@ -16,6 +14,7 @@ import javax.swing.*;
 import java.util.List;
 import java.util.Random;
 
+// Runs code from model, manages GUI, weaves everything together into a coherent experience
 public class Game {
     private final MainWindow mainWindow;
     private final StoryController story;
@@ -27,7 +26,10 @@ public class Game {
     private Player player;
     private boolean saved = true;
 
-
+    // EFFECTS: Game has its own random number generator, save system, interpreter, and initialized story
+    //          objects that will work together to present the user with a text-based adventure experience. It also
+    //          records the main window and panels that comprise the GUI. Finally, it initializes Deserializer class
+    //          and starts the game.
     public Game() {
         DataManager.initializeGson();
         random = new Random();
@@ -47,6 +49,9 @@ public class Game {
         return saved;
     }
 
+    // MODIFIES: this, this object's story instance, this object's player instance, this object's console panel instance
+    // EFFECTS: prints the next line of the story's current scene to the console panel, or handles the end of the
+    //          scene if necessary.
     void printNextLine() {
         try {
             consolePanel.printLine(story.getCurrentNextLine(), true);
@@ -64,8 +69,7 @@ public class Game {
     }
 
     // MODIFIES: this, this object's story instance, this object's player instance, device disk
-    // EFFECTS: offers player the choice to load a new game, iff one has been saved; then, calls method to start
-    //          gameplay loop.
+    // EFFECTS: offers player the choice to load a new game, iff one has been saved
     private void getPlayer() {
         if (!saveSystem.isSaveDetected()) {
             newGame();
@@ -106,7 +110,7 @@ public class Game {
         }
     }
 
-    // MODIFIES: this object's story instance, this object's player instance
+    // MODIFIES: this, this object's story instance, this object's player instance, this object's console panel instance
     // EFFECTS: executes given scene event, with varying effects depending on its type and supplied keyword
     @SuppressWarnings("methodlength")
     private void handleSceneEvent(SceneEvent event) {
@@ -139,6 +143,9 @@ public class Game {
         }
     }
 
+    // REQUIRES: StoryController.ALL_SCENES.containsKey(id)
+    // MODIFIES: this object's story instance, this object's console panel instance
+    // EFFECTS: prepares story controller for the given scene, disables input to console, prints first line
     private void startScene(String id) {
         story.setCurrentScene(id);
         isExploring = false;
@@ -146,14 +153,17 @@ public class Game {
         printNextLine();
     }
 
-
+    // MODIFIES: this, this object's console panel instance
+    // EFFECTS: enabled input to console in preparation for user to explore
     private void startExploring() {
         isExploring = true;
         consolePanel.setInputActive(true);
         consolePanel.setWaitingForEnter(false);
     }
 
-
+    // REQUIRES: userInput.length() > 0
+    // MODIFIES: this, this object's story instance, this object's player instance, this object's console panel
+    //           instance.
     public boolean executeUserInput(String userInput) {
         saved = false;
         try {
@@ -165,35 +175,23 @@ public class Game {
         return true;
     }
 
-    // MODIFIES: this object's story instance
+    // REQUIRES: StoryController.ALL_LOCATIONS.containsKey(newLocation)
+    // MODIFIES: this object's story instance, this object's console panel instance
     // EFFECTS: updates player's location in the story, prints corresponding message
     private void changeLocation(String newLocation) {
         consolePanel.printLine(story.changeLocation(newLocation), false);
     }
 
+    // MODIFIES: this, device disk
+    // EFFECTS: saves current state of the game to disk using save system
     public void saveGameState() {
-        //story.writeValuesToSaveSystem(saveSystem);
+        story.writeValuesToSaveSystem(saveSystem);
+        saved = true;
         JOptionPane.showMessageDialog(mainWindow, "Game successfully saved!");
     }
 
-    // EFFECTS: prints info about all the spells the player has collected thus far, or a message about memory
-    //          if they have collected none.
-    private void printSpells() {
-        Spell[] spells = player.getSpells();
-        if (spells.length == 0) {
-            String a = "You take a moment to collect yourself, trying to recall the esoteric shapes and \n"
-                    + "incantations for the spells you know. However, a dark fog seems to clings to your mind,\n"
-                    + "obscuring your memory of the spells and training you know you have experienced.";
-            System.out.println(a);
-            return;
-        }
-
-        String b = "You take a moment to collect yourself, visualizing the esoteric shapes and recalling\n"
-                + "the incantations for the spells you know. For some reason, a dark fog seems to cling to your\n"
-                + "mind, obfuscating your memory of any spells beyond the following: \n";
-        System.out.println(b);
-        for (Spell s : spells) {
-            System.out.println("[*]  " + s.getIncantation() + " - " + s.getDamage() + " damage");
-        }
+    // EFFECTS: returns all spells that this game's player instance knows
+    public Spell[] getKnownSpells() {
+        return player.getSpells();
     }
 }

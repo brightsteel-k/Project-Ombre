@@ -1,0 +1,7 @@
+{
+  "name": "See Darkness",
+  "incantation": "voyez noir",
+  "school": "silk",
+  "description": "Blinds the target, disallowing them from using sight to direct spells and attacks.",
+  "damage": 0
+}
