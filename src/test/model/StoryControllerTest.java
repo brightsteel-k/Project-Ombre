@@ -46,6 +46,7 @@ public class StoryControllerTest {
             testStory.setCurrentScene("home");
             assertEquals(DataManager.loadObject(Scene.class, "data/scenes/home.json"),
                     testStory.getCurrentScene());
+            assertEquals("home", testStory.getCurrentSceneId());
         } catch (InvalidSceneException e1) {
             fail();
         }

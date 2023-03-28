@@ -42,6 +42,10 @@ public class StoryController {
         return currentScene;
     }
 
+    public String getCurrentSceneId() {
+        return currentSceneId;
+    }
+
     // MODIFIES: device disk
     // EFFECTS: sends current state of game to the save system to write to disk
     public void writeValuesToSaveSystem(SaveSystem system) {

@@ -12,6 +12,7 @@ import model.storyobjects.SceneEvent;
 import model.storyobjects.Spell;
 import util.DataManager;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.Random;
 
@@ -24,6 +25,7 @@ public class Game {
     private final Random random;
     private boolean isExploring = false;
     private Player player;
+    private boolean saved = true;
 
 
     public Game() {
@@ -34,13 +36,15 @@ public class Game {
         story = new StoryController();
         story.setCurrentScene("intro");
         story.setCurrentLocation("front");
-        mainWindow = new MainWindow();
+        mainWindow = new MainWindow(this);
         consolePanel = mainWindow.getConsolePanel().setGame(this);
+        mainWindow.getSidebarPanel().setGame(this);
+        getPlayer();
         startGame();
     }
 
-    public void getInput(String input) {
-
+    public boolean hasSaved() {
+        return saved;
     }
 
     void printNextLine() {
@@ -62,24 +66,18 @@ public class Game {
     // MODIFIES: this, this object's story instance, this object's player instance, device disk
     // EFFECTS: offers player the choice to load a new game, iff one has been saved; then, calls method to start
     //          gameplay loop.
-    /*private void startGame() {
+    private void getPlayer() {
         if (!saveSystem.isSaveDetected()) {
             newGame();
         } else {
-            System.out.println("New game (N) or continue (C) from saved game?");
-            boolean waiting = true;
-            while (waiting) {
-                String input = SCANNER.nextLine();
-                if (input.equalsIgnoreCase("n")) {
-                    newGame();
-                    waiting = false;
-                } else if (input.equalsIgnoreCase("c")) {
-                    loadGame();
-                    waiting = false;
-                }
+            int i = JOptionPane.showConfirmDialog(mainWindow, "Load game from save?",
+                    "Save file detected!", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+            if (i == JOptionPane.YES_OPTION) {
+                loadGame();
+            } else {
+                newGame();
             }
         }
-        game();
     }
 
     // MODIFIES: this object's story instance, this object's player instance
@@ -98,7 +96,7 @@ public class Game {
         story.setPlayer(player);
         story.setCurrentScene(saveSystem.getCurrentScene());
         story.setCurrentLocation(saveSystem.getCurrentLocation());
-    }*/
+    }
 
     // MODIFIES: this object's story instance, this object's player instance
     // EFFECTS: triggers all given scene events
@@ -157,6 +155,7 @@ public class Game {
 
 
     public boolean executeUserInput(String userInput) {
+        saved = false;
         try {
             String[] actionWords = interpreter.userInput(userInput);
             handleSceneEvents(story.executeAction(actionWords));
@@ -170,6 +169,11 @@ public class Game {
     // EFFECTS: updates player's location in the story, prints corresponding message
     private void changeLocation(String newLocation) {
         consolePanel.printLine(story.changeLocation(newLocation), false);
+    }
+
+    public void saveGameState() {
+        //story.writeValuesToSaveSystem(saveSystem);
+        JOptionPane.showMessageDialog(mainWindow, "Game successfully saved!");
     }
 
     // EFFECTS: prints info about all the spells the player has collected thus far, or a message about memory
