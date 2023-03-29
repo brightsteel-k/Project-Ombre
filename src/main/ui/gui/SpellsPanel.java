@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -90,7 +91,7 @@ public class SpellsPanel extends JPanel {
             bottomPanel.add(new SpellItem(spells[i].getName(), i, this));
             add(Box.createRigidArea(new Dimension(0, 10)));
         }
-        spellList.addAll(List.of(spells));
+        spellList = Arrays.asList(spells);
         revalidate();
         repaint();
     }
