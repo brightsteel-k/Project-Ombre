@@ -130,6 +130,15 @@ public class ConsolePanel extends JPanel implements KeyListener {
         return this;
     }
 
+    // MODIFIES: this
+    // EFFECTS: clears input and output text areas, resets waiting variables
+    public void reset() {
+        textIn.setText("");
+        textOut.setText("");
+        isWaitingForEnter = false;
+        setPaused(false);
+    }
+
     // REQUIRES: textIn.getText().length() > 0
     // MODIFIES: this
     // EFFECTS: uses an instance of Colours to linearly interpolates between normal and invalid text colours for the

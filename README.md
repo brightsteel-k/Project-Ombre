@@ -77,9 +77,8 @@ commands will guide you through the story to several spells:
 - "examine plant"
 - "read book"
 
-**Second Required Action (viewing details of X):** Click on the button with the 
-fireball label to open the spells menu, then click a spell to learn 
-more about it.
+**Second Required Action (clearing Xs from Y):** Click on the button with the 
+octagonal label to restart the entire game, clearing all spells from the list.
 
 **Visual Component:** Visual components for the buttons can be found in the data/icons folder.
 

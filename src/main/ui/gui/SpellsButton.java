@@ -7,12 +7,29 @@ import java.awt.event.ActionEvent;
 public class SpellsButton extends SidebarButton {
 
     private boolean selected = false;
+    private ImageIcon iconOn;
+    private ImageIcon iconOff;
 
     // EFFECTS: SpellsButton has a descriptive icon and tooltip, and a corresponding sidebar panel to which it belongs
     public SpellsButton(SidebarPanel sidebar) {
         super(sidebar);
-        setIcon(new ImageIcon("data/icons/spells_icon.png", "Fireball spells icon"));
+        iconOn = new ImageIcon("data/icons/spells_selected_icon.png", "Fireball spells icon");
+        iconOff = new ImageIcon("data/icons/spells_unselected_icon.png", "Fireball spells icon");
+        setSelectionIcon();
         setToolTipText("View spell list");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets itself to unselected
+    public void reset() {
+        selected = false;
+        setSelectionIcon();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes button icon to reflect selection state: iconOn if selected, iconOff else
+    private void setSelectionIcon() {
+        setIcon(selected ? iconOn : iconOff);
     }
 
     // MODIFIES: sidebar
@@ -21,6 +38,7 @@ public class SpellsButton extends SidebarButton {
     @Override
     public void actionPerformed(ActionEvent e) {
         selected = !selected;
+        setSelectionIcon();
         sidebar.getMainWindow().setSpellsPanelActive(selected);
     }
 }

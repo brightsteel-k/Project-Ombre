@@ -16,6 +16,7 @@ public class SpellsPanel extends JPanel {
     private JTextArea spellTitle;
     private JTextArea spellDescription;
     private JPanel bottomPanel;
+    private JScrollPane bottomScrollPane;
     private List<Spell> spellList = new ArrayList<>();
 
     // EFFECTS: SpellsPanel has a box layout, line border, coloured background, spell title text area, and spell
@@ -74,11 +75,11 @@ public class SpellsPanel extends JPanel {
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
         bottomPanel.setBorder(new EmptyBorder(new Insets(20, 20, 20, 40)));
         bottomPanel.setBackground(Colours.getColour("spells_panel_background"));
-        JScrollPane scrollPane = new JScrollPane(bottomPanel);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setBackground(Colours.getColour("spells_panel_background"));
-        return scrollPane;
+        bottomScrollPane = new JScrollPane(bottomPanel);
+        bottomScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        bottomScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        bottomScrollPane.setBackground(Colours.getColour("spells_panel_background"));
+        return bottomScrollPane;
     }
 
     // REQUIRES: spells.length > 0
@@ -86,7 +87,7 @@ public class SpellsPanel extends JPanel {
     // EFFECTS: reloads line of spell buttons, displays one for each spell in the given array of spells and adds them
     //          to spellList.
     public void registerSpells(Spell[] spells) {
-        clearSpellList();
+        clearSpells();
         for (int i = 0; i < spells.length; i++) {
             bottomPanel.add(new SpellItem(spells[i].getName(), i, this));
             add(Box.createRigidArea(new Dimension(0, 10)));
@@ -113,17 +114,32 @@ public class SpellsPanel extends JPanel {
 
     // MODIFIES: this
     // EFFECTS: remove all components from this object's bottom panel
-    public void clearSpellList() {
+    public void clearSpells() {
         bottomPanel.removeAll();
     }
 
-    // EFFECTS: Formats and returns a String describing a spell with the given magic type
+    // MODIFIES: this
+    // EFFECTS: clears all the displaying text
+    public void clearTopPanel() {
+        spellTitle.setText("");
+        spellDescription.setText("");
+    }
+
+    // EFFECTS: formats and returns a String describing a spell with the given magic type
     public String printSpellType(String school) {
         return "TYPE: " + school.substring(0, 1).toUpperCase() + school.substring(1) + " Magic.";
     }
 
-    // EFFECTS: Formats and returns a String describing a spell with the given damage
+    // EFFECTS: formats and returns a String describing a spell with the given damage
     public String printSpellDamage(float damage) {
         return "DAMAGE: " + damage;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: resizes this panel and the bottom scroll pane appropriately
+    @Override
+    public void setBounds(int x, int y, int width, int height) {
+        super.setBounds(x, y, width, height);
+        MainWindow.setComponentSize(bottomScrollPane, width, height - 250);
     }
 }

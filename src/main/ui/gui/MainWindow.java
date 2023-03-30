@@ -32,9 +32,11 @@ public class MainWindow extends JFrame implements WindowListener, WindowStateLis
     }
 
     // MODIFIES: this
-    // EFFECTS: sets the default size and close operation, and registers listeners to track changes in states
+    // EFFECTS: sets the default size, minimum size, and close operation, and registers listeners to track changes
+    //          in states.
     private void configureWindow() {
         setSize(1400, 800);
+        setMinimumSize(new Dimension(735, 490));
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(this);
         addWindowStateListener(this);
@@ -60,7 +62,7 @@ public class MainWindow extends JFrame implements WindowListener, WindowStateLis
         getLayeredPane().add(spellsPanel, new Integer(1), 1);
     }
 
-    // MODIFIES: this object's spellsPanel, this object's consolePanel
+    // MODIFIES: this object's spells panel, this object's console panel
     // EFFECTS: if value == true: activates spell panel, loads all known spells into it, and pauses console input.
     //          Else, deactivates spell panel and unpauses console input.
     public void setSpellsPanelActive(boolean value) {
@@ -68,6 +70,15 @@ public class MainWindow extends JFrame implements WindowListener, WindowStateLis
         consolePanel.setPaused(value);
         spellsPanel.registerSpells(game.getKnownSpells());
         spellsPanel.selectSpell(0);
+    }
+
+    // MODIFIES: this object's spells panel, this object's console panel, this object's corresponding game instance
+    // EFFECTS: clears spells panel and console panel, restarts the story with an empty player
+    public void restartGame() {
+        spellsPanel.clearTopPanel();
+        //spellsPanel.setVisible(false);
+        consolePanel.reset();
+        game.restartGame();
     }
 
     @Override
@@ -158,7 +169,7 @@ public class MainWindow extends JFrame implements WindowListener, WindowStateLis
     // MODIFIES: this, this object's spellsPanel
     // EFFECTS: resizes main and spells panel based on main window dimensions
     private void fixComponentSizes() {
-        mainPanel.setBounds(0, 0, getSize().width - 10, getSize().height - 35);
-        spellsPanel.setBounds(getSize().width - 500, 20, 400, getSize().height - 95);
+        mainPanel.setBounds(0, 0, getWidth() - 10, getHeight() - 35);
+        spellsPanel.setBounds(getWidth() - 500, 20, 400, getHeight() - 95);
     }
 }

@@ -17,14 +17,14 @@ import java.util.Random;
 // Runs code from model, manages GUI, weaves everything together into a coherent experience
 public class Game {
     private final MainWindow mainWindow;
-    private final StoryController story;
+    private StoryController story;
     private final Interpreter interpreter;
     private final SaveSystem saveSystem;
     private final ConsolePanel consolePanel;
     private final Random random;
-    private boolean isExploring = false;
+    private boolean isExploring;
     private Player player;
-    private boolean saved = true;
+    private boolean saved;
 
     // EFFECTS: Game has its own random number generator, save system, interpreter, and initialized story
     //          objects that will work together to present the user with a text-based adventure experience. It also
@@ -35,12 +35,20 @@ public class Game {
         random = new Random();
         saveSystem = new SaveSystem();
         interpreter = new Interpreter();
-        story = new StoryController();
-        story.setCurrentScene("intro");
-        story.setCurrentLocation("front");
         mainWindow = new MainWindow(this);
         consolePanel = mainWindow.getConsolePanel().setGame(this);
         mainWindow.getSidebarPanel().setGame(this);
+        initializeStory();
+    }
+
+    // MODIFIES: this, this object's story instance, this object's player instance, device disk, this object's console
+    //           panel instance.
+    private void initializeStory() {
+        story = new StoryController();
+        story.setCurrentScene("intro");
+        story.setCurrentLocation("front");
+        saved = true;
+        isExploring = false;
         getPlayer();
         startGame();
     }
@@ -60,7 +68,8 @@ public class Game {
         }
     }
 
-    // MODIFIES: this, this object's story instance, this object's player instance, device disk
+    // MODIFIES: this, this object's story instance, this object's player instance, device disk, this object's
+    //           console panel instance.
     // EFFECTS: starts the gameplay loop
     private void startGame() {
         String a = "🌟 This game does not have an autosave feature. Use the save button at the top-right to save "
@@ -188,6 +197,14 @@ public class Game {
         story.writeValuesToSaveSystem(saveSystem);
         saved = true;
         JOptionPane.showMessageDialog(mainWindow, "Game successfully saved!");
+    }
+
+
+    // MODIFIES: this, this object's story instance, this object's player instance, device disk, this object's console
+    //           panel instance.
+    // EFFECTS: restarts game and with reloaded story and player instances
+    public void restartGame() {
+        initializeStory();
     }
 
     // EFFECTS: returns all spells that this game's player instance knows
