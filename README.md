@@ -68,6 +68,8 @@ and add them to an inventory-like collection that could be Y.
 - learn the effects of each spell and experiment with the keywords to build a rudimentary understanding
   of some French vocabulary
 
+## Phase 3 Information
+
 ### Instructions for Grader
 
 **First Required Action (adding Xs to Y):** After the intro, type "go to desk" into the interface. Then, the following 
@@ -86,4 +88,56 @@ octagonal label to restart the entire game, clearing all spells from the list.
 to save upon closing the application. They can also use the button
 labelled with a save icon. If a save file already exists, the player
 will be prompted with the option to load upon starting the application.
+
+## Phase 4 Information
+
+### Phase 4: Task 2
+*Representative event log of a game.*
+
+Tue Apr 11 15:14:26 PDT 2023\
+Started new game.
+
+Tue Apr 11 15:14:38 PDT 2023\
+Changed player location: worktable
+
+Tue Apr 11 15:14:45 PDT 2023\
+Added new spell: brulez.
+
+Tue Apr 11 15:14:52 PDT 2023\
+Added new spell: avez_peur.
+
+Tue Apr 11 15:14:52 PDT 2023\
+Added new spell: voyez_noir.
+
+Tue Apr 11 15:14:54 PDT 2023\
+Changed player location: front
+
+Tue Apr 11 15:14:59 PDT 2023\
+Game saved.
+
+Tue Apr 11 15:15:09 PDT 2023\
+Changed player location: worktable
+
+Tue Apr 11 15:15:19 PDT 2023\
+Added new spell: avez_mal.
+
+Tue Apr 11 15:15:23 PDT 2023\
+All spells cleared.
+
+Tue Apr 11 15:15:25 PDT 2023\
+Loaded game from save file.
+
+Tue Apr 11 15:15:30 PDT 2023\
+Changed player location: worktable
+
+Tue Apr 11 15:15:37 PDT 2023\
+Added new spell: avez_mal.
+
+Tue Apr 11 15:16:04 PDT 2023\
+Added new spell: gelez.
+
+Tue Apr 11 15:16:10 PDT 2023\
+Game saved.
+
+### Phase 4: Task 3
 

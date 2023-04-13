@@ -1,6 +1,6 @@
 {
   "name": "Damage",
-  "incantation": "avez mal",
+  "incantation": "avez_mal",
   "school": "blood",
   "description": "Rends the target's tissue structure, inflicting damage and internal hemorrhaging.",
   "damage": 6

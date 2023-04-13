@@ -10,7 +10,7 @@ public class RestartButton extends SidebarButton {
     public RestartButton(SidebarPanel sidebar) {
         super(sidebar);
         setAlignmentY(BOTTOM_ALIGNMENT);
-        setIcon(new ImageIcon("data/icons/restart_icon.png", "Hazard restart    1 icon"));
+        setIcon(new ImageIcon("data/icons/restart_icon.png", "Hazard restart icon"));
         setToolTipText("Restart game");
     }
 

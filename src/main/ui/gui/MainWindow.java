@@ -76,7 +76,7 @@ public class MainWindow extends JFrame implements WindowListener, WindowStateLis
     // EFFECTS: clears spells panel and console panel, restarts the story with an empty player
     public void restartGame() {
         spellsPanel.clearTopPanel();
-        //spellsPanel.setVisible(false);
+        spellsPanel.setVisible(false);
         consolePanel.reset();
         game.restartGame();
     }
@@ -92,7 +92,7 @@ public class MainWindow extends JFrame implements WindowListener, WindowStateLis
     @Override
     public void windowClosing(WindowEvent e) {
         if (game.hasSaved()) {
-            System.exit(0);
+            game.endGame();
         }
 
         int i = JOptionPane.showConfirmDialog(this, "Would you like to save your progress?",
@@ -100,9 +100,9 @@ public class MainWindow extends JFrame implements WindowListener, WindowStateLis
         switch (i) {
             case JOptionPane.YES_OPTION:
                 game.saveGameState();
-                System.exit(0);
+                game.endGame();
             case JOptionPane.NO_OPTION:
-                System.exit(0);
+                game.endGame();
         }
     }
 

@@ -55,7 +55,7 @@ public class Player {
     }
 
     // REQUIRES: name.length() > 0
-    // MODIFIES: this
+    // MODIFIES: this, EventLog's instance
     // EFFECTS: adds the spell with the given name to the player's collection of known spells, or does nothing if
     //          it's already there.
     public void addSpell(String name) {
@@ -63,6 +63,14 @@ public class Player {
             return;
         }
         spells.put(name, StoryController.ALL_SPELLS.get(name));
+        EventLog.getInstance().logEvent(new Event("Added new spell: " + name + "."));
+    }
+
+    // MODIFIES: this, EventLog's instance
+    // EFFECTS: removes all objects from the player's list of known spells
+    public void forgetSpells() {
+        spells.clear();
+        EventLog.getInstance().logEvent(new Event("All spells cleared."));
     }
 
     // REQUIRES: name.length() > 0

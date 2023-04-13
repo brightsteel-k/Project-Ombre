@@ -5,6 +5,13 @@
         "progressConditions": {},
         "spells": [
             {
+                "damage": 0,
+                "school": "silk",
+                "name": "See Darkness",
+                "description": "Blinds the target, disallowing them from using sight to direct spells and attacks.",
+                "incantation": "voyez_noir"
+            },
+            {
                 "damage": 4,
                 "school": "ember",
                 "name": "Burn",
@@ -17,8 +24,22 @@
                 "name": "Freeze",
                 "description": "Channel the heat from your opponent, inflicting rapid frostbite.",
                 "incantation": "gelez"
+            },
+            {
+                "damage": 3,
+                "school": "silk",
+                "name": "Have Terror",
+                "description": "Fills the target's minds with horrifying images of their darkest nightmares.",
+                "incantation": "avez_peur"
+            },
+            {
+                "damage": 6,
+                "school": "blood",
+                "name": "Damage",
+                "description": "Rends the target's tissue structure, inflicting damage and internal hemorrhaging.",
+                "incantation": "avez_mal"
             }
         ],
-        "items": []
+        "items": ["book"]
     }
 }

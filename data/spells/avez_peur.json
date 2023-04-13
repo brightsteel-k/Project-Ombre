@@ -1,6 +1,6 @@
 {
   "name": "Have Terror",
-  "incantation": "avez peur",
+  "incantation": "avez_peur",
   "school": "silk",
   "description": "Fills the target's minds with horrifying images of their darkest nightmares.",
   "damage": 3

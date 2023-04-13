@@ -2,17 +2,13 @@ package ui.gui;
 
 import exceptions.InvalidActionException;
 import exceptions.SceneEndingException;
-import model.Interpreter;
-import model.Player;
-import model.SaveSystem;
-import model.StoryController;
+import model.*;
 import model.storyobjects.SceneEvent;
 import model.storyobjects.Spell;
 import util.DataManager;
 
 import javax.swing.*;
 import java.util.List;
-import java.util.Random;
 
 // Runs code from model, manages GUI, weaves everything together into a coherent experience
 public class Game {
@@ -21,18 +17,15 @@ public class Game {
     private final Interpreter interpreter;
     private final SaveSystem saveSystem;
     private final ConsolePanel consolePanel;
-    private final Random random;
     private boolean isExploring;
     private Player player;
     private boolean saved;
 
-    // EFFECTS: Game has its own random number generator, save system, interpreter, and initialized story
-    //          objects that will work together to present the user with a text-based adventure experience. It also
-    //          records the main window and panels that comprise the GUI. Finally, it initializes Deserializer class
-    //          and starts the game.
+    // EFFECTS: Game has its own save system, interpreter, and initialized story objects that will work together to
+    //          present the user with a text-based adventure experience. It also records the main window and panels
+    //          that comprise the GUI. Finally, it initializes Deserializer class and starts the game.
     public Game() {
         DataManager.initializeGson();
-        random = new Random();
         saveSystem = new SaveSystem();
         interpreter = new Interpreter();
         mainWindow = new MainWindow(this);
@@ -98,6 +91,7 @@ public class Game {
     private void newGame() {
         player = new Player();
         story.setPlayer(player);
+        EventLog.getInstance().logEvent(new Event("Started new game."));
     }
 
     // REQUIRES: previous player object is already serialized to a Json file at the correct directory
@@ -109,6 +103,7 @@ public class Game {
         story.setPlayer(player);
         story.setCurrentScene(saveSystem.getCurrentScene());
         story.setCurrentLocation(saveSystem.getCurrentLocation());
+        EventLog.getInstance().logEvent(new Event("Loaded game from save file."));
     }
 
     // MODIFIES: this object's story instance, this object's player instance
@@ -191,11 +186,12 @@ public class Game {
         consolePanel.printLine(story.changeLocation(newLocation), false);
     }
 
-    // MODIFIES: this, device disk
+    // MODIFIES: this, device disk, EventLog's instance
     // EFFECTS: saves current state of the game to disk using save system
     public void saveGameState() {
         story.writeValuesToSaveSystem(saveSystem);
         saved = true;
+        EventLog.getInstance().logEvent(new Event("Game saved."));
         JOptionPane.showMessageDialog(mainWindow, "Game successfully saved!");
     }
 
@@ -204,11 +200,22 @@ public class Game {
     //           panel instance.
     // EFFECTS: restarts game and with reloaded story and player instances
     public void restartGame() {
+        player.forgetSpells();
         initializeStory();
     }
 
     // EFFECTS: returns all spells that this game's player instance knows
     public Spell[] getKnownSpells() {
         return player.getSpells();
+    }
+
+    // MODIFIES: System
+    // EFFECTS: prints the event log, kills program
+    public void endGame() {
+        EventLog el = EventLog.getInstance();
+        for (Event e : el) {
+            System.out.println(e.toString() + "\n");
+        }
+        System.exit(0);
     }
 }

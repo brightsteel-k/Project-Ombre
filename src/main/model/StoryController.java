@@ -97,11 +97,12 @@ public class StoryController {
     }
 
     // REQUIRES: loc is a valid location in ALL_LOCATIONS
-    // MODIFIES: this
+    // MODIFIES: this, EventLog's instance
     // EFFECTS: changes the current location to the one with the given id, returns the appropriate feedback message
     public String changeLocation(String id) {
         String previousName = currentLocation.getName();
         setCurrentLocation(id);
+        EventLog.getInstance().logEvent(new Event("Changed player location: " + id));
         return "You leave " + previousName + " and make your way to " + currentLocation.getName() + ".";
     }
 
