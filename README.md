@@ -98,7 +98,7 @@ Tue Apr 11 15:14:26 PDT 2023\
 Started new game.
 
 Tue Apr 11 15:14:38 PDT 2023\
-Changed player location: worktable
+Changed player location: worktable.
 
 Tue Apr 11 15:14:45 PDT 2023\
 Added new spell: brulez.
@@ -110,13 +110,13 @@ Tue Apr 11 15:14:52 PDT 2023\
 Added new spell: voyez_noir.
 
 Tue Apr 11 15:14:54 PDT 2023\
-Changed player location: front
+Changed player location: front.
 
 Tue Apr 11 15:14:59 PDT 2023\
 Game saved.
 
 Tue Apr 11 15:15:09 PDT 2023\
-Changed player location: worktable
+Changed player location: worktable.
 
 Tue Apr 11 15:15:19 PDT 2023\
 Added new spell: avez_mal.
@@ -128,7 +128,7 @@ Tue Apr 11 15:15:25 PDT 2023\
 Loaded game from save file.
 
 Tue Apr 11 15:15:30 PDT 2023\
-Changed player location: worktable
+Changed player location: worktable.
 
 Tue Apr 11 15:15:37 PDT 2023\
 Added new spell: avez_mal.
@@ -140,4 +140,25 @@ Tue Apr 11 15:16:10 PDT 2023\
 Game saved.
 
 ### Phase 4: Task 3
+Upon examining the UML Design Diagram for my project, I'm noticing that a large
+amount of coupling exists around my Game class. It holds references to a lot of
+other classes, which is to be expected, but there are also a lot of classes that
+reference it, which disrupts the top-down flow of control that would have been 
+ideal for a large-scale project like this. SidebarPanel, MainWindow, and 
+ConsolePanel are all examples of classes that house a reference to the Game 
+object.
 
+Given more time, I would like to refactor the classes that are used very 
+often throughout the project--for example, Game--to utilize the Singleton design
+pattern. While this won't necessarily solve the coupling issue, it will
+drastically help improve cohesion by eliminating the need for every class in the
+project to establish and store a reference to the same Game object. Instead, the
+classes will have a single universal point of access to the Game, making it much 
+simpler to reference all throughout the project. 
+
+After these changes, an ideal version of the UML Design Diagram would have 
+a single bidirectional association tying together the entire left side of the 
+project--MainWindow and its UI classes--with the entire right side of the
+project--Game and its story-managing classes. In this way, the coupling will 
+have slightly decreased and the units of the project can handle their
+respective domains independently and efficiently. 

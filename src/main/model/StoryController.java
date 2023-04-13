@@ -102,7 +102,7 @@ public class StoryController {
     public String changeLocation(String id) {
         String previousName = currentLocation.getName();
         setCurrentLocation(id);
-        EventLog.getInstance().logEvent(new Event("Changed player location: " + id));
+        EventLog.getInstance().logEvent(new Event("Changed player location: " + id + "."));
         return "You leave " + previousName + " and make your way to " + currentLocation.getName() + ".";
     }
 
