@@ -162,3 +162,5 @@ project--MainWindow and its UI classes--with the entire right side of the
 project--Game and its story-managing classes. In this way, the coupling will 
 have slightly decreased and the units of the project can handle their
 respective domains independently and efficiently. 
+
+### PHASE 5: To make it my own game.
